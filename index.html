@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <!-- 3. Category Selectors Bar (Men & Women Filters) -->
+    <!-- 3. Category Selectors Bar (Men, Women, Tops, Pants, Outerwear) -->
     <div class="categories">
         <button class="cat-btn active" onclick="selectCategory(this, 'all')" data-key="cat_all">ទាំងអស់ (All)</button>
         <button class="cat-btn" onclick="selectCategory(this, 'men')" data-key="cat_men">បុរស (Men)</button>
@@ -122,8 +122,8 @@
 
     <!-- 4. Main Product Container Area -->
     <div class="container">
-        <!-- ===== PRODUCT CARD 1 (Men) ===== -->
-        <div class="card" id="prod-1" data-category="men">
+        <!-- ===== PRODUCT CARD 1 (Men & Tops) ===== -->
+        <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
                 <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
@@ -145,8 +145,8 @@
             <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
-        <!-- ===== PRODUCT CARD 2 (Men) ===== -->
-        <div class="card" id="prod-2" data-category="men">
+        <!-- ===== PRODUCT CARD 2 (Men & Tops) ===== -->
+        <div class="card" id="prod-2" data-gender="men" data-type="tops">
             <span class="badge" data-key="badge_new">New Collection</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
@@ -170,11 +170,11 @@
             <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
-        <!-- ===== PRODUCT CARD 3 (Women) ===== -->
-        <div class="card" id="prod-3" data-category="women">
+        <!-- ===== PRODUCT CARD 3 (Women & Tops) ===== -->
+        <div class="card" id="prod-3" data-gender="women" data-type="tops">
             <span class="badge" data-key="badge_women">Women Trend</span>
             <div class="img-box">
-                <img src="YOUR_IMAGE_NAME.jpeg" alt="Women Summer Dress">
+                <img src="YOUR_IMAGE_NAME.jpeg" alt="Elegant Women Dress">
             </div>
 
             <div class="prod-title" data-key="p3_title">Elegant Women Dress</div>
@@ -338,7 +338,7 @@
             element.classList.add('active');
         }
 
-        function selectCategory(element, category) {
+        function selectCategory(element, filterType) {
             let catContainer = element.parentElement;
             let buttons = catContainer.getElementsByClassName('cat-btn');
             for (let btn of buttons) {
@@ -348,10 +348,23 @@
 
             let cards = document.querySelectorAll('.container .card');
             cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
+                let gender = card.getAttribute('data-gender');
+                let type = card.getAttribute('data-type');
+
+                if (filterType === 'all') {
                     card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
+                } else if (filterType === 'men' || filterType === 'women') {
+                    if (gender === filterType) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else if (filterType === 'tops' || filterType === 'pants' || filterType === 'outerwear') {
+                    if (type === filterType) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 }
             });
         }
