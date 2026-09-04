@@ -534,7 +534,6 @@
             document.getElementById('modal-total-price').innerText = '$' + totalPrice.toFixed(2);
         }
 
-        // JavaScript Function Force Open Telegram App directly
         function openTelegram() {
             let telegramUsername = "OneDayClothingAgent";
             let message = `${translations[currentLang].msg_hello}\n`;
@@ -553,17 +552,14 @@
 
             let encodedMessage = encodeURIComponent(message);
             
-            // ប្រើប្រាស់ Deep Link ដើម្បីបង្ខំឱ្យបើកកម្មវិធី Telegram ផ្ទាល់កាត់បន្ថយការជាប់ Browser
+            // ប្រើប្រាស់ Deep Link របស់ Telegram ផ្ទាល់ ដើម្បីជៀសវាងទំព័រ t.me របស់ Browser
             let tgAppUrl = `tg://resolve?domain=${telegramUsername}&text=${encodedMessage}`;
             let webUrl = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
 
-            // ព្យាយាមបើក Telegram App ផ្ទាល់
             window.location.href = tgAppUrl;
-
-            // ប្រសិនបើក្នុងរយៈពេលខ្លីម៉ាស៊ីនមិនទាន់បើក app ទេ វា會 fallback ไปកាន់ web link
             setTimeout(function() {
                 window.open(webUrl, '_blank');
-            }, 500);
+            }, 400);
         }
     </script>
 
