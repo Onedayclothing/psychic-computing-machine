@@ -110,18 +110,20 @@
         </div>
     </div>
 
-    <!-- 3. Category Selectors Bar -->
+    <!-- 3. Category Selectors Bar (Men & Women Filters) -->
     <div class="categories">
-        <button class="cat-btn active" onclick="selectCategory(this)" data-key="cat_all">ទាំងអស់ (All)</button>
-        <button class="cat-btn" onclick="selectCategory(this)" data-key="cat_tops">អាវ (Tops)</button>
-        <button class="cat-btn" onclick="selectCategory(this)" data-key="cat_pants">ខោ (Pants)</button>
-        <button class="cat-btn" onclick="selectCategory(this)" data-key="cat_outerwear">អាវក្រៅ (Outerwear)</button>
+        <button class="cat-btn active" onclick="selectCategory(this, 'all')" data-key="cat_all">ទាំងអស់ (All)</button>
+        <button class="cat-btn" onclick="selectCategory(this, 'men')" data-key="cat_men">បុរស (Men)</button>
+        <button class="cat-btn" onclick="selectCategory(this, 'women')" data-key="cat_women">នារី (Women)</button>
+        <button class="cat-btn" onclick="selectCategory(this, 'tops')" data-key="cat_tops">អាវ (Tops)</button>
+        <button class="cat-btn" onclick="selectCategory(this, 'pants')" data-key="cat_pants">ខោ (Pants)</button>
+        <button class="cat-btn" onclick="selectCategory(this, 'outerwear')" data-key="cat_outerwear">អាវក្រៅ (Outerwear)</button>
     </div>
 
     <!-- 4. Main Product Container Area -->
     <div class="container">
-        <!-- ===== PRODUCT CARD 1 ===== -->
-        <div class="card" id="prod-1">
+        <!-- ===== PRODUCT CARD 1 (Men) ===== -->
+        <div class="card" id="prod-1" data-category="men">
             <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
                 <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
@@ -143,8 +145,8 @@
             <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
-        <!-- ===== PRODUCT CARD 2 ===== -->
-        <div class="card" id="prod-2">
+        <!-- ===== PRODUCT CARD 2 (Men) ===== -->
+        <div class="card" id="prod-2" data-category="men">
             <span class="badge" data-key="badge_new">New Collection</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
@@ -168,16 +170,16 @@
             <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
-        <!-- ===== PRODUCT CARD 3 ===== -->
-        <div class="card" id="prod-3">
-            <span class="badge" data-key="badge_sale">Sale Off</span>
+        <!-- ===== PRODUCT CARD 3 (Women) ===== -->
+        <div class="card" id="prod-3" data-category="women">
+            <span class="badge" data-key="badge_women">Women Trend</span>
             <div class="img-box">
-                <img src="YOUR_IMAGE_NAME.jpeg" alt="Oversize Streetwear Jacket">
+                <img src="YOUR_IMAGE_NAME.jpeg" alt="Women Summer Dress">
             </div>
 
-            <div class="prod-title" data-key="p3_title">Oversize Streetwear Jacket</div>
-            <div class="prod-desc" data-key="p3_desc">អាវក្រៅស្ទីល Streetwear ក្រាស់ទន់ ម៉ូដទាន់សម័យសម្រាប់យុវវ័យ</div>
-            <div class="price">$25.00</div>
+            <div class="prod-title" data-key="p3_title">Elegant Women Dress</div>
+            <div class="prod-desc" data-key="p3_desc">រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង និងការងារ</div>
+            <div class="price">$22.00</div>
             
             <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
             <div class="size-grid">
@@ -188,7 +190,7 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p3_title', 25.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
     </div>
 
@@ -228,18 +230,20 @@
                 cart_btn: "កន្ត្រក",
                 cover_title: "BUILD YOUR DREAM STYLE",
                 cat_all: "ទាំងអស់ (All)",
+                cat_men: "បុរស (Men)",
+                cat_women: "នារី (Women)",
                 cat_tops: "អាវ (Tops)",
                 cat_pants: "ខោ (Pants)",
                 cat_outerwear: "អាវក្រៅ (Outerwear)",
                 badge_bestseller: "Bestseller",
                 badge_new: "New Collection",
-                badge_sale: "បញ្ចុះតម្លៃ",
+                badge_women: "Women Trend",
                 p1_title: "T-Shirt Polo Collab OneDay",
                 p1_desc: "អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ",
                 p2_title: "Outfit Smart Casual (Full Set)",
                 p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )",
-                p3_title: "Oversize Streetwear Jacket",
-                p3_desc: "អាវក្រៅស្ទីល Streetwear ក្រាស់ទន់ ម៉ូដទាន់សម័យសម្រាប់យុវវ័យ",
+                p3_title: "Elegant Women Dress",
+                p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង និងការងារ",
                 select_size: "ជ្រើសរើសទំហំ (SELECT SIZE)",
                 add_to_cart: "ដាក់ចូលកន្ត្រក",
                 total_label: "សរុប",
@@ -254,18 +258,20 @@
                 cart_btn: "Cart",
                 cover_title: "BUILD YOUR DREAM STYLE",
                 cat_all: "All Products",
+                cat_men: "Men",
+                cat_women: "Women",
                 cat_tops: "Tops",
                 cat_pants: "Pants",
                 cat_outerwear: "Outerwear",
                 badge_bestseller: "Bestseller",
                 badge_new: "New Collection",
-                badge_sale: "Sale Off",
+                badge_women: "Women Trend",
                 p1_title: "T-Shirt Polo Collab OneDay",
                 p1_desc: "Collab Edition Polo T-Shirt, simple & stylish design.",
                 p2_title: "Outfit Smart Casual (Full Set)",
                 p2_desc: "Smart Casual Outfit - Modern & Simple Style (Full Set).",
-                p3_title: "Oversize Streetwear Jacket",
-                p3_desc: "Thick & soft streetwear jacket, modern style for youth.",
+                p3_title: "Elegant Women Dress",
+                p3_desc: "Elegant women dress, perfect for casual outings and work.",
                 select_size: "SELECT SIZE",
                 add_to_cart: "Add to Cart",
                 total_label: "Total",
@@ -280,18 +286,20 @@
                 cart_btn: "购物车",
                 cover_title: "打造您的理想风格",
                 cat_all: "全部商品",
+                cat_men: "男装",
+                cat_women: "女装",
                 cat_tops: "上衣",
                 cat_pants: "裤子",
                 cat_outerwear: "外套",
                 badge_bestseller: "热销爆款",
                 badge_new: "新品上市",
-                badge_sale: "特惠促销",
+                badge_women: "女装潮流",
                 p1_title: "OneDay 联名款 Polo 衫",
                 p1_desc: "联名款 Polo 衫，简约时尚百搭。",
                 p2_title: "商务休闲套装 (全套)",
                 p2_desc: "商务休闲套装，时尚简约 (全套)。",
-                p3_title: "宽松街头风夹克",
-                p3_desc: "厚实柔软的街头风夹克，青年时尚款式。",
+                p3_title: "优雅女士连衣裙",
+                p3_desc: "时尚女士连衣裙，适合日常出行与工作。",
                 select_size: "选择尺码",
                 add_to_cart: "加入购物车",
                 total_label: "合计",
@@ -330,13 +338,22 @@
             element.classList.add('active');
         }
 
-        function selectCategory(element) {
+        function selectCategory(element, category) {
             let catContainer = element.parentElement;
             let buttons = catContainer.getElementsByClassName('cat-btn');
             for (let btn of buttons) {
                 btn.classList.remove('active');
             }
             element.classList.add('active');
+
+            let cards = document.querySelectorAll('.container .card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
         function addToCart(titleKey, price, cardId) {
