@@ -31,7 +31,6 @@
         .container { max-width: 400px; margin: 0 auto; padding: 0 16px; }
         .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 16px; position: relative; }
         .img-box { background: #f1f5f9; height: 180px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 600; margin-bottom: 12px; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
         .badge { position: absolute; top: 26px; right: 26px; background: #00C2FF; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
 
         .prod-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
@@ -45,7 +44,6 @@
 
         /* Add to Cart Button */
         .btn-add { width: 100%; background: #0f172a; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; }
-        .btn-add:active { transform: scale(0.98); }
 
         /* Floating Cart Bar */
         .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; padding: 12px 16px; z-index: 100; }
@@ -53,6 +51,22 @@
         .total-price { font-size: 18px; font-weight: 800; color: #0f172a; }
         .total-label { font-size: 11px; color: #64748b; font-weight: 600; }
         .btn-telegram { background: #00C2FF; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+
+        /* Cart Modal Drawer Overlay */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.5); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-height: 70vh; overflow-y: auto; max-width: 400px; width: 100%; margin: 0 auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px; }
+        .modal-title { font-size: 16px; font-weight: 800; }
+        .btn-close { background: #f1f5f9; border: none; font-size: 16px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; }
+
+        /* Cart Item List Style */
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0; }
+        .item-info { font-size: 13px; font-weight: 700; }
+        .item-sub { font-size: 11px; color: #64748b; font-weight: 500; }
+        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-qty { background: #e0f2fe; color: #00C2FF; border: none; width: 26px; height: 26px; border-radius: 6px; font-weight: 800; cursor: pointer; }
+        .empty-msg { text-align: center; color: #94a3b8; padding: 20px 0; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -60,7 +74,7 @@
     <!-- Navigation -->
     <nav>
         <div class="logo">Oneday<span>.</span></div>
-        <button class="cart-btn">🛒 កន្ត្រក (<span id="cart-count">0</span>)</button>
+        <button class="cart-btn" onclick="toggleCartModal()">🛒 កន្ត្រក (<span id="cart-count">0</span>)</button>
     </nav>
 
     <!-- FB Style Cover Banner Header -->
@@ -106,21 +120,35 @@
     <!-- Floating Cart Bar -->
     <div class="cart-checkout-bar">
         <div class="bar-content">
-            <div>
+            <div onclick="toggleCartModal()" style="cursor: pointer;">
                 <div class="total-label">សរុប (<span id="items-count">0</span> មុខ)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <!-- សូមដូរ @your_telegram_username ទៅជា Username Telegram របស់បង -->
             <a href="https://t.me/your_telegram_username" id="telegram-link" class="btn-telegram">📲 កុម្មង់ទិញតាម Telegram</a>
+        </div>
+    </div>
+
+    <!-- Cart Items Drawer Modal -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🛒 ទំនិញក្នុងកន្ត្រករបស់អ្នក</div>
+                <button class="btn-close" onclick="toggleCartModal()">✕</button>
+            </div>
+            <div id="cart-list">
+                <div class="empty-msg">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
+            </div>
         </div>
     </div>
 
     <!-- JavaScript Logic -->
     <script>
-        let cart = [];
-        let totalPrice = 0;
+        let cart = {};
 
-        // មុខងារជ្រើសរើស Size
+        function toggleCartModal() {
+            document.getElementById('cartModal').classList.toggle('active');
+        }
+
         function selectSize(element) {
             let sizeGrid = element.parentElement;
             let buttons = sizeGrid.getElementsByClassName('size-btn');
@@ -130,7 +158,6 @@
             element.classList.add('active');
         }
 
-        // មុខងារជ្រើសរើស Category
         function selectCategory(element) {
             let catContainer = element.parentElement;
             let buttons = catContainer.getElementsByClassName('cat-btn');
@@ -140,31 +167,81 @@
             element.classList.add('active');
         }
 
-        // មុខងារដាក់ចូលកន្ត្រក (Add to Cart)
         function addToCart(productName, price, cardId) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+            let itemKey = `${productName}_${selectedSize}`;
 
-            cart.push({ name: productName, price: price, size: selectedSize });
-            totalPrice += price;
+            if (cart[itemKey]) {
+                cart[itemKey].qty += 1;
+            } else {
+                cart[itemKey] = { name: productName, price: price, size: selectedSize, qty: 1 };
+            }
 
-            // Update UI
-            document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('items-count').innerText = cart.length;
-            document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
-
-            // រៀបចំសារសម្រាប់ផ្ញើទៅ Telegram
-            updateTelegramLink();
+            renderCart();
         }
 
-        // មុខងារបង្កើត Link កុម្មង់ទិញចូល Telegram
-        function updateTelegramLink() {
-            let telegramUsername = "your_telegram_username"; // ប្តូរត្រង់នេះជា Username Telegram បង
+        function changeQty(itemKey, delta) {
+            if (cart[itemKey]) {
+                cart[itemKey].qty += delta;
+                if (cart[itemKey].qty <= 0) {
+                    delete cart[itemKey];
+                }
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            let cartList = document.getElementById('cart-list');
+            let totalItems = 0;
+            let totalPrice = 0;
+            let itemsHtml = '';
+
+            for (let key in cart) {
+                let item = cart[key];
+                let itemTotal = item.price * item.qty;
+                totalItems += item.qty;
+                totalPrice += itemTotal;
+
+                itemsHtml += `
+                    <div class="cart-item">
+                        <div>
+                            <div class="item-info">${item.name}</div>
+                            <div class="item-sub">Size: ${item.size} | $${item.price.toFixed(2)}</div>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="btn-qty" onclick="changeQty('${key}', -1)">-</button>
+                            <span style="font-weight:700; font-size:13px;">${item.qty}</span>
+                            <button class="btn-qty" onclick="changeQty('${key}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (Object.keys(cart).length === 0) {
+                cartList.innerHTML = '<div class="empty-msg">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>';
+            } else {
+                cartList.innerHTML = itemsHtml;
+            }
+
+            document.getElementById('cart-count').innerText = totalItems;
+            document.getElementById('items-count').innerText = totalItems;
+            document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
+
+            updateTelegramLink(totalPrice);
+        }
+
+        function updateTelegramLink(totalPrice) {
+            let telegramUsername = "your_telegram_username"; // ប្តូរទៅជា Username Telegram បង
             let message = "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖\n";
-            cart.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} (Size: ${item.size}) - $${item.price.toFixed(2)}\n`;
-            });
+            let index = 1;
+
+            for (let key in cart) {
+                let item = cart[key];
+                message += `${index}. ${item.name} (Size: ${item.size}) x${item.qty} = $${(item.price * item.qty).toFixed(2)}\n`;
+                index++;
+            }
             message += `\nតម្លៃសរុប៖ $${totalPrice.toFixed(2)}`;
 
             let encodedMessage = encodeURIComponent(message);
