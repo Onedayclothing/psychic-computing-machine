@@ -167,6 +167,29 @@
             
             <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
+
+        <!-- ===== PRODUCT CARD 3 ===== -->
+        <div class="card" id="prod-3">
+            <span class="badge" data-key="badge_sale">Sale Off</span>
+            <div class="img-box">
+                <img src="YOUR_IMAGE_NAME.jpeg" alt="Oversize Streetwear Jacket">
+            </div>
+
+            <div class="prod-title" data-key="p3_title">Oversize Streetwear Jacket</div>
+            <div class="prod-desc" data-key="p3_desc">អាវក្រៅស្ទីល Streetwear ក្រាស់ទន់ ម៉ូដទាន់សម័យសម្រាប់យុវវ័យ</div>
+            <div class="price">$25.00</div>
+            
+            <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
+            <div class="size-grid">
+                <button class="size-btn" onclick="selectSize(this)">S</button>
+                <button class="size-btn active" onclick="selectSize(this)">M</button>
+                <button class="size-btn" onclick="selectSize(this)">L</button>
+                <button class="size-btn" onclick="selectSize(this)">XL</button>
+                <button class="size-btn" onclick="selectSize(this)">XXL</button>
+            </div>
+            
+            <button class="btn-add" onclick="addToCart('p3_title', 25.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
+        </div>
     </div>
 
     <!-- 5. Bottom Floating Checkout Bar Section -->
@@ -177,7 +200,7 @@
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
             <!-- Telegram Order Direct Link -->
-            <a href="https://t.me/OneDayClothingAgent" id="telegram-link" class="btn-telegram">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
+            <a href="https://t.me/OneDayClothingAgent" id="telegram-link" class="btn-telegram" target="_blank">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
         </div>
     </div>
 
@@ -210,10 +233,13 @@
                 cat_outerwear: "អាវក្រៅ (Outerwear)",
                 badge_bestseller: "Bestseller",
                 badge_new: "New Collection",
+                badge_sale: "បញ្ចុះតម្លៃ",
                 p1_title: "T-Shirt Polo Collab OneDay",
                 p1_desc: "អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ",
                 p2_title: "Outfit Smart Casual (Full Set)",
                 p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )",
+                p3_title: "Oversize Streetwear Jacket",
+                p3_desc: "អាវក្រៅស្ទីល Streetwear ក្រាស់ទន់ ម៉ូដទាន់សម័យសម្រាប់យុវវ័យ",
                 select_size: "ជ្រើសរើសទំហំ (SELECT SIZE)",
                 add_to_cart: "ដាក់ចូលកន្ត្រក",
                 total_label: "សរុប",
@@ -233,10 +259,13 @@
                 cat_outerwear: "Outerwear",
                 badge_bestseller: "Bestseller",
                 badge_new: "New Collection",
+                badge_sale: "Sale Off",
                 p1_title: "T-Shirt Polo Collab OneDay",
                 p1_desc: "Collab Edition Polo T-Shirt, simple & stylish design.",
                 p2_title: "Outfit Smart Casual (Full Set)",
                 p2_desc: "Smart Casual Outfit - Modern & Simple Style (Full Set).",
+                p3_title: "Oversize Streetwear Jacket",
+                p3_desc: "Thick & soft streetwear jacket, modern style for youth.",
                 select_size: "SELECT SIZE",
                 add_to_cart: "Add to Cart",
                 total_label: "Total",
@@ -256,10 +285,13 @@
                 cat_outerwear: "外套",
                 badge_bestseller: "热销爆款",
                 badge_new: "新品上市",
+                badge_sale: "特惠促销",
                 p1_title: "OneDay 联名款 Polo 衫",
                 p1_desc: "联名款 Polo 衫，简约时尚百搭。",
                 p2_title: "商务休闲套装 (全套)",
                 p2_desc: "商务休闲套装，时尚简约 (全套)。",
+                p3_title: "宽松街头风夹克",
+                p3_desc: "厚实柔软的街头风夹克，青年时尚款式。",
                 select_size: "选择尺码",
                 add_to_cart: "加入购物车",
                 total_label: "合计",
@@ -278,7 +310,7 @@
             const elements = document.querySelectorAll('[data-key]');
             elements.forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (translations[lang][key]) {
+                if (translations[lang] && translations[lang][key]) {
                     el.innerText = translations[lang][key];
                 }
             });
@@ -320,6 +352,7 @@
             }
 
             renderCart();
+            toggleCartModal();
         }
 
         function changeQty(itemKey, delta) {
@@ -385,7 +418,7 @@
                 message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${(item.price * item.qty).toFixed(2)}\n`;
                 index++;
             }
-            message += `\n${translations[currentLang].msg_total}៖ $${totalPrice.toFixed(2)}`;
+            message += `\n${translations[currentLang].msg_total}: $${totalPrice.toFixed(2)}`;
 
             let encodedMessage = encodeURIComponent(message);
             document.getElementById('telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
