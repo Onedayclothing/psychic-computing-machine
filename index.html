@@ -7,7 +7,6 @@
     
     <!-- CSS Style Structure -->
     <style>
-        /* General Layout & Variables */
         :root {
             --primary: #0f172a;
             --accent: #00c2ff;
@@ -27,7 +26,7 @@
         .logo span { color: var(--primary); }
         .nav-right { display: flex; align-items: center; gap: 10px; }
 
-        /* Premium Language Switcher */
+        /* Language Switcher */
         .lang-select { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; outline: none; transition: all 0.2s; }
         .lang-select:hover { border-color: var(--accent); }
 
@@ -44,13 +43,10 @@
 
         /* Premium Menu & Option Selectors */
         .menu-wrapper { padding: 0 16px 16px; max-width: 420px; margin: 0 auto; }
-        
-        /* Main Category Segmented Control */
         .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 12px; }
         .cat-btn { flex: 1; background: transparent; border: none; padding: 10px 0; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.3s ease; }
         .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        /* Sub-Categories (Tops, Pants, Outerwear) Premium Pills */
         .sub-categories { display: none; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
         .sub-categories.active { display: flex; }
         .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
@@ -58,7 +54,7 @@
 
         /* Product Container & Cards */
         .container { max-width: 420px; margin: 0 auto; padding: 0 16px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.02); transition: transform 0.2s; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
         
         .img-box { background: #f8fafc; height: 380px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 14px; border: 1px solid #f1f5f9; position: relative; }
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: cover; }
@@ -69,7 +65,6 @@
         .prod-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
         .price { font-size: 19px; font-weight: 900; color: var(--accent); margin-bottom: 14px; }
 
-        /* Premium Size Selection Options */
         .size-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .size-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         
@@ -78,7 +73,6 @@
         .size-btn:hover { border-color: var(--accent); }
         .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(15,23,42,0.15); }
 
-        /* Premium Add To Cart Button */
         .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.3px; }
         .btn-add:active { transform: scale(0.98); opacity: 0.9; }
 
@@ -93,13 +87,14 @@
         /* Slide-up Cart Modal Drawer */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; animation: fadeIn 0.3s ease; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 24px 24px 0 0; padding: 24px; max-height: 75vh; overflow-y: auto; max-width: 420px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); }
+        .modal-content { background: white; border-radius: 24px 24px 0 0; padding: 24px; max-height: 75vh; overflow-y: auto; max-width: 420px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; margin-bottom: 16px; }
         .modal-title { font-size: 17px; font-weight: 900; }
         .btn-close { background: #f1f5f9; border: none; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .btn-close:hover { background: #e2e8f0; }
 
         /* Cart Items Display List */
+        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 16px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 12px 0; }
         .item-info { font-size: 13px; font-weight: 800; }
         .item-sub { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
@@ -107,6 +102,13 @@
         .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 28px; height: 28px; border-radius: 8px; font-weight: 900; cursor: pointer; transition: transform 0.1s; }
         .btn-qty:active { transform: scale(0.9); }
         .empty-msg { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 13px; font-weight: 600; }
+
+        /* Modal Footer Total & Checkout */
+        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
+        .modal-total-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .modal-total-amount { font-size: 20px; font-weight: 900; color: var(--primary); }
+        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 14px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); }
 
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -191,6 +193,7 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
+            <!-- លុប toggleCartModal ออก ទុកត្រឹមaddToCart ធម្មតា -->
             <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
         </div>
 
@@ -258,15 +261,27 @@
         </div>
     </div>
 
-    <!-- 6. Cart Items Modal Drawer Section -->
+    <!-- 6. Cart Items Modal Drawer Section (មានបន្ថែម Total Price & Telegram Button ខាងក្នុងស្រាប់) -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">🛒 <span data-key="cart_title">ទំនិញក្នុងកន្ត្រករបស់អ្នក</span></div>
                 <button class="btn-close" onclick="toggleCartModal()">✕</button>
             </div>
+            
             <div id="cart-list">
                 <div class="empty-msg" data-key="empty_cart">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
+            </div>
+
+            <!-- បន្ថែម Total Summary & Checkout Button ក្នុងកន្លែងនេះ -->
+            <div class="modal-footer" id="modal-footer" style="display: none;">
+                <div class="modal-total-row">
+                    <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
+                    <span class="modal-total-amount" id="modal-total-price">$0.00</span>
+                </div>
+                <a href="https://t.me/OneDayClothingAgent" id="modal-telegram-link" class="btn-modal-telegram" target="_blank">
+                    📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span>
+                </a>
             </div>
         </div>
     </div>
@@ -382,8 +397,6 @@
         }
 
         function selectSize(element) {
-            let sizeGrid = element.parentElement.nextElementSibling || element.parentElement;
-            // Handle active toggle nicely
             let buttons = element.parentElement.getElementsByClassName('size-btn');
             for (let btn of buttons) {
                 btn.classList.remove('active');
@@ -471,7 +484,7 @@
             }
 
             renderCart();
-            toggleCartModal();
+            // លុប toggleCartModal() ចេញទីនេះ ដើម្បីកុំឱ្យវាលោតផ្ទាំងកន្ត្រកស្វ័យប្រវត្តិពេលចុច Add to Cart
         }
 
         function changeQty(itemKey, delta) {
@@ -486,6 +499,7 @@
 
         function renderCart() {
             let cartList = document.getElementById('cart-list');
+            let modalFooter = document.getElementById('modal-footer');
             let totalItems = 0;
             let totalPrice = 0;
             let itemsHtml = '';
@@ -514,13 +528,16 @@
 
             if (Object.keys(cart).length === 0) {
                 cartList.innerHTML = `<div class="empty-msg">${translations[currentLang].empty_cart}</div>`;
+                modalFooter.style.display = 'none';
             } else {
                 cartList.innerHTML = itemsHtml;
+                modalFooter.style.display = 'flex';
             }
 
             document.getElementById('cart-count').innerText = totalItems;
             document.getElementById('items-count').innerText = totalItems;
             document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
+            document.getElementById('modal-total-price').innerText = '$' + totalPrice.toFixed(2);
 
             updateTelegramLink(totalPrice);
         }
@@ -540,6 +557,7 @@
 
             let encodedMessage = encodeURIComponent(message);
             document.getElementById('telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
+            document.getElementById('modal-telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
         }
     </script>
 
