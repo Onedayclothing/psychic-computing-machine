@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oneday Clothing</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 
+"Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 120px; }
+    
+    /* Navigation Bar */
+    nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 16px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 20px; font-weight: 800; color: #00C2FF; }
+    .logo span { color: #0f172a; }
+    .cart-btn { background: #e0f2fe; color: #00C2FF; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; }
+
+    /* Hero Section */
+    header { text-align: center; padding: 24px 16px 12px; background: linear-gradient(180deg, rgba(0,194,255,0.08) 0%, rgba(255,255,255,0) 100%); }
+    .sub-title { font-size: 11px; font-weight: 700; color: #00C2FF; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .main-title { font-size: 20px; font-weight: 900; text-transform: uppercase; }
+
+    /* Category Navigation */
+    .categories { display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; margin-bottom: 12px; }
+    .cat-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+    .cat-btn.active { background: #00C2FF; color: #ffffff; border-color: #00C2FF; }
+
+    /* Product Cards */
+    .container { max-width: 400px; margin: 0 auto; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+    .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .img-box { background: #f1f5f9; height: 180px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 13px; font-weight: 600; margin-bottom: 12px; position: relative; }
+    .badge { position: absolute; top: 10px; right: 10px; background: #00C2FF; color: white; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 6px; }
+    
+    .prod-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .price { font-size: 18px; font-weight: 800; color: #00C2FF; margin-bottom: 12px; }
+
+    /* Size Selector Grid */
+    .size-label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px; display: block; }
+    .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 16px; }
+    .size-btn { border: 1px solid #cbd5e1; background: white; padding: 8px 0; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; text-align: center; }
+    .size-btn.active { background: #00C2FF; color: white; border-color: #00C2FF; }
+
+    /* Add to Cart Button */
+    .btn-add { width: 100%; background: #0f172a; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 13px; cursor: pointer; }
+    .btn-add:active { transform: scale(0.98); }
+
+    /* Floating Cart Bar */
+    .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #e2e8f0; padding: 16px; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 100; }
+    .bar-content { max-width: 400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .total-price { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .total-label { font-size: 11px; color: #64748b; font-weight: 600; display: block; }
+    .btn-telegram { background: #00C2FF; color: white; border: none; padding: 12px 18px; border-radius: 12px; font-weight: bold; font-size: 13px; cursor: pointer; flex-grow: 1; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">Oneday<span>.</span></div>
+    <button class="cart-btn" onclick="scrollToBottom()">🛒 កន្ត្រក (<span id="nav-count">0</span>)</button>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header>
+    <div class="sub-title">Simple • Modern • Confident</div>
+    <div class="main-title">Build Your Dream Style</div>
+  </header>
+
+  <!-- Categories -->
+  <div class="categories">
+    <button class="cat-btn active">ទាំងអស់ (All)</button>
+    <button class="cat-btn">អាវ (Tops)</button>
+    <button class="cat-btn">ខោ (Pants)</button>
+    <button class="cat-btn">អាវក្រៅ (Outerwear)</button>
+    <button class="cat-btn">គ្រឿងលំអ (Accessories)</button>
+  </div>
+
+  <!-- Product Container -->
+  <div class="container">
+    
+    <!-- Item 1: Polo -->
+    <div class="card">
+      <div class="img-box">
+        [ រូបថត T-Shirt Polo Collab ]
+        <span class="badge">BESTSELLER</span>
+      </div>
+      <div class="prod-title">T-Shirt Polo Collab OneDay</div>
+      <div class="price">$15.00</div>
+
+      <span class="size-label">ជ្រើសរើសទំហំ (Select Size)</span>
+      <div class="size-grid">
+        <button class="size-btn" onclick="selectSize(this, 'polo', 'S')">S</button>
+        <button class="size-btn active" onclick="selectSize(this, 'polo', 'M')">M</button>
+        <button class="size-btn" onclick="selectSize(this, 'polo', 'L')">L</button>
+        <button class="size-btn" onclick="selectSize(this, 'polo', 'XL')">XL</button>
+        <button class="size-btn" onclick="selectSize(this, 'polo', 'XXL')">XXL</button>
+      </div>
+
+      <button class="btn-add" onclick="addToCart('T-Shirt Polo Collab', 15, sizes['polo'])">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
+    </div>
+
+    <!-- Item 2: Pants -->
+    <div class="card">
+      <div class="img-box">
+        [ រូបថត ខោ Oneday Trousers ]
+        <span class="badge" style="background:#0f172a">NEW</span>
+      </div>
+      <div class="prod-title">Oneday Minimalist Trousers</div>
+      <div class="price">$22.00</div>
+
+      <span class="size-label">ជ្រើសរើសទំហំ (Select Size)</span>
+      <div class="size-grid">
+        <button class="size-btn" onclick="selectSize(this, 'pant', 'S')">S</button>
+        <button class="size-btn active" onclick="selectSize(this, 'pant', 'M')">M</button>
+        <button class="size-btn" onclick="selectSize(this, 'pant', 'L')">L</button>
+        <button class="size-btn" onclick="selectSize(this, 'pant', 'XL')">XL</button>
+        <button class="size-btn" onclick="selectSize(this, 'pant', 'XXL')">XXL</button>
+      </div>
+
+      <button class="btn-add" onclick="addToCart('Oneday Minimalist Trousers', 22, sizes['pant'])">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
+    </div>
+
+  </div>
+
+  <!-- Bottom Checkout Bar -->
+  <div class="cart-checkout-bar" id="cart-bar">
+    <div class="bar-content">
+      <div>
+        <span class="total-label">សរុប (<span id="cart-item-count">0</span> មុខ)</span>
+        <div class="total-price" id="total-price">$0.00</div>
+      </div>
+      <button class="btn-telegram" onclick="checkoutTelegram()">📲 កុម្ម៉ង់ទិញតាម Telegram</button>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+    let sizes = { polo: 'M', pant: 'M' };
+
+    function selectSize(btn, productKey, size) {
+      let parent = btn.parentElement;
+      parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sizes[productKey] = size;
+    }
+
+    function addToCart(itemName, price, size) {
+      cart.push({ name: itemName, price: price, size: size });
+      updateCartUI();
+      alert(`បានបន្ថែម "${itemName} (Size ${size})" ចូលកន្ត្រក!`);
+    }
+
+    function updateCartUI() {
+      let count = cart.length;
+      let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+      document.getElementById('nav-count').innerText = count;
+      document.getElementById('cart-item-count').innerText = count;
+      document.getElementById('total-price').innerText = `$${total.toFixed(2)}`;
+    }
+
+    function checkoutTelegram() {
+      if (cart.length === 0) {
+        alert("សូមជ្រើសរើសទំនិញដាក់ចូលកន្ត្រកជាមុនសិន!");
+        return;
+      }
+
+      const telegramUsername = 'onedayclothing';
+      let message = "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្ម៉ង់ទិញ៖\n\n";
+      
+      let total = 0;
+      cart.forEach((item, index) => {
+        message += `${index + 1}. ${item.name} (Size: ${item.size}) - $${item.price}.00\n`;
+        total += item.price;
+      });
+
+      message += `\n💰 សរុបរួម៖ $${total.toFixed(2)}`;
+
+      window.open(`https://t.me/${telegramUsername}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    function scrollToBottom() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
