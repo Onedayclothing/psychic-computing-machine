@@ -3,89 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oneday Clothing</title>
+    <title>Oneday Clothing | Premium Collection</title>
     
     <!-- CSS Style Structure -->
     <style>
-        /* General Layout Reset */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #f8fafc; color: #0f172a; padding-bottom: 120px; }
+        /* General Layout & Variables */
+        :root {
+            --primary: #0f172a;
+            --accent: #00c2ff;
+            --accent-light: #e0f2fe;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-muted: #64748b;
+        }
 
-        /* Top Navigation Bar Style */
-        nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 16px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: 800; color: #00C2FF; }
-        .logo span { color: #0f172a; }
-        .nav-right { display: flex; align-items: center; gap: 8px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
-        /* Language Switcher Selector Button */
-        .lang-select { background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; padding: 6px 8px; border-radius: 12px; font-size: 12px; font-weight: 700; cursor: pointer; outline: none; }
+        /* Top Navigation Bar */
+        nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: var(--accent); }
+        .logo span { color: var(--primary); }
+        .nav-right { display: flex; align-items: center; gap: 10px; }
 
-        .cart-btn { background: #e0f2fe; color: #00C2FF; border: none; padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; }
+        /* Premium Language Switcher */
+        .lang-select { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; outline: none; transition: all 0.2s; }
+        .lang-select:hover { border-color: var(--accent); }
 
-        /* FB Style Cover Video/Banner Header */
-        .cover-container { width: 100%; background: #ffffff; border-bottom: 1px solid #e2e8f0; margin-bottom: 16px; }
-        .cover-image-box { width: 100%; height: auto; background-color: #0f172a; overflow: hidden; position: relative; }
-        .cover-image-box video, .cover-image-box img { width: 100%; height: auto; display: block; object-fit: contain; }
-        .cover-info { text-align: center; padding: 16px; }
-        .sub-title { font-size: 11px; font-weight: 700; color: #00C2FF; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .main-title { font-size: 22px; font-weight: 900; text-transform: uppercase; }
+        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: transform 0.1s; }
+        .cart-btn:active { transform: scale(0.96); }
 
-        /* Category & Sub-Category Navigation Bar */
-        .menu-wrapper { padding: 0 16px 16px; background: #f8fafc; }
-        .categories { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-bottom: 8px; }
-        .cat-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; }
-        .cat-btn.active { background: #00C2FF; color: #ffffff; border-color: #00C2FF; }
+        /* Cover Video Banner */
+        .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .cover-image-box { width: 100%; max-height: 250px; background-color: var(--primary); overflow: hidden; position: relative; }
+        .cover-image-box video { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+        .cover-info { text-align: center; padding: 20px; }
+        .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .main-title { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
 
-        /* Sub-Categories (Tops, Pants, Outerwear) hidden by default */
-        .sub-categories { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-top: 4px; }
+        /* Premium Menu & Option Selectors */
+        .menu-wrapper { padding: 0 16px 16px; max-width: 420px; margin: 0 auto; }
+        
+        /* Main Category Segmented Control */
+        .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 12px; }
+        .cat-btn { flex: 1; background: transparent; border: none; padding: 10px 0; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.3s ease; }
+        .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+        /* Sub-Categories (Tops, Pants, Outerwear) Premium Pills */
+        .sub-categories { display: none; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
         .sub-categories.active { display: flex; }
-        .sub-btn { background: #e2e8f0; border: none; padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: #334155; }
-        .sub-btn.active { background: #0f172a; color: #ffffff; }
+        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
+        .sub-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(15,23,42,0.2); }
 
-        /* Product Display Container & Card Style */
-        .container { max-width: 400px; margin: 0 auto; padding: 0 16px; }
-        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 16px; position: relative; }
+        /* Product Container & Cards */
+        .container { max-width: 420px; margin: 0 auto; padding: 0 16px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.02); transition: transform 0.2s; }
         
-        .img-box { background: #ffffff; height: 380px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 600; margin-bottom: 12px; overflow: hidden; border: 1px solid #f1f5f9; }
-        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; }
+        .img-box { background: #f8fafc; height: 380px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 14px; border: 1px solid #f1f5f9; position: relative; }
+        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: cover; }
         
-        .badge { position: absolute; top: 26px; right: 26px; background: #00C2FF; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
+        .badge { position: absolute; top: 14px; right: 14px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: white; font-size: 10px; font-weight: 800; padding: 5px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .prod-title { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
-        .prod-desc { font-size: 12px; color: #64748b; margin-bottom: 8px; line-height: 1.4; }
-        .price { font-size: 18px; font-weight: 800; color: #00C2FF; margin-bottom: 12px; }
+        .prod-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.3px; }
+        .prod-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
+        .price { font-size: 19px; font-weight: 900; color: var(--accent); margin-bottom: 14px; }
 
-        /* Interactive Size Grid Buttons */
-        .size-label { font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; }
-        .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 12px; }
-        .size-btn { border: 1px solid #cbd5e1; background: white; padding: 8px 0; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; }
-        .size-btn.active { background: #00C2FF; color: white; border-color: #00C2FF; }
+        /* Premium Size Selection Options */
+        .size-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .size-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 14px; }
+        .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 10px 0; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); transition: all 0.2s; }
+        .size-btn:hover { border-color: var(--accent); }
+        .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(15,23,42,0.15); }
 
-        /* Add To Cart Action Button */
-        .btn-add { width: 100%; background: #0f172a; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; }
+        /* Premium Add To Cart Button */
+        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.3px; }
+        .btn-add:active { transform: scale(0.98); opacity: 0.9; }
 
-        /* Bottom Floating Bar Layout */
-        .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; padding: 12px 16px; z-index: 100; }
+        /* Bottom Floating Checkout Bar */
+        .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 14px 20px; z-index: 100; }
         .bar-content { max-width: 400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .total-price { font-size: 18px; font-weight: 800; color: #0f172a; }
-        .total-label { font-size: 11px; color: #64748b; font-weight: 600; }
-        .btn-telegram { background: #00C2FF; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .total-price { font-size: 19px; font-weight: 900; color: var(--primary); }
+        .total-label { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+        .btn-telegram { background: var(--accent); color: white; border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); transition: transform 0.1s; }
+        .btn-telegram:active { transform: scale(0.96); }
 
         /* Slide-up Cart Modal Drawer */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.5); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; animation: fadeIn 0.3s ease; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-height: 70vh; overflow-y: auto; max-width: 400px; width: 100%; margin: 0 auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px; }
-        .modal-title { font-size: 16px; font-weight: 800; }
-        .btn-close { background: #f1f5f9; border: none; font-size: 16px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; }
+        .modal-content { background: white; border-radius: 24px 24px 0 0; padding: 24px; max-height: 75vh; overflow-y: auto; max-width: 420px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; margin-bottom: 16px; }
+        .modal-title { font-size: 17px; font-weight: 900; }
+        .btn-close { background: #f1f5f9; border: none; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .btn-close:hover { background: #e2e8f0; }
 
         /* Cart Items Display List */
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0; }
-        .item-info { font-size: 13px; font-weight: 700; }
-        .item-sub { font-size: 11px; color: #64748b; font-weight: 500; }
-        .qty-controls { display: flex; align-items: center; gap: 8px; }
-        .btn-qty { background: #e0f2fe; color: #00C2FF; border: none; width: 26px; height: 26px; border-radius: 6px; font-weight: 800; cursor: pointer; }
-        .empty-msg { text-align: center; color: #94a3b8; padding: 20px 0; font-size: 13px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 12px 0; }
+        .item-info { font-size: 13px; font-weight: 800; }
+        .item-sub { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
+        .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 28px; height: 28px; border-radius: 8px; font-weight: 900; cursor: pointer; transition: transform 0.1s; }
+        .btn-qty:active { transform: scale(0.9); }
+        .empty-msg { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 13px; font-weight: 600; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -94,13 +120,12 @@
     <nav>
         <div class="logo">Oneday<span>.</span></div>
         <div class="nav-right">
-            <!-- Language Selection Selector Button -->
             <select class="lang-select" onchange="changeLanguage(this.value)">
-                <option value="km">🇰🇭 ខ្មែរ</option>
-                <option value="en">🇬🇧 English</option>
+                <option value="km">🇰🇭 KH</option>
+                <option value="en">🇬🇧 EN</option>
                 <option value="zh">🇨🇳 中文</option>
             </select>
-            <button class="cart-btn" onclick="toggleCartModal()">🛒 <span data-key="cart_btn">កន្ត្រក</span> (<span id="cart-count">0</span>)</button>
+            <button class="cart-btn" onclick="toggleCartModal()">🛒 <span id="cart-count">0</span></button>
         </div>
     </nav>
 
@@ -155,7 +180,9 @@
             <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ</div>
             <div class="price">$15.00</div>
             
-            <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
+            <div class="size-header">
+                <div class="size-label" data-key="select_size">SELECT SIZE</div>
+            </div>
             <div class="size-grid">
                 <button class="size-btn" onclick="selectSize(this)">S</button>
                 <button class="size-btn active" onclick="selectSize(this)">M</button>
@@ -164,7 +191,7 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
         </div>
 
         <!-- ===== PRODUCT CARD 2 (Men - Outerwear) ===== -->
@@ -180,7 +207,9 @@
             <div class="prod-desc" data-key="p2_desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )</div>
             <div class="price">$20.00</div>
             
-            <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
+            <div class="size-header">
+                <div class="size-label" data-key="select_size">SELECT SIZE</div>
+            </div>
             <div class="size-grid">
                 <button class="size-btn" onclick="selectSize(this)">S</button>
                 <button class="size-btn active" onclick="selectSize(this)">M</button>
@@ -189,7 +218,7 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
         </div>
 
         <!-- ===== PRODUCT CARD 3 (Women - Tops) ===== -->
@@ -203,7 +232,9 @@
             <div class="prod-desc" data-key="p3_desc">រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង និងការងារ</div>
             <div class="price">$22.00</div>
             
-            <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
+            <div class="size-header">
+                <div class="size-label" data-key="select_size">SELECT SIZE</div>
+            </div>
             <div class="size-grid">
                 <button class="size-btn" onclick="selectSize(this)">S</button>
                 <button class="size-btn active" onclick="selectSize(this)">M</button>
@@ -212,7 +243,7 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
         </div>
     </div>
 
@@ -223,7 +254,6 @@
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <!-- Telegram Order Direct Link -->
             <a href="https://t.me/OneDayClothingAgent" id="telegram-link" class="btn-telegram" target="_blank">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
         </div>
     </div>
@@ -248,14 +278,12 @@
         let currentGender = 'all';
         let currentType = 'all';
 
-        // Multilingual Translation Dictionary
         const translations = {
             km: {
-                cart_btn: "កន្ត្រក",
                 cover_title: "BUILD YOUR DREAM STYLE",
-                cat_all: "ទាំងអស់ (All)",
-                cat_men: "បុរស (Men)",
-                cat_women: "នារី (Women)",
+                cat_all: "ទាំងអស់",
+                cat_men: "បុរស",
+                cat_women: "នារី",
                 cat_tops: "អាវ",
                 cat_pants: "ខោ",
                 cat_outerwear: "អាវក្រៅ",
@@ -269,7 +297,7 @@
                 p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )",
                 p3_title: "Elegant Women Dress",
                 p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង និងការងារ",
-                select_size: "ជ្រើសរើសទំហំ (SELECT SIZE)",
+                select_size: "ជ្រើសរើសទំហំ (SIZE)",
                 add_to_cart: "ដាក់ចូលកន្ត្រក",
                 total_label: "សរុប",
                 items_unit: "មុខ",
@@ -280,7 +308,6 @@
                 msg_total: "តម្លៃសរុប"
             },
             en: {
-                cart_btn: "Cart",
                 cover_title: "BUILD YOUR DREAM STYLE",
                 cat_all: "All",
                 cat_men: "Men",
@@ -309,7 +336,6 @@
                 msg_total: "Total Amount"
             },
             zh: {
-                cart_btn: "购物车",
                 cover_title: "打造您的理想风格",
                 cat_all: "全部",
                 cat_men: "男装",
@@ -339,7 +365,6 @@
             }
         };
 
-        // Switch System Language
         function changeLanguage(lang) {
             currentLang = lang;
             const elements = document.querySelectorAll('[data-key]');
@@ -357,8 +382,9 @@
         }
 
         function selectSize(element) {
-            let sizeGrid = element.parentElement;
-            let buttons = sizeGrid.getElementsByClassName('size-btn');
+            let sizeGrid = element.parentElement.nextElementSibling || element.parentElement;
+            // Handle active toggle nicely
+            let buttons = element.parentElement.getElementsByClassName('size-btn');
             for (let btn of buttons) {
                 btn.classList.remove('active');
             }
@@ -369,12 +395,10 @@
             currentGender = gender;
             currentType = 'all';
 
-            // Active button style
             let catButtons = document.querySelectorAll('.categories .cat-btn');
             catButtons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Show/Hide sub-categories
             document.getElementById('sub-men').classList.remove('active');
             document.getElementById('sub-women').classList.remove('active');
 
@@ -481,7 +505,7 @@
                         </div>
                         <div class="qty-controls">
                             <button class="btn-qty" onclick="changeQty('${key}', -1)">-</button>
-                            <span style="font-weight:700; font-size:13px;">${item.qty}</span>
+                            <span style="font-weight:800; font-size:13px;">${item.qty}</span>
                             <button class="btn-qty" onclick="changeQty('${key}', 1)">+</button>
                         </div>
                     </div>
@@ -501,7 +525,6 @@
             updateTelegramLink(totalPrice);
         }
 
-        // Format Dynamic Order Message for Telegram Direct Redirect
         function updateTelegramLink(totalPrice) {
             let telegramUsername = "OneDayClothingAgent";
             let message = `${translations[currentLang].msg_hello}\n`;
