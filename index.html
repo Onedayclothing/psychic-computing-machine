@@ -36,7 +36,7 @@
         /* Cover Video Banner */
         .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
         .cover-image-box { width: 100%; max-height: 250px; background-color: var(--primary); overflow: hidden; position: relative; }
-        .cover-image-box video { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+        .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; }
         .cover-info { text-align: center; padding: 20px; }
         .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
         .main-title { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
@@ -56,10 +56,11 @@
         .container { max-width: 420px; margin: 0 auto; padding: 0 16px; }
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
         
-        .img-box { background: #f8fafc; height: 380px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 14px; border: 1px solid #f1f5f9; position: relative; }
-        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: cover; }
+        /* កែប្រែត្រង់នេះ៖ ប្រើ contain និង background ស ដើម្បីបង្ហាញពេញរូបរាង មិនឱ្យដាច់ក្បាល់ */
+        .img-box { background: #ffffff; height: 380px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 14px; border: 1px solid #f1f5f9; position: relative; }
+        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; }
         
-        .badge { position: absolute; top: 14px; right: 14px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: white; font-size: 10px; font-weight: 800; padding: 5px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge { position: absolute; top: 14px; right: 14px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: white; font-size: 10px; font-weight: 800; padding: 5px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 10; }
 
         .prod-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.3px; }
         .prod-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
@@ -103,7 +104,6 @@
         .btn-qty:active { transform: scale(0.9); }
         .empty-msg { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 13px; font-weight: 600; }
 
-        /* Modal Footer Total & Checkout */
         .modal-footer { border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
         .modal-total-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
@@ -152,7 +152,6 @@
             <button class="cat-btn active" onclick="selectMainCategory('all')" data-key="cat_all">ទាំងអស់ (All)</button>
         </div>
 
-        <!-- Sub-options for Men -->
         <div class="sub-categories" id="sub-men">
             <button class="sub-btn active" onclick="selectSubCategory('men', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'tops', this)" data-key="cat_tops">អាវ</button>
@@ -160,7 +159,6 @@
             <button class="sub-btn" onclick="selectSubCategory('men', 'outerwear', this)" data-key="cat_outerwear">អាវក្រៅ</button>
         </div>
 
-        <!-- Sub-options for Women -->
         <div class="sub-categories" id="sub-women">
             <button class="sub-btn active" onclick="selectSubCategory('women', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('women', 'tops', this)" data-key="cat_tops">អាវ</button>
@@ -193,7 +191,6 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <!-- លុប toggleCartModal ออก ទុកត្រឹមaddToCart ធម្មតា -->
             <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
         </div>
 
@@ -261,7 +258,7 @@
         </div>
     </div>
 
-    <!-- 6. Cart Items Modal Drawer Section (មានបន្ថែម Total Price & Telegram Button ខាងក្នុងស្រាប់) -->
+    <!-- 6. Cart Items Modal Drawer Section -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -273,7 +270,6 @@
                 <div class="empty-msg" data-key="empty_cart">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
             </div>
 
-            <!-- បន្ថែម Total Summary & Checkout Button ក្នុងកន្លែងនេះ -->
             <div class="modal-footer" id="modal-footer" style="display: none;">
                 <div class="modal-total-row">
                     <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
@@ -484,7 +480,6 @@
             }
 
             renderCart();
-            // លុប toggleCartModal() ចេញទីនេះ ដើម្បីកុំឱ្យវាលោតផ្ទាំងកន្ត្រកស្វ័យប្រវត្តិពេលចុច Add to Cart
         }
 
         function changeQty(itemKey, delta) {
