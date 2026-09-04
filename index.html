@@ -24,13 +24,14 @@
 
         /* Category Navigation */
         .categories { display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 16px; scrollbar-width: none; }
-        .cat-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+        .cat-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; }
         .cat-btn.active { background: #00C2FF; color: #ffffff; border-color: #00C2FF; }
 
         /* Product Cards */
         .container { max-width: 400px; margin: 0 auto; padding: 0 16px; }
         .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 16px; position: relative; }
         .img-box { background: #f1f5f9; height: 180px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 600; margin-bottom: 12px; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
         .badge { position: absolute; top: 26px; right: 26px; background: #00C2FF; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
 
         .prod-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
@@ -44,6 +45,7 @@
 
         /* Add to Cart Button */
         .btn-add { width: 100%; background: #0f172a; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; }
+        .btn-add:active { transform: scale(0.98); }
 
         /* Floating Cart Bar */
         .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; padding: 12px 16px; z-index: 100; }
@@ -64,7 +66,6 @@
     <!-- FB Style Cover Banner Header -->
     <div class="cover-container">
         <div class="cover-image-box">
-            <!-- ប្រើរូបថតដែលបងបាន Upload ចូល GitHub ផ្ទាល់ -->
             <img src="IMG_5509.jpeg" alt="Oneday Clothing Cover">
         </div>
         <div class="cover-info">
@@ -75,15 +76,15 @@
 
     <!-- Categories -->
     <div class="categories">
-        <button class="cat-btn active">ទាំងអស់ (All)</button>
-        <button class="cat-btn">អាវ (Tops)</button>
-        <button class="cat-btn">ខោ (Pants)</button>
-        <button class="cat-btn">អាវក្រៅ (Outerwear)</button>
+        <button class="cat-btn active" onclick="selectCategory(this)">ទាំងអស់ (All)</button>
+        <button class="cat-btn" onclick="selectCategory(this)">អាវ (Tops)</button>
+        <button class="cat-btn" onclick="selectCategory(this)">ខោ (Pants)</button>
+        <button class="cat-btn" onclick="selectCategory(this)">អាវក្រៅ (Outerwear)</button>
     </div>
 
     <!-- Product Cards -->
     <div class="container">
-        <div class="card">
+        <div class="card" id="prod-1">
             <span class="badge">Bestseller</span>
             <div class="img-box">[ រូបថត T-Shirt Polo Collab ]</div>
             <div class="prod-title">T-Shirt Polo Collab OneDay</div>
@@ -91,14 +92,14 @@
             
             <div class="size-label">ជ្រើសរើសទំហំ (Select Size)</div>
             <div class="size-grid">
-                <button class="size-btn">S</button>
-                <button class="size-btn active">M</button>
-                <button class="size-btn">L</button>
-                <button class="size-btn">XL</button>
-                <button class="size-btn">XXL</button>
+                <button class="size-btn" onclick="selectSize(this)">S</button>
+                <button class="size-btn active" onclick="selectSize(this)">M</button>
+                <button class="size-btn" onclick="selectSize(this)">L</button>
+                <button class="size-btn" onclick="selectSize(this)">XL</button>
+                <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('T-Shirt Polo Collab OneDay', 15.00, 'prod-1')">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
         </div>
     </div>
 
@@ -106,12 +107,70 @@
     <div class="cart-checkout-bar">
         <div class="bar-content">
             <div>
-                <div class="total-label">សរុប (0 មុខ)</div>
-                <div class="total-price">$0.00</div>
+                <div class="total-label">សរុប (<span id="items-count">0</span> មុខ)</div>
+                <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <a href="https://t.me/your_telegram_username" class="btn-telegram">📲 កុម្មង់ទិញតាម Telegram</a>
+            <!-- សូមដូរ @your_telegram_username ទៅជា Username Telegram របស់បង -->
+            <a href="https://t.me/your_telegram_username" id="telegram-link" class="btn-telegram">📲 កុម្មង់ទិញតាម Telegram</a>
         </div>
     </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let cart = [];
+        let totalPrice = 0;
+
+        // មុខងារជ្រើសរើស Size
+        function selectSize(element) {
+            let sizeGrid = element.parentElement;
+            let buttons = sizeGrid.getElementsByClassName('size-btn');
+            for (let btn of buttons) {
+                btn.classList.remove('active');
+            }
+            element.classList.add('active');
+        }
+
+        // មុខងារជ្រើសរើស Category
+        function selectCategory(element) {
+            let catContainer = element.parentElement;
+            let buttons = catContainer.getElementsByClassName('cat-btn');
+            for (let btn of buttons) {
+                btn.classList.remove('active');
+            }
+            element.classList.add('active');
+        }
+
+        // មុខងារដាក់ចូលកន្ត្រក (Add to Cart)
+        function addToCart(productName, price, cardId) {
+            let card = document.getElementById(cardId);
+            let activeSizeBtn = card.querySelector('.size-btn.active');
+            let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+
+            cart.push({ name: productName, price: price, size: selectedSize });
+            totalPrice += price;
+
+            // Update UI
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('items-count').innerText = cart.length;
+            document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
+
+            // រៀបចំសារសម្រាប់ផ្ញើទៅ Telegram
+            updateTelegramLink();
+        }
+
+        // មុខងារបង្កើត Link កុម្មង់ទិញចូល Telegram
+        function updateTelegramLink() {
+            let telegramUsername = "your_telegram_username"; // ប្តូរត្រង់នេះជា Username Telegram បង
+            let message = "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖\n";
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} (Size: ${item.size}) - $${item.price.toFixed(2)}\n`;
+            });
+            message += `\nតម្លៃសរុប៖ $${totalPrice.toFixed(2)}`;
+
+            let encodedMessage = encodeURIComponent(message);
+            document.getElementById('telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
+        }
+    </script>
 
 </body>
 </html>
