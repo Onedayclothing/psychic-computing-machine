@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oneday Clothing</title>
     
+    <!-- CSS Style Structure -->
     <style>
         /* General Layout Reset */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -14,7 +15,12 @@
         nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 16px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 20px; font-weight: 800; color: #00C2FF; }
         .logo span { color: #0f172a; }
-        .cart-btn { background: #e0f2fe; color: #00C2FF; border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .nav-right { display: flex; align-items: center; gap: 8px; }
+
+        /* Language Switcher Selector Button */
+        .lang-select { background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; padding: 6px 8px; border-radius: 12px; font-size: 12px; font-weight: 700; cursor: pointer; outline: none; }
+
+        .cart-btn { background: #e0f2fe; color: #00C2FF; border: none; padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; }
 
         /* FB Style Cover Video/Banner Header */
         .cover-container { width: 100%; background: #ffffff; border-bottom: 1px solid #e2e8f0; margin-bottom: 16px; }
@@ -77,11 +83,21 @@
 </head>
 <body>
 
+    <!-- 1. Top Navigation Bar Section -->
     <nav>
         <div class="logo">Oneday<span>.</span></div>
-        <button class="cart-btn" onclick="toggleCartModal()">🛒 កន្ត្រក (<span id="cart-count">0</span>)</button>
+        <div class="nav-right">
+            <!-- Language Selection Selector Button -->
+            <select class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="km">🇰🇭 ខ្មែរ</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+            <button class="cart-btn" onclick="toggleCartModal()">🛒 <span data-key="cart_btn">កន្ត្រក</span> (<span id="cart-count">0</span>)</button>
+        </div>
     </nav>
 
+    <!-- 2. FB Cover Banner Section -->
     <div class="cover-container">
         <div class="cover-image-box">
             <video autoplay loop muted playsinline>
@@ -90,29 +106,32 @@
         </div>
         <div class="cover-info">
             <div class="sub-title">Simple · Modern · Confident</div>
-            <div class="main-title">Build Your Dream Style</div>
+            <div class="main-title" data-key="cover_title">BUILD YOUR DREAM STYLE</div>
         </div>
     </div>
 
+    <!-- 3. Category Selectors Bar -->
     <div class="categories">
-        <button class="cat-btn active" onclick="selectCategory(this)">ទាំងអស់ (All)</button>
-        <button class="cat-btn" onclick="selectCategory(this)">អាវ (Tops)</button>
-        <button class="cat-btn" onclick="selectCategory(this)">ខោ (Pants)</button>
-        <button class="cat-btn" onclick="selectCategory(this)">អាវក្រៅ (Outerwear)</button>
+        <button class="cat-btn active" onclick="selectCategory(this)" data-key="cat_all">ទាំងអស់ (All)</button>
+        <button class="cat-btn" onclick="selectCategory(this)" data-key="cat_tops">អាវ (Tops)</button>
+        <button class="cat-btn" onclick="selectCategory(this)" data-key="cat_pants">ខោ (Pants)</button>
+        <button class="cat-btn" onclick="selectCategory(this)" data-key="cat_outerwear">អាវក្រៅ (Outerwear)</button>
     </div>
 
+    <!-- 4. Main Product Container Area -->
     <div class="container">
+        <!-- ===== PRODUCT CARD 1 ===== -->
         <div class="card" id="prod-1">
-            <span class="badge">Bestseller</span>
+            <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
                 <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
             </div>
 
-            <div class="prod-title">T-Shirt Polo Collab OneDay</div>
-            <div class="prod-desc">អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ</div>
+            <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
+            <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ</div>
             <div class="price">$15.00</div>
             
-            <div class="size-label">ជ្រើសរើសទំហំ (Select Size)</div>
+            <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
             <div class="size-grid">
                 <button class="size-btn" onclick="selectSize(this)">S</button>
                 <button class="size-btn active" onclick="selectSize(this)">M</button>
@@ -121,22 +140,23 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add" onclick="addToCart('T-Shirt Polo Collab OneDay', 15.00, 'prod-1')">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
+        <!-- ===== PRODUCT CARD 2 ===== -->
         <div class="card" id="prod-2">
-            <span class="badge">New Collection</span>
+            <span class="badge" data-key="badge_new">New Collection</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
                     <source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4">
                 </video>
             </div>
 
-            <div class="prod-title">Outfit Smart Casual (Full Set)</div>
-            <div class="prod-desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )</div>
+            <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
+            <div class="prod-desc" data-key="p2_desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )</div>
             <div class="price">$20.00</div>
             
-            <div class="size-label">ជ្រើសរើសទំហំ (Select Size)</div>
+            <div class="size-label" data-key="select_size">ជ្រើសរើសទំហំ (SELECT SIZE)</div>
             <div class="size-grid">
                 <button class="size-btn" onclick="selectSize(this)">S</button>
                 <button class="size-btn active" onclick="selectSize(this)">M</button>
@@ -145,34 +165,124 @@
                 <button class="size-btn" onclick="selectSize(this)">XXL</button>
             </div>
             
-            <button class="btn-add" onclick="addToCart('Outfit Smart Casual (Full Set)', 20.00, 'prod-2')">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
+            <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
     </div>
 
+    <!-- 5. Bottom Floating Checkout Bar Section -->
     <div class="cart-checkout-bar">
         <div class="bar-content">
             <div onclick="toggleCartModal()" style="cursor: pointer;">
-                <div class="total-label">សរុប (<span id="items-count">0</span> មុខ)</div>
+                <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <a href="https://t.me/your_telegram_username" id="telegram-link" class="btn-telegram">📲 កុម្មង់ទិញតាម Telegram</a>
+            <a href="https://t.me/your_telegram_username" id="telegram-link" class="btn-telegram">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
         </div>
     </div>
 
+    <!-- 6. Cart Items Modal Drawer Section -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">🛒 ទំនិញក្នុងកន្ត្រករបស់អ្នក</div>
+                <div class="modal-title">🛒 <span data-key="cart_title">ទំនិញក្នុងកន្ត្រករបស់អ្នក</span></div>
                 <button class="btn-close" onclick="toggleCartModal()">✕</button>
             </div>
             <div id="cart-list">
-                <div class="empty-msg">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
+                <div class="empty-msg" data-key="empty_cart">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
             </div>
         </div>
     </div>
 
+    <!-- 7. Interactive JavaScript & Multi-Language Dictionary Section -->
     <script>
+        let currentLang = 'km';
         let cart = {};
+
+        // Multilingual Translation Dictionary
+        const translations = {
+            km: {
+                cart_btn: "កន្ត្រក",
+                cover_title: "BUILD YOUR DREAM STYLE",
+                cat_all: "ទាំងអស់ (All)",
+                cat_tops: "អាវ (Tops)",
+                cat_pants: "ខោ (Pants)",
+                cat_outerwear: "អាវក្រៅ (Outerwear)",
+                badge_bestseller: "Bestseller",
+                badge_new: "New Collection",
+                p1_title: "T-Shirt Polo Collab OneDay",
+                p1_desc: "អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ",
+                p2_title: "Outfit Smart Casual (Full Set)",
+                p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )",
+                select_size: "ជ្រើសរើសទំហំ (SELECT SIZE)",
+                add_to_cart: "ដាក់ចូលកន្ត្រក",
+                total_label: "សរុប",
+                items_unit: "មុខ",
+                btn_order_telegram: "កុម្មង់ទិញតាម Telegram",
+                cart_title: "ទំនិញក្នុងកន្ត្រករបស់អ្នក",
+                empty_cart: "មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ",
+                msg_hello: "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖",
+                msg_total: "តម្លៃសរុប"
+            },
+            en: {
+                cart_btn: "Cart",
+                cover_title: "BUILD YOUR DREAM STYLE",
+                cat_all: "All Products",
+                cat_tops: "Tops",
+                cat_pants: "Pants",
+                cat_outerwear: "Outerwear",
+                badge_bestseller: "Bestseller",
+                badge_new: "New Collection",
+                p1_title: "T-Shirt Polo Collab OneDay",
+                p1_desc: "Collab Edition Polo T-Shirt, simple & stylish design.",
+                p2_title: "Outfit Smart Casual (Full Set)",
+                p2_desc: "Smart Casual Outfit - Modern & Simple Style (Full Set).",
+                select_size: "SELECT SIZE",
+                add_to_cart: "Add to Cart",
+                total_label: "Total",
+                items_unit: "items",
+                btn_order_telegram: "Order via Telegram",
+                cart_title: "Your Shopping Cart",
+                empty_cart: "Your cart is currently empty",
+                msg_hello: "Hello Oneday Clothing! I would like to order:",
+                msg_total: "Total Amount"
+            },
+            zh: {
+                cart_btn: "购物车",
+                cover_title: "打造您的理想风格",
+                cat_all: "全部商品",
+                cat_tops: "上衣",
+                cat_pants: "裤子",
+                cat_outerwear: "外套",
+                badge_bestseller: "热销爆款",
+                badge_new: "新品上市",
+                p1_title: "OneDay 联名款 Polo 衫",
+                p1_desc: "联名款 Polo 衫，简约时尚百搭。",
+                p2_title: "商务休闲套装 (全套)",
+                p2_desc: "商务休闲套装，时尚简约 (全套)。",
+                select_size: "选择尺码",
+                add_to_cart: "加入购物车",
+                total_label: "合计",
+                items_unit: "件",
+                btn_order_telegram: "通过 Telegram 订购",
+                cart_title: "您的购物车",
+                empty_cart: "购物车是空的",
+                msg_hello: "您好 Oneday Clothing！我想订购以下商品：",
+                msg_total: "总金额"
+            }
+        };
+
+        // Switch System Language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+            renderCart();
+        }
 
         function toggleCartModal() {
             document.getElementById('cartModal').classList.toggle('active');
@@ -196,16 +306,16 @@
             element.classList.add('active');
         }
 
-        function addToCart(productName, price, cardId) {
+        function addToCart(titleKey, price, cardId) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
-            let itemKey = `${productName}_${selectedSize}`;
+            let itemKey = `${titleKey}_${selectedSize}`;
 
             if (cart[itemKey]) {
                 cart[itemKey].qty += 1;
             } else {
-                cart[itemKey] = { name: productName, price: price, size: selectedSize, qty: 1 };
+                cart[itemKey] = { titleKey: titleKey, price: price, size: selectedSize, qty: 1 };
             }
 
             renderCart();
@@ -232,11 +342,12 @@
                 let itemTotal = item.price * item.qty;
                 totalItems += item.qty;
                 totalPrice += itemTotal;
+                let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
 
                 itemsHtml += `
                     <div class="cart-item">
                         <div>
-                            <div class="item-info">${item.name}</div>
+                            <div class="item-info">${localizedTitle}</div>
                             <div class="item-sub">Size: ${item.size} | $${item.price.toFixed(2)}</div>
                         </div>
                         <div class="qty-controls">
@@ -249,7 +360,7 @@
             }
 
             if (Object.keys(cart).length === 0) {
-                cartList.innerHTML = '<div class="empty-msg">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>';
+                cartList.innerHTML = `<div class="empty-msg">${translations[currentLang].empty_cart}</div>`;
             } else {
                 cartList.innerHTML = itemsHtml;
             }
@@ -262,16 +373,17 @@
         }
 
         function updateTelegramLink(totalPrice) {
-            let telegramUsername = "your_telegram_username";
-            let message = "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖\n";
+            let telegramUsername = "your_telegram_username"; // កុំភ្លេចដូរទៅជា Username Telegram របស់បង
+            let message = `${translations[currentLang].msg_hello}\n`;
             let index = 1;
 
             for (let key in cart) {
                 let item = cart[key];
-                message += `${index}. ${item.name} (Size: ${item.size}) x${item.qty} = $${(item.price * item.qty).toFixed(2)}\n`;
+                let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
+                message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${(item.price * item.qty).toFixed(2)}\n`;
                 index++;
             }
-            message += `\nតម្លៃសរុប៖ $${totalPrice.toFixed(2)}`;
+            message += `\n${translations[currentLang].msg_total}៖ $${totalPrice.toFixed(2)}`;
 
             let encodedMessage = encodeURIComponent(message);
             document.getElementById('telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
