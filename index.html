@@ -30,10 +30,17 @@
         .sub-title { font-size: 11px; font-weight: 700; color: #00C2FF; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
         .main-title { font-size: 22px; font-weight: 900; text-transform: uppercase; }
 
-        /* Horizontal Category Navigation Bar */
-        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 16px; scrollbar-width: none; }
+        /* Category & Sub-Category Navigation Bar */
+        .menu-wrapper { padding: 0 16px 16px; background: #f8fafc; }
+        .categories { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-bottom: 8px; }
         .cat-btn { background: #ffffff; border: 1px solid #cbd5e1; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; }
         .cat-btn.active { background: #00C2FF; color: #ffffff; border-color: #00C2FF; }
+
+        /* Sub-Categories (Tops, Pants, Outerwear) hidden by default */
+        .sub-categories { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-top: 4px; }
+        .sub-categories.active { display: flex; }
+        .sub-btn { background: #e2e8f0; border: none; padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: #334155; }
+        .sub-btn.active { background: #0f172a; color: #ffffff; }
 
         /* Product Display Container & Card Style */
         .container { max-width: 400px; margin: 0 auto; padding: 0 16px; }
@@ -110,19 +117,34 @@
         </div>
     </div>
 
-    <!-- 3. Category Selectors Bar (Men, Women, Tops, Pants, Outerwear) -->
-    <div class="categories">
-        <button class="cat-btn active" onclick="selectCategory(this, 'all')" data-key="cat_all">ទាំងអស់ (All)</button>
-        <button class="cat-btn" onclick="selectCategory(this, 'men')" data-key="cat_men">បុរស (Men)</button>
-        <button class="cat-btn" onclick="selectCategory(this, 'women')" data-key="cat_women">នារី (Women)</button>
-        <button class="cat-btn" onclick="selectCategory(this, 'tops')" data-key="cat_tops">អាវ (Tops)</button>
-        <button class="cat-btn" onclick="selectCategory(this, 'pants')" data-key="cat_pants">ខោ (Pants)</button>
-        <button class="cat-btn" onclick="selectCategory(this, 'outerwear')" data-key="cat_outerwear">អាវក្រៅ (Outerwear)</button>
+    <!-- 3. Category & Sub-Category Menu Bar -->
+    <div class="menu-wrapper">
+        <div class="categories">
+            <button class="cat-btn" onclick="selectMainCategory('men')" data-key="cat_men">បុរស (Men)</button>
+            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី (Women)</button>
+            <button class="cat-btn active" onclick="selectMainCategory('all')" data-key="cat_all">ទាំងអស់ (All)</button>
+        </div>
+
+        <!-- Sub-options for Men -->
+        <div class="sub-categories" id="sub-men">
+            <button class="sub-btn active" onclick="selectSubCategory('men', 'all', this)" data-key="sub_all">ទាំងអស់</button>
+            <button class="sub-btn" onclick="selectSubCategory('men', 'tops', this)" data-key="cat_tops">អាវ</button>
+            <button class="sub-btn" onclick="selectSubCategory('men', 'pants', this)" data-key="cat_pants">ខោ</button>
+            <button class="sub-btn" onclick="selectSubCategory('men', 'outerwear', this)" data-key="cat_outerwear">អាវក្រៅ</button>
+        </div>
+
+        <!-- Sub-options for Women -->
+        <div class="sub-categories" id="sub-women">
+            <button class="sub-btn active" onclick="selectSubCategory('women', 'all', this)" data-key="sub_all">ទាំងអស់</button>
+            <button class="sub-btn" onclick="selectSubCategory('women', 'tops', this)" data-key="cat_tops">អាវ</button>
+            <button class="sub-btn" onclick="selectSubCategory('women', 'pants', this)" data-key="cat_pants">ខោ</button>
+            <button class="sub-btn" onclick="selectSubCategory('women', 'outerwear', this)" data-key="cat_outerwear">អាវក្រៅ</button>
+        </div>
     </div>
 
     <!-- 4. Main Product Container Area -->
     <div class="container">
-        <!-- ===== PRODUCT CARD 1 (Men & Tops) ===== -->
+        <!-- ===== PRODUCT CARD 1 (Men - Tops) ===== -->
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
@@ -145,8 +167,8 @@
             <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
-        <!-- ===== PRODUCT CARD 2 (Men & Tops) ===== -->
-        <div class="card" id="prod-2" data-gender="men" data-type="tops">
+        <!-- ===== PRODUCT CARD 2 (Men - Outerwear) ===== -->
+        <div class="card" id="prod-2" data-gender="men" data-type="outerwear">
             <span class="badge" data-key="badge_new">New Collection</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
@@ -170,7 +192,7 @@
             <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span> (Add to Cart)</button>
         </div>
 
-        <!-- ===== PRODUCT CARD 3 (Women & Tops) ===== -->
+        <!-- ===== PRODUCT CARD 3 (Women - Tops) ===== -->
         <div class="card" id="prod-3" data-gender="women" data-type="tops">
             <span class="badge" data-key="badge_women">Women Trend</span>
             <div class="img-box">
@@ -223,6 +245,8 @@
     <script>
         let currentLang = 'km';
         let cart = {};
+        let currentGender = 'all';
+        let currentType = 'all';
 
         // Multilingual Translation Dictionary
         const translations = {
@@ -232,9 +256,10 @@
                 cat_all: "ទាំងអស់ (All)",
                 cat_men: "បុរស (Men)",
                 cat_women: "នារី (Women)",
-                cat_tops: "អាវ (Tops)",
-                cat_pants: "ខោ (Pants)",
-                cat_outerwear: "អាវក្រៅ (Outerwear)",
+                cat_tops: "អាវ",
+                cat_pants: "ខោ",
+                cat_outerwear: "អាវក្រៅ",
+                sub_all: "ទាំងអស់",
                 badge_bestseller: "Bestseller",
                 badge_new: "New Collection",
                 badge_women: "Women Trend",
@@ -257,12 +282,13 @@
             en: {
                 cart_btn: "Cart",
                 cover_title: "BUILD YOUR DREAM STYLE",
-                cat_all: "All Products",
+                cat_all: "All",
                 cat_men: "Men",
                 cat_women: "Women",
                 cat_tops: "Tops",
                 cat_pants: "Pants",
                 cat_outerwear: "Outerwear",
+                sub_all: "All",
                 badge_bestseller: "Bestseller",
                 badge_new: "New Collection",
                 badge_women: "Women Trend",
@@ -285,12 +311,13 @@
             zh: {
                 cart_btn: "购物车",
                 cover_title: "打造您的理想风格",
-                cat_all: "全部商品",
+                cat_all: "全部",
                 cat_men: "男装",
                 cat_women: "女装",
                 cat_tops: "上衣",
                 cat_pants: "裤子",
                 cat_outerwear: "外套",
+                sub_all: "全部",
                 badge_bestseller: "热销爆款",
                 badge_new: "新品上市",
                 badge_women: "女装潮流",
@@ -338,30 +365,68 @@
             element.classList.add('active');
         }
 
-        function selectCategory(element, filterType) {
-            let catContainer = element.parentElement;
-            let buttons = catContainer.getElementsByClassName('cat-btn');
+        function selectMainCategory(gender) {
+            currentGender = gender;
+            currentType = 'all';
+
+            // Active button style
+            let catButtons = document.querySelectorAll('.categories .cat-btn');
+            catButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/Hide sub-categories
+            document.getElementById('sub-men').classList.remove('active');
+            document.getElementById('sub-women').classList.remove('active');
+
+            if (gender === 'men') {
+                document.getElementById('sub-men').classList.add('active');
+                resetSubActive('sub-men');
+            } else if (gender === 'women') {
+                document.getElementById('sub-women').classList.add('active');
+                resetSubActive('sub-women');
+            }
+
+            filterProducts();
+        }
+
+        function selectSubCategory(gender, type, element) {
+            currentGender = gender;
+            currentType = type;
+
+            let subContainer = element.parentElement;
+            let buttons = subContainer.getElementsByClassName('sub-btn');
             for (let btn of buttons) {
                 btn.classList.remove('active');
             }
             element.classList.add('active');
 
+            filterProducts();
+        }
+
+        function resetSubActive(subId) {
+            let subContainer = document.getElementById(subId);
+            let buttons = subContainer.getElementsByClassName('sub-btn');
+            for (let btn of buttons) {
+                btn.classList.remove('active');
+            }
+            buttons[0].classList.add('active');
+        }
+
+        function filterProducts() {
             let cards = document.querySelectorAll('.container .card');
             cards.forEach(card => {
-                let gender = card.getAttribute('data-gender');
-                let type = card.getAttribute('data-type');
+                let cardGender = card.getAttribute('data-gender');
+                let cardType = card.getAttribute('data-type');
 
-                if (filterType === 'all') {
+                if (currentGender === 'all') {
                     card.style.display = 'block';
-                } else if (filterType === 'men' || filterType === 'women') {
-                    if (gender === filterType) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                } else if (filterType === 'tops' || filterType === 'pants' || filterType === 'outerwear') {
-                    if (type === filterType) {
-                        card.style.display = 'block';
+                } else if (currentGender === 'men' || currentGender === 'women') {
+                    if (cardGender === currentGender) {
+                        if (currentType === 'all' || cardType === currentType) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     } else {
                         card.style.display = 'none';
                     }
