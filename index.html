@@ -176,7 +176,8 @@
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <a href="https://t.me/your_telegram_username" id="telegram-link" class="btn-telegram">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
+            <!-- Telegram Order Direct Link -->
+            <a href="https://t.me/OneDayClothingAgent" id="telegram-link" class="btn-telegram">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
         </div>
     </div>
 
@@ -372,8 +373,9 @@
             updateTelegramLink(totalPrice);
         }
 
+        // Format Dynamic Order Message for Telegram Direct Redirect
         function updateTelegramLink(totalPrice) {
-            let telegramUsername = "your_telegram_username"; // កុំភ្លេចដូរទៅជា Username Telegram របស់បង
+            let telegramUsername = "OneDayClothingAgent"; // Telegram Username ផ្លូវការរបស់ Oneday Clothing
             let message = `${translations[currentLang].msg_hello}\n`;
             let index = 1;
 
