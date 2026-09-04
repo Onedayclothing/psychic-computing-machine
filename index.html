@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oneday Clothing</title>
     
-    <!-- CSS Style Structure -->
     <style>
         /* General Layout Reset */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -35,11 +34,12 @@
         .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 16px; position: relative; }
         
         .img-box { background: #ffffff; height: 380px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 600; margin-bottom: 12px; overflow: hidden; border: 1px solid #f1f5f9; }
-        .img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; }
         
         .badge { position: absolute; top: 26px; right: 26px; background: #00C2FF; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
 
-        .prod-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .prod-title { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+        .prod-desc { font-size: 12px; color: #64748b; margin-bottom: 8px; line-height: 1.4; }
         .price { font-size: 18px; font-weight: 800; color: #00C2FF; margin-bottom: 12px; }
 
         /* Interactive Size Grid Buttons */
@@ -77,13 +77,11 @@
 </head>
 <body>
 
-    <!-- 1. Top Navigation Bar Section -->
     <nav>
         <div class="logo">Oneday<span>.</span></div>
         <button class="cart-btn" onclick="toggleCartModal()">🛒 កន្ត្រក (<span id="cart-count">0</span>)</button>
     </nav>
 
-    <!-- 2. FB Cover Banner Section (ប្រើវីដេអូដែលបងទើប Upload) -->
     <div class="cover-container">
         <div class="cover-image-box">
             <video autoplay loop muted playsinline>
@@ -96,7 +94,6 @@
         </div>
     </div>
 
-    <!-- 3. Category Selectors Bar -->
     <div class="categories">
         <button class="cat-btn active" onclick="selectCategory(this)">ទាំងអស់ (All)</button>
         <button class="cat-btn" onclick="selectCategory(this)">អាវ (Tops)</button>
@@ -104,18 +101,15 @@
         <button class="cat-btn" onclick="selectCategory(this)">អាវក្រៅ (Outerwear)</button>
     </div>
 
-    <!-- 4. Main Product Container Area -->
     <div class="container">
-        <!-- ===== PRODUCT CARD THUMBNAIL ===== -->
         <div class="card" id="prod-1">
             <span class="badge">Bestseller</span>
-
-            <!-- រូបភាពអាវ T-Shirt ពេញលេញ ១០០% -->
             <div class="img-box">
                 <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
             </div>
 
             <div class="prod-title">T-Shirt Polo Collab OneDay</div>
+            <div class="prod-desc">អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ</div>
             <div class="price">$15.00</div>
             
             <div class="size-label">ជ្រើសរើសទំហំ (Select Size)</div>
@@ -129,21 +123,42 @@
             
             <button class="btn-add" onclick="addToCart('T-Shirt Polo Collab OneDay', 15.00, 'prod-1')">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
         </div>
+
+        <div class="card" id="prod-2">
+            <span class="badge">New Collection</span>
+            <div class="img-box">
+                <video autoplay loop muted playsinline>
+                    <source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="prod-title">Outfit Smart Casual (Full Set)</div>
+            <div class="prod-desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )</div>
+            <div class="price">$20.00</div>
+            
+            <div class="size-label">ជ្រើសរើសទំហំ (Select Size)</div>
+            <div class="size-grid">
+                <button class="size-btn" onclick="selectSize(this)">S</button>
+                <button class="size-btn active" onclick="selectSize(this)">M</button>
+                <button class="size-btn" onclick="selectSize(this)">L</button>
+                <button class="size-btn" onclick="selectSize(this)">XL</button>
+                <button class="size-btn" onclick="selectSize(this)">XXL</button>
+            </div>
+            
+            <button class="btn-add" onclick="addToCart('Outfit Smart Casual (Full Set)', 20.00, 'prod-2')">+ ដាក់ចូលកន្ត្រក (Add to Cart)</button>
+        </div>
     </div>
 
-    <!-- 5. Bottom Floating Checkout Bar Section -->
     <div class="cart-checkout-bar">
         <div class="bar-content">
             <div onclick="toggleCartModal()" style="cursor: pointer;">
                 <div class="total-label">សរុប (<span id="items-count">0</span> មុខ)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <!-- កុំភ្លេចដូរ your_telegram_username ទៅជា Username Telegram បង -->
             <a href="https://t.me/your_telegram_username" id="telegram-link" class="btn-telegram">📲 កុម្មង់ទិញតាម Telegram</a>
         </div>
     </div>
 
-    <!-- 6. Cart Items Modal Drawer Section -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -156,16 +171,13 @@
         </div>
     </div>
 
-    <!-- 7. Interactive JavaScript Logic Section -->
     <script>
         let cart = {};
 
-        // Toggle Drawer Modal View State
         function toggleCartModal() {
             document.getElementById('cartModal').classList.toggle('active');
         }
 
-        // Handle Active Button Size Switch
         function selectSize(element) {
             let sizeGrid = element.parentElement;
             let buttons = sizeGrid.getElementsByClassName('size-btn');
@@ -175,7 +187,6 @@
             element.classList.add('active');
         }
 
-        // Handle Active Category Navigation Switch
         function selectCategory(element) {
             let catContainer = element.parentElement;
             let buttons = catContainer.getElementsByClassName('cat-btn');
@@ -185,7 +196,6 @@
             element.classList.add('active');
         }
 
-        // Push Items To Cart Data Structure
         function addToCart(productName, price, cardId) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
@@ -201,7 +211,6 @@
             renderCart();
         }
 
-        // Modify Item Quantities inside Cart View
         function changeQty(itemKey, delta) {
             if (cart[itemKey]) {
                 cart[itemKey].qty += delta;
@@ -212,7 +221,6 @@
             renderCart();
         }
 
-        // Render Cart State Interface UI
         function renderCart() {
             let cartList = document.getElementById('cart-list');
             let totalItems = 0;
@@ -253,9 +261,8 @@
             updateTelegramLink(totalPrice);
         }
 
-        // Format Dynamic Order Message for Telegram Redirect
         function updateTelegramLink(totalPrice) {
-            let telegramUsername = "your_telegram_username"; // ប្តូរត្រង់នេះជា Username Telegram របស់បង
+            let telegramUsername = "your_telegram_username";
             let message = "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖\n";
             let index = 1;
 
