@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+import time
 
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 STOCK_FILE = "stock.json"
@@ -39,7 +40,7 @@ def send_message(chat_id, text):
 
 def process_messages():
     offset = get_last_offset()
-    url = f"https://api.telegram.org/bot{TOKEN}/getUpdates?offset={offset}&timeout=5"
+    url = f"https://api.telegram.org/bot{TOKEN}/getUpdates?offset={offset}&timeout=2"
     response = requests.get(url).json()
     
     if not response.get("ok"):
@@ -68,7 +69,7 @@ def process_messages():
             )
             send_message(chat_id, msg)
 
-        elif text == "/stock" or text == "/list":
+        elif text in ["/stock", "/list"]:
             stock = load_stock()
             if not stock:
                 send_message(chat_id, "📦 គ្មានទំនិញក្នុងស្តុកទេនាពេលនេះ។")
@@ -110,7 +111,7 @@ def process_messages():
             if len(parts) < 3:
                 send_message(chat_id, "⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/sell [ឈ្មោះ] [ចំនួន]`")
             else:
-                item_name = parts[1].lower()
+5                   item_name = parts[1].lower()
                 try:
                     qty = int(parts[2])
                     stock = load_stock()
@@ -125,4 +126,8 @@ def process_messages():
                     send_message(chat_id, "⚠️ ចំនួនត្រូវតែជាតួលេខ!")
 
 if __name__ == "__main__":
-    process_messages()
+    # រត់ស្តាប់សារបន្តបន្ទាប់គ្នា لمدة ៤៥ វិនាទី ក្នុងពេល Actions ដំណើរការម្ដងៗ
+    start_time = time.time()
+    while time.time() - start_time < 45:
+        process_messages()
+        time.sleep(2)
