@@ -175,7 +175,6 @@
     </div>
 
     <div class="container" id="product-container">
-        <!-- ផលិតផលនឹងត្រូវใส่ Ref ស្វ័យប្រវត្តិតាម JavaScript ខាងក្រោម -->
         
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge ref-badge">Ref: 1</span>
@@ -350,6 +349,7 @@
                 p4_desc: "អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្ាតប្រណិត",
                 select_size: "SIZE",
                 add_to_cart: "ដាក់ចូលកន្ត្រក",
+                out_of_stock_btn: "អស់ស្តុក (Out of Stock)",
                 total_label: "តម្លៃសរុប",
                 subtotal_label: "តម្លៃទំនិញ",
                 delivery_label: "ថ្លៃដឹក (Delivery Fee)",
@@ -382,6 +382,7 @@
                 p4_desc: "Olive green mandarin collar long-sleeve shirt, premium style.",
                 select_size: "SIZE",
                 add_to_cart: "Add to Cart",
+                out_of_stock_btn: "Out of Stock",
                 total_label: "Total Amount",
                 subtotal_label: "Subtotal",
                 delivery_label: "Delivery Fee",
@@ -414,6 +415,7 @@
                 p4_desc: "橄榄绿立领长袖衬衫，高级时尚剪裁。",
                 select_size: "尺码",
                 add_to_cart: "加入购物车",
+                out_of_stock_btn: "已售罄",
                 total_label: "总金额",
                 subtotal_label: "商品小计",
                 delivery_label: "配送费 (Delivery Fee)",
@@ -439,6 +441,7 @@
                     el.innerText = translations[lang][key];
                 }
             });
+            updateUIStockTexts();
             renderCart();
         }
 
@@ -447,12 +450,11 @@
         }
 
         window.onload = function() {
-            autoAssignRefs(); // Auto generate Ref លេខរៀងតាមកាតទំនិញ
+            autoAssignRefs();
             loadStockData();
             filterProducts();
         };
 
-        // មុខងារ Auto រៀបចំដាក់ Ref តាមលំដាប់លំដោយ 1, 2, 3... ស្វ័យប្រវត្តិ
         function autoAssignRefs() {
             let cards = document.querySelectorAll('.container .card');
             cards.forEach((card, index) => {
@@ -481,16 +483,20 @@
             let cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 let ref = card.getAttribute('data-ref');
+                let addBtn = card.querySelector('.btn-add');
+                
                 if (ref && stockData[ref]) {
                     let productStock = stockData[ref];
                     let sizeGrid = card.querySelector('.size-grid');
                     if (!sizeGrid) return;
                     let buttons = sizeGrid.querySelectorAll('.size-btn');
                     let firstAvailable = null;
+                    let totalProductStock = 0;
 
                     buttons.forEach(btn => {
                         let size = btn.getAttribute('data-size');
                         let stockQty = productStock[size] !== undefined ? productStock[size] : 0;
+                        totalProductStock += stockQty;
                         
                         btn.setAttribute('data-stock', stockQty);
                         if (stockQty <= 0) {
@@ -501,10 +507,39 @@
                         }
                     });
 
+                    if (totalProductStock <= 0) {
+                        addBtn.disabled = true;
+                        addBtn.style.background = "#cbd5e1";
+                        addBtn.style.cursor = "not-allowed";
+                        addBtn.innerHTML = translations[currentLang].out_of_stock_btn;
+                    } else {
+                        addBtn.disabled = false;
+                        addBtn.style.background = "var(--primary)";
+                        addBtn.style.cursor = "pointer";
+                        addBtn.innerHTML = `+ <span data-key="add_to_cart">${translations[currentLang].add_to_cart}</span>`;
+                    }
+
                     let activeBtn = sizeGrid.querySelector('.size-btn.active');
                     if (!activeBtn || parseInt(activeBtn.getAttribute('data-stock')) <= 0) {
                         buttons.forEach(b => b.classList.remove('active'));
                         if (firstAvailable) firstAvailable.classList.add('active');
+                    }
+                }
+            });
+        }
+
+        function updateUIStockTexts() {
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                let ref = card.getAttribute('data-ref');
+                let addBtn = card.querySelector('.btn-add');
+                if (ref && stockData[ref]) {
+                    let productStock = stockData[ref];
+                    let totalStock = Object.values(productStock).reduce((a, b) => a + b, 0);
+                    if (totalStock <= 0) {
+                        addBtn.innerHTML = translations[currentLang].out_of_stock_btn;
+                    } else {
+                        addBtn.innerHTML = `+ <span data-key="add_to_cart">${translations[currentLang].add_to_cart}</span>`;
                     }
                 }
             });
