@@ -33,10 +33,19 @@
 
         .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); }
 
-        .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
+        .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; position: relative; }
+        .cover-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
+        .cover-slider::-webkit-scrollbar { display: none; }
+        .cover-slide-item { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
+        
         .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
         .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; }
-        .cover-info { text-align: center; padding: 14px; background: linear-gradient(to bottom, #ffffff, #f8fafc); }
+
+        .cover-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: #ffffff; }
+        .cover-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; transition: all 0.3s ease; }
+        .cover-dot.active { width: 18px; border-radius: 4px; background: var(--accent); }
+
+        .cover-info { text-align: center; padding: 10px 14px 14px; background: linear-gradient(to bottom, #ffffff, #f8fafc); }
         .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
         .main-title { font-size: 18px; font-weight: 900; text-transform: uppercase; color: var(--primary); }
 
@@ -131,8 +140,23 @@
     </nav>
 
     <div class="cover-container">
-        <div class="cover-image-box">
-            <video autoplay loop muted playsinline preload="metadata"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
+        <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
+            <!-- Cover 1 (New First) -->
+            <div class="cover-slide-item">
+                <div class="cover-image-box">
+                    <video autoplay loop muted playsinline preload="metadata"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
+                </div>
+            </div>
+            <!-- Cover 2 (Previous) -->
+            <div class="cover-slide-item">
+                <div class="cover-image-box">
+                    <video autoplay loop muted playsinline preload="metadata"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
+                </div>
+            </div>
+        </div>
+        <div class="cover-dots" id="coverDots">
+            <div class="cover-dot active"></div>
+            <div class="cover-dot"></div>
         </div>
         <div class="cover-info">
             <div class="sub-title">Simple · Modern · Confident</div>
@@ -419,6 +443,22 @@
                 }
             });
             renderCart();
+        }
+
+        function updateCoverDots() {
+            const slider = document.getElementById('coverSlider');
+            const dots = document.getElementById('coverDots').children;
+            const scrollLeft = slider.scrollLeft;
+            const slideWidth = slider.clientWidth;
+            const currentIndex = Math.round(scrollLeft / slideWidth);
+            
+            for (let i = 0; i < dots.length; i++) {
+                if (i === currentIndex) {
+                    dots[i].classList.add('active');
+                } else {
+                    dots[i].classList.remove('active');
+                }
+            }
         }
 
         function openModal(modalId) {
