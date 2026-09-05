@@ -344,36 +344,8 @@
     </div>
 
     <script>
-        // ==========================================
-        // តភ្ជាប់ស្តុកស្វ័យប្រវត្តិពី Google Sheets CSV
-        // ==========================================
         let stockData = {};
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvkD0AmmidUi0GfyOh0wAz0jdASv2Yt8bGIHznpGTQ3fkTnI7wc6w5D58-BanK0Nb3KAsqnM3He_Xn/pub?output=csv";
-
-        async function fetchStockFromGoogleSheet() {
-            try {
-                let response = await fetch(csvUrl);
-                let data = await response.text();
-                let rows = data.split('\n');
-                
-                for (let i = 1; i < rows.length; i++) {
-                    let cols = rows[i].split(',');
-                    if (cols.length >= 4) {
-                        let ref = cols[0].trim().replace(/^["']|["']$/g, '');       // ឧ. 1
-                        let size = cols[2].trim().replace(/^["']|["']$/g, '');      // ឧ. S, M, L
-                        let stock = parseInt(cols[3].trim()) || 0;                 // ចំនួនស្តុក
-                        
-                        if (ref && size) {
-                            let stockKey = `Ref: ${ref}_${size}`;
-                            stockData[stockKey] = stock;
-                        }
-                    }
-                }
-                console.log("Stock loaded successfully:", stockData);
-            } catch (error) {
-                console.error("Error loading stock:", error);
-            }
-        }
 
         let currentLang = 'km';
         let cart = {};
@@ -573,15 +545,35 @@
         }
 
         window.onload = function() {
-            fetchStockFromGoogleSheet();
             filterProducts();
         };
 
-        function addToCart(titleKey, price, cardId, refText) {
+        // Real-time Stock Check ពេលចុចដាក់ចូលកន្ត្រក (អត់ Delay)
+        async function addToCart(titleKey, price, cardId, refText) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
             let stockKey = `${refText}_${selectedSize}`;
+
+            try {
+                let response = await fetch(csvUrl + "&t=" + new Date().getTime());
+                let data = await response.text();
+                let rows = data.split('\n');
+                
+                for (let i = 1; i < rows.length; i++) {
+                    let cols = rows[i].split(',');
+                    if (cols.length >= 4) {
+                        let ref = cols[0].trim().replace(/^["']|["']$/g, '');
+                        let size = cols[2].trim().replace(/^["']|["']$/g, '');
+                        let stock = parseInt(cols[3].trim()) || 0;
+                        if (ref && size) {
+                            stockData[`Ref: ${ref}_${size}`] = stock;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error updating live stock:", error);
+            }
 
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
