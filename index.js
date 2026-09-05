@@ -11,6 +11,14 @@ if (!BOT_TOKEN) {
 const bot = new Telegraf(BOT_TOKEN);
 const STOCK_FILE = path.join(__dirname, 'stock.json');
 
+// បញ្ជីឈ្មោះផលិតផលតាមកូដ (Ref) ដែលត្រូវគ្នាជាមួយ Website
+const productNames = {
+    "182": "T-Shirt Polo Collab OneDay",
+    "183": "Olive Green Mandarin Collar Long-Sleeve Shirt",
+    "prod-2": "Outfit Smart Casual (Full Set)",
+    "prod-3": "Elegant Women Dress"
+};
+
 function loadStock() {
     if (!fs.existsSync(STOCK_FILE)) return {};
     try {
@@ -27,9 +35,9 @@ function saveStock(data) {
 
 bot.start((ctx) => {
     ctx.reply(
-        "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានដំណើរការជោគជ័យហើយ!\n\n" +
+        "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានតភ្ជាប់ជាមួយប្រព័ន្ធរៀបចំរួចរាល់!\n\n" +
         "បញ្ជី Commands:\n" +
-        "👉 `/stock` - មើលបញ្ជីស្តុក\n" +
+        "👉 `/stock` - មើលបញ្ជីស្តុកទាំងអស់\n" +
         "👉 `/add [កូដ] [ខ្នាត] [ចំនួន]` (ឧ: `/add 182 m 5`)\n" +
         "👉 `/sell [កូដ] [ខ្នាត] [ចំនួន]` (ឧ: `/sell 182 m 2`)"
     );
@@ -42,23 +50,16 @@ bot.command(['stock', 'list'], (ctx) => {
     }
 
     let resp = "📦 **បញ្ជីស្តុក Oneday Clothing:**\n\n";
-    resp += "🔹 **ផ្នែក បុរស**\n";
-    resp += "• **អាវ**\n\n";
-
-    const productNames = {
-        "182": "T-Shirt Polo Collab OneDay",
-        "183": "Olive Green Mandarin Collar Long-Sleeve Shirt"
-    };
 
     for (const [code, sizes] of Object.entries(stock)) {
-        let name = productNames[code] || `Product Ref:${code}`;
+        let name = productNames[code] || `Product Ref: ${code}`;
         let s = sizes["S"] ?? 0;
         let m = sizes["M"] ?? 0;
         let l = sizes["L"] ?? 0;
         let xl = sizes["XL"] ?? 0;
         let xxl = sizes["XXL"] ?? 0;
 
-        resp += `${name}\n`;
+        resp += `🔹 **${name}** (Ref: ${code})\n`;
         resp += `SIZE : S:${s} | M:${m} | L:${l} | XL:${xl} | XXL:${xxl}\n\n`;
     }
 
