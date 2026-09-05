@@ -1,7 +1,69 @@
-{
-  "1": { "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0 },
-  "2": { "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0 },
-  "3": { "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0 },
-  "4": { "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0 }
-}
+import json
+import os
+from telegram import Update
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
+from git import Repo
 
+# ដាក់ Token របស់ Bot របស់អ្នកនៅទីនេះ
+TOKEN = "8992365352:AAE2s2nMAwzyXnXvhrjK9_XLfISAUjEdc0Q"
+REPO_PATH = "."
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.strip()
+    
+    # ពិនិត្យមើលថាតើសារចាប់ផ្តើមដោយពាក្យ /add ដែរឬទេ
+    if text.lower().startswith("/add "):
+        try:
+            # ឧទាហរណ៍សារ៖ /add ref1 size S5 M10 ឬ /add ref:1 size S5
+            parts = text.split(" ")
+            # parts[1] គឺ ref1 ឬ ref:1
+            ref_raw = parts[1].replace("ref:", "").replace("ref", "")
+            ref_id = ref_raw.strip()
+
+            json_file_path = os.path.join(REPO_PATH, "stock.json")
+            if not os.path.exists(json_file_path):
+                await update.message.reply_text("រកមិនឃើញឯកសារ stock.json ទេ!")
+                return
+
+            with open(json_file_path, "r", encoding="utf-8") as f:
+                stock_data = json.load(f)
+
+            if ref_id not in stock_data:
+                stock_data[ref_id] = { "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0 }
+
+            # អានបន្តបន្ទាប់ពី index ទី 3 (ឧទាហរណ៍ S5, M10)
+            updated_sizes = []
+            for item in parts[3:]:
+                if "=" in item:
+                    size_key, qty_str = item.split("=") # ករណី S=5
+                else:
+                    # ករណី S5 (អក្សរនៅមុខ លេខនៅក្រោយ)
+                    size_key = "".join([c for c in item if not c.isdigit()]).upper()
+                    qty_str = "".join([c for c in item if c.isdigit()])
+                
+                if size_key and qty_str:
+                    stock_data[ref_id][size_key] = int(qty_str)
+                    updated_sizes.append(f"{size_key}:{qty_str}")
+
+            # រក្សាទុកចូល stock.json វិញ
+            with open(json_file_path, "w", encoding="utf-8") as f:
+                json.dump(stock_data, f, indent=4, ensure_ascii=False)
+
+            # Git Commit & Push ឡើង GitHub ស្វ័យប្រវត្តិ
+            repo = Repo(REPO_PATH)
+            repo.git.add(json_file_path)
+            repo.index.commit(f"Update stock via Telegram Bot: Ref {ref_id} -> {', '.join(updated_sizes)}")
+            repo.remote(name='origin').push()
+
+            await update.message.reply_text(f"✅ កែប្រែស្តុក Ref:{ref_id} สำเร็จ! ({', '.join(updated_sizes)}) និងបាន Push ឡើង GitHub រួចរាល់។")
+
+        except Exception as e:
+            await update.message.reply_text(f"⚠️ ទម្រង់ខុស! សូមសរសេរឧទាហរណ៍៖\n/add ref1 size S5 M10\nError: {e}")
+    else:
+        await update.message.reply_text("សូមផ្ញើសារតាមទម្រង់៖ /add ref1 size S5 M10")
+
+if __name__ == '__main__':
+    app = ApplicationBuilder().token(TOKEN).build()
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
+    print("🤖 Bot កំពុងដំណើរការ...")
+    app.run_polling()
