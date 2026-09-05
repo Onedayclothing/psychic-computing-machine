@@ -34,85 +34,85 @@
         .cart-btn:active { transform: scale(0.96); }
 
         /* Cover Video Banner */
-        .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .cover-image-box { width: 100%; max-height: 250px; background-color: var(--primary); overflow: hidden; position: relative; }
+        .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
+        .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
         .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; }
-        .cover-info { text-align: center; padding: 20px; }
-        .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
-        .main-title { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
+        .cover-info { text-align: center; padding: 14px; }
+        .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+        .main-title { font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
 
-        /* Premium Menu & Option Selectors */
-        .menu-wrapper { padding: 0 16px 16px; max-width: 420px; margin: 0 auto; }
-        .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 12px; }
-        .cat-btn { flex: 1; background: transparent; border: none; padding: 10px 0; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.3s ease; }
+        /* Professional Menu Bar */
+        .menu-wrapper { padding: 0 12px 14px; max-width: 480px; margin: 0 auto; }
+        .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 8px; }
+        .cat-btn { flex: 1; background: transparent; border: none; padding: 8px 0; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.3s ease; }
         .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        .sub-categories { display: none; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
+        .sub-categories { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px; animation: fadeIn 0.3s ease; }
         .sub-categories.active { display: flex; }
-        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
+        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
+        .sub-btn:hover { border-color: var(--accent); color: var(--primary); }
         .sub-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(15,23,42,0.2); }
 
-        /* Product Container & Cards */
-        .container { max-width: 420px; margin: 0 auto; padding: 0 16px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        /* Product Container & Cards - រៀបចំជា ២ ជួរ (2 Columns Grid) */
+        .container { max-width: 480px; margin: 0 auto; padding: 0 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between; }
         
-        /* កែប្រែត្រង់នេះ៖ ប្រើ contain និង background ស ដើម្បីបង្ហាញពេញរូបរាង មិនឱ្យដាច់ក្បាល់ */
-        .img-box { background: #ffffff; height: 380px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 14px; border: 1px solid #f1f5f9; position: relative; }
+        .img-box { background: #ffffff; height: 180px; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #f1f5f9; position: relative; }
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; }
         
-        .badge { position: absolute; top: 14px; right: 14px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: white; font-size: 10px; font-weight: 800; padding: 5px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 10; }
+        .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: white; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 10; }
 
-        .prod-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.3px; }
-        .prod-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
-        .price { font-size: 19px; font-weight: 900; color: var(--accent); margin-bottom: 14px; }
+        .prod-title { font-size: 13px; font-weight: 800; margin-bottom: 2px; letter-spacing: -0.2px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .prod-desc { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .price { font-size: 15px; font-weight: 900; color: var(--accent); margin-bottom: 8px; }
 
-        .size-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .size-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .size-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .size-label { font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 14px; }
-        .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 10px 0; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); transition: all 0.2s; }
+        .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin-bottom: 8px; }
+        .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 6px 0; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); transition: all 0.2s; }
         .size-btn:hover { border-color: var(--accent); }
-        .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(15,23,42,0.15); }
+        .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.3px; }
+        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.2px; }
         .btn-add:active { transform: scale(0.98); opacity: 0.9; }
 
         /* Bottom Floating Checkout Bar */
-        .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 14px 20px; z-index: 100; }
-        .bar-content { max-width: 400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .total-price { font-size: 19px; font-weight: 900; color: var(--primary); }
-        .total-label { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-        .btn-telegram { background: var(--accent); color: white; border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); transition: transform 0.1s; }
+        .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; }
+        .bar-content { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .total-price { font-size: 17px; font-weight: 900; color: var(--primary); }
+        .total-label { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+        .btn-telegram { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); transition: transform 0.1s; cursor: pointer; }
         .btn-telegram:active { transform: scale(0.96); }
 
         /* Slide-up Cart Modal Drawer */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; animation: fadeIn 0.3s ease; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 24px 24px 0 0; padding: 24px; max-height: 75vh; overflow-y: auto; max-width: 420px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; margin-bottom: 16px; }
-        .modal-title { font-size: 17px; font-weight: 900; }
-        .btn-close { background: #f1f5f9; border: none; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-height: 75vh; overflow-y: auto; max-width: 480px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px; }
+        .modal-title { font-size: 16px; font-weight: 900; }
+        .btn-close { background: #f1f5f9; border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .btn-close:hover { background: #e2e8f0; }
 
         /* Cart Items Display List */
-        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 16px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 12px 0; }
-        .item-info { font-size: 13px; font-weight: 800; }
-        .item-sub { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
-        .qty-controls { display: flex; align-items: center; gap: 10px; }
-        .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 28px; height: 28px; border-radius: 8px; font-weight: 900; cursor: pointer; transition: transform 0.1s; }
+        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 14px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 10px 0; }
+        .item-info { font-size: 12px; font-weight: 800; }
+        .item-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 24px; height: 24px; border-radius: 6px; font-weight: 900; cursor: pointer; transition: transform 0.1s; }
         .btn-qty:active { transform: scale(0.9); }
-        .empty-msg { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 13px; font-weight: 600; }
+        .empty-msg { text-align: center; color: var(--text-muted); padding: 25px 0; font-size: 12px; font-weight: 600; }
 
-        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
-        .modal-total-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .modal-total-amount { font-size: 20px; font-weight: 900; color: var(--primary); }
-        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 14px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); }
+        .modal-total-label { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .modal-total-amount { font-size: 18px; font-weight: 900; color: var(--primary); }
+        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 13px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); cursor: pointer; }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -144,21 +144,22 @@
         </div>
     </div>
 
-    <!-- 3. Category & Sub-Category Menu Bar -->
+    <!-- 3. Professional Menu Bar -->
     <div class="menu-wrapper">
         <div class="categories">
-            <button class="cat-btn" onclick="selectMainCategory('men')" data-key="cat_men">បុរស (Men)</button>
-            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី (Women)</button>
-            <button class="cat-btn active" onclick="selectMainCategory('all')" data-key="cat_all">ទាំងអស់ (All)</button>
+            <button class="cat-btn active" onclick="selectMainCategory('men')" data-key="cat_men">បុរស</button>
+            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី</button>
         </div>
 
-        <div class="sub-categories" id="sub-men">
+        <!-- Sub-options for Men -->
+        <div class="sub-categories active" id="sub-men">
             <button class="sub-btn active" onclick="selectSubCategory('men', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'tops', this)" data-key="cat_tops">អាវ</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'pants', this)" data-key="cat_pants">ខោ</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'outerwear', this)" data-key="cat_outerwear">អាវក្រៅ</button>
         </div>
 
+        <!-- Sub-options for Women -->
         <div class="sub-categories" id="sub-women">
             <button class="sub-btn active" onclick="selectSubCategory('women', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('women', 'tops', this)" data-key="cat_tops">អាវ</button>
@@ -167,83 +168,95 @@
         </div>
     </div>
 
-    <!-- 4. Main Product Container Area -->
+    <!-- 4. Main Product Container Area (2 Columns Grid) -->
     <div class="container">
         <!-- ===== PRODUCT CARD 1 (Men - Tops) ===== -->
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
-                <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
+                <img src="IMG_5604.jpeg" alt="T-Shirt Polo Collab OneDay">
             </div>
 
-            <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
-            <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ</div>
-            <div class="price">$15.00</div>
-            
-            <div class="size-header">
-                <div class="size-label" data-key="select_size">SELECT SIZE</div>
-            </div>
-            <div class="size-grid">
-                <button class="size-btn" onclick="selectSize(this)">S</button>
-                <button class="size-btn active" onclick="selectSize(this)">M</button>
-                <button class="size-btn" onclick="selectSize(this)">L</button>
-                <button class="size-btn" onclick="selectSize(this)">XL</button>
-                <button class="size-btn" onclick="selectSize(this)">XXL</button>
+            <div>
+                <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
+                <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab ស្អាតសាមញ្ញ</div>
+                <div class="price">$15.00</div>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            <div>
+                <div class="size-header">
+                    <div class="size-label" data-key="select_size">SIZE</div>
+                </div>
+                <div class="size-grid">
+                    <button class="size-btn" onclick="selectSize(this)">S</button>
+                    <button class="size-btn active" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                </div>
+                
+                <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            </div>
         </div>
 
         <!-- ===== PRODUCT CARD 2 (Men - Outerwear) ===== -->
         <div class="card" id="prod-2" data-gender="men" data-type="outerwear">
-            <span class="badge" data-key="badge_new">New Collection</span>
+            <span class="badge" data-key="badge_new">New</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
                     <source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4">
                 </video>
             </div>
 
-            <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
-            <div class="prod-desc" data-key="p2_desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )</div>
-            <div class="price">$20.00</div>
-            
-            <div class="size-header">
-                <div class="size-label" data-key="select_size">SELECT SIZE</div>
-            </div>
-            <div class="size-grid">
-                <button class="size-btn" onclick="selectSize(this)">S</button>
-                <button class="size-btn active" onclick="selectSize(this)">M</button>
-                <button class="size-btn" onclick="selectSize(this)">L</button>
-                <button class="size-btn" onclick="selectSize(this)">XL</button>
-                <button class="size-btn" onclick="selectSize(this)">XXL</button>
+            <div>
+                <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
+                <div class="prod-desc" data-key="p2_desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ</div>
+                <div class="price">$20.00</div>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            <div>
+                <div class="size-header">
+                    <div class="size-label" data-key="select_size">SIZE</div>
+                </div>
+                <div class="size-grid">
+                    <button class="size-btn" onclick="selectSize(this)">S</button>
+                    <button class="size-btn active" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                </div>
+                
+                <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            </div>
         </div>
 
         <!-- ===== PRODUCT CARD 3 (Women - Tops) ===== -->
         <div class="card" id="prod-3" data-gender="women" data-type="tops">
-            <span class="badge" data-key="badge_women">Women Trend</span>
+            <span class="badge" data-key="badge_women">Trend</span>
             <div class="img-box">
                 <img src="YOUR_IMAGE_NAME.jpeg" alt="Elegant Women Dress">
             </div>
 
-            <div class="prod-title" data-key="p3_title">Elegant Women Dress</div>
-            <div class="prod-desc" data-key="p3_desc">រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង និងការងារ</div>
-            <div class="price">$22.00</div>
-            
-            <div class="size-header">
-                <div class="size-label" data-key="select_size">SELECT SIZE</div>
-            </div>
-            <div class="size-grid">
-                <button class="size-btn" onclick="selectSize(this)">S</button>
-                <button class="size-btn active" onclick="selectSize(this)">M</button>
-                <button class="size-btn" onclick="selectSize(this)">L</button>
-                <button class="size-btn" onclick="selectSize(this)">XL</button>
-                <button class="size-btn" onclick="selectSize(this)">XXL</button>
+            <div>
+                <div class="prod-title" data-key="p3_title">Elegant Women Dress</div>
+                <div class="prod-desc" data-key="p3_desc">រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង</div>
+                <div class="price">$22.00</div>
             </div>
             
-            <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            <div>
+                <div class="size-header">
+                    <div class="size-label" data-key="select_size">SIZE</div>
+                </div>
+                <div class="size-grid">
+                    <button class="size-btn" onclick="selectSize(this)">S</button>
+                    <button class="size-btn active" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                </div>
+                
+                <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            </div>
         </div>
     </div>
 
@@ -254,7 +267,7 @@
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <a href="https://t.me/OneDayClothingAgent" id="telegram-link" class="btn-telegram" target="_blank">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
+            <button onclick="openTelegram()" class="btn-telegram">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></button>
         </div>
     </div>
 
@@ -275,9 +288,9 @@
                     <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
                     <span class="modal-total-amount" id="modal-total-price">$0.00</span>
                 </div>
-                <a href="https://t.me/OneDayClothingAgent" id="modal-telegram-link" class="btn-modal-telegram" target="_blank">
+                <button onclick="openTelegram()" class="btn-modal-telegram">
                     📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span>
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -286,13 +299,12 @@
     <script>
         let currentLang = 'km';
         let cart = {};
-        let currentGender = 'all';
+        let currentGender = 'men';
         let currentType = 'all';
 
         const translations = {
             km: {
                 cover_title: "BUILD YOUR DREAM STYLE",
-                cat_all: "ទាំងអស់",
                 cat_men: "បុរស",
                 cat_women: "នារី",
                 cat_tops: "អាវ",
@@ -300,15 +312,15 @@
                 cat_outerwear: "អាវក្រៅ",
                 sub_all: "ទាំងអស់",
                 badge_bestseller: "Bestseller",
-                badge_new: "New Collection",
-                badge_women: "Women Trend",
+                badge_new: "New",
+                badge_women: "Trend",
                 p1_title: "T-Shirt Polo Collab OneDay",
-                p1_desc: "អាវយឺត Polo រចនាបែប Collab Edition ស្អាតសាមញ្ញ ទាន់សម័យ",
+                p1_desc: "អាវយឺត Polo រចនាបែប Collab ស្អាតសាមញ្ញ",
                 p2_title: "Outfit Smart Casual (Full Set)",
-                p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ សាមញ្ញ ( Full Set )",
+                p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ",
                 p3_title: "Elegant Women Dress",
-                p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង និងការងារ",
-                select_size: "ជ្រើសរើសទំហំ (SIZE)",
+                p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង",
+                select_size: "SIZE",
                 add_to_cart: "ដាក់ចូលកន្ត្រក",
                 total_label: "សរុប",
                 items_unit: "មុខ",
@@ -320,7 +332,6 @@
             },
             en: {
                 cover_title: "BUILD YOUR DREAM STYLE",
-                cat_all: "All",
                 cat_men: "Men",
                 cat_women: "Women",
                 cat_tops: "Tops",
@@ -328,15 +339,15 @@
                 cat_outerwear: "Outerwear",
                 sub_all: "All",
                 badge_bestseller: "Bestseller",
-                badge_new: "New Collection",
-                badge_women: "Women Trend",
+                badge_new: "New",
+                badge_women: "Trend",
                 p1_title: "T-Shirt Polo Collab OneDay",
-                p1_desc: "Collab Edition Polo T-Shirt, simple & stylish design.",
+                p1_desc: "Collab Edition Polo T-Shirt, simple & stylish.",
                 p2_title: "Outfit Smart Casual (Full Set)",
-                p2_desc: "Smart Casual Outfit - Modern & Simple Style (Full Set).",
+                p2_desc: "Smart Casual Outfit - Modern & Simple Style.",
                 p3_title: "Elegant Women Dress",
-                p3_desc: "Elegant women dress, perfect for casual outings and work.",
-                select_size: "SELECT SIZE",
+                p3_desc: "Elegant women dress, perfect for casual outings.",
+                select_size: "SIZE",
                 add_to_cart: "Add to Cart",
                 total_label: "Total",
                 items_unit: "items",
@@ -348,23 +359,22 @@
             },
             zh: {
                 cover_title: "打造您的理想风格",
-                cat_all: "全部",
                 cat_men: "男装",
                 cat_women: "女装",
                 cat_tops: "上衣",
                 cat_pants: "裤子",
                 cat_outerwear: "外套",
                 sub_all: "全部",
-                badge_bestseller: "热销爆款",
-                badge_new: "新品上市",
-                badge_women: "女装潮流",
+                badge_bestseller: "热销",
+                badge_new: "新品",
+                badge_women: "潮流",
                 p1_title: "OneDay 联名款 Polo 衫",
                 p1_desc: "联名款 Polo 衫，简约时尚百搭。",
                 p2_title: "商务休闲套装 (全套)",
-                p2_desc: "商务休闲套装，时尚简约 (全套)。",
+                p2_desc: "商务休闲套装，时尚简约。",
                 p3_title: "优雅女士连衣裙",
-                p3_desc: "时尚女士连衣裙，适合日常出行与工作。",
-                select_size: "选择尺码",
+                p3_desc: "时尚女士连衣裙，适合日常出行。",
+                select_size: "尺码",
                 add_to_cart: "加入购物车",
                 total_label: "合计",
                 items_unit: "件",
@@ -451,21 +461,21 @@
                 let cardGender = card.getAttribute('data-gender');
                 let cardType = card.getAttribute('data-type');
 
-                if (currentGender === 'all') {
-                    card.style.display = 'block';
-                } else if (currentGender === 'men' || currentGender === 'women') {
-                    if (cardGender === currentGender) {
-                        if (currentType === 'all' || cardType === currentType) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
+                if (cardGender === currentGender) {
+                    if (currentType === 'all' || cardType === currentType) {
+                        card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';
                     }
+                } else {
+                    card.style.display = 'none';
                 }
             });
         }
+
+        window.onload = function() {
+            filterProducts();
+        };
 
         function addToCart(titleKey, price, cardId) {
             let card = document.getElementById(cardId);
@@ -514,7 +524,7 @@
                         </div>
                         <div class="qty-controls">
                             <button class="btn-qty" onclick="changeQty('${key}', -1)">-</button>
-                            <span style="font-weight:800; font-size:13px;">${item.qty}</span>
+                            <span style="font-weight:800; font-size:12px;">${item.qty}</span>
                             <button class="btn-qty" onclick="changeQty('${key}', 1)">+</button>
                         </div>
                     </div>
@@ -533,26 +543,27 @@
             document.getElementById('items-count').innerText = totalItems;
             document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
             document.getElementById('modal-total-price').innerText = '$' + totalPrice.toFixed(2);
-
-            updateTelegramLink(totalPrice);
         }
 
-        function updateTelegramLink(totalPrice) {
+        function openTelegram() {
             let telegramUsername = "OneDayClothingAgent";
             let message = `${translations[currentLang].msg_hello}\n`;
             let index = 1;
+            let totalPrice = 0;
 
             for (let key in cart) {
                 let item = cart[key];
+                let itemTotal = item.price * item.qty;
+                totalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
-                message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${(item.price * item.qty).toFixed(2)}\n`;
+                message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${itemTotal.toFixed(2)}\n`;
                 index++;
             }
             message += `\n${translations[currentLang].msg_total}: $${totalPrice.toFixed(2)}`;
 
             let encodedMessage = encodeURIComponent(message);
-            document.getElementById('telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
-            document.getElementById('modal-telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
+            let webUrl = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
+            window.location.href = webUrl;
         }
     </script>
 
