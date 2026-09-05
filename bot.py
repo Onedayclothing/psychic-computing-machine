@@ -1,12 +1,11 @@
 import os
 import json
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+import requests
 
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 STOCK_FILE = "stock.json"
+OFFSET_FILE = "offset.txt"
 
-# អានស្តុកពី JSON
 def load_stock():
     if not os.path.exists(STOCK_FILE):
         return {}
@@ -16,96 +15,114 @@ def load_stock():
         except json.JSONDecodeError:
             return {}
 
-# រក្សាទុកស្តុកចូល JSON
 def save_stock(data):
     with open(STOCK_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    msg = (
-        "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានដំណើរការជោគជ័យហើយ!\n\n"
-        "បញ្ជី Commands ដែលអាចប្រើបាន:\n"
-        "👉 /stock - មើលបញ្ជីទំនិញទាំងអស់\n"
-        "👉 /check [ឈ្មោះ] - ឆែកស្តុកទំនិញជាក់លាក់\n"
-        "👉 /add [ឈ្មោះ] [ចំនួន] - បន្ថែមចំនួនស្តុក\n"
-        "👉 /sell [ឈ្មោះ] [ចំនួន] - កាត់បន្ថយស្តុកពេលលក់ចេញ"
-    )
-    await update.message.reply_text(msg)
+def get_last_offset():
+    if not os.path.exists(OFFSET_FILE):
+        return 0
+    with open(OFFSET_FILE, "r") as f:
+        try:
+            return int(f.read().strip())
+        except ValueError:
+            return 0
 
-async def show_stock(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    stock = load_stock()
-    if not stock:
-        await update.message.reply_text("📦 គ្មានទំនិញក្នុងស្តុកទេនាពេលនេះ។")
-        return
-    
-    response = "📦 **បញ្ជីស្តុក Oneday Clothing:**\n"
-    for item, qty in stock.items():
-        response += f"- {item}: {qty} ដំ/ឈុត\n"
-    await update.message.reply_text(response)
+def save_last_offset(offset):
+    with open(OFFSET_FILE, "w") as f:
+        f.write(str(offset))
 
-async def check_item(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not context.args:
-        await update.message.reply_text("⚠️ សូមបញ្ចូលឈ្មោះទំនិញផង (ឧទាហរណ៍: /check shirt)")
-        return
-    
-    item_name = context.args[0].lower()
-    stock = load_stock()
-    
-    if item_name in stock:
-        await update.message.reply_text(- f"🔍 ទំនិញ **{item_name}** សល់ចំនួន: **{stock[item_name]}**")
-    else:
-        await update.message.reply_text(f"❌ រកមិនឃើញទំនិញ '{item_name}' ក្នុងប្រព័ន្ធទេ។")
+def send_message(chat_id, text):
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    payload = {"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}
+    requests.post(url, json=payload)
 
-async def add_stock(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if len(context.args) < 2:
-        await update.message.reply_text("⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/add [ឈ្មោះ] [ចំនួន]` (ឧ: `/add shirt 10`)")
-        return
+def process_messages():
+    offset = get_last_offset()
+    url = f"https://api.telegram.org/bot{TOKEN}/getUpdates?offset={offset}&timeout=5"
+    response = requests.get(url).json()
     
-    item_name = context.args[0].lower()
-    try:
-        qty = int(context.args[1])
-    except ValueError:
-        await update.message.reply_text("⚠️ ចំនួនទឹកប្រាក់ ឬចំនួនស្តុកត្រូវតែជាតួលេខ!")
+    if not response.get("ok"):
         return
 
-    stock = load_stock()
-    stock[item_name] = stock.get(item_name, 0) + qty
-    save_stock(stock)
-    
-    await update.message.reply_text(f"✅ បានបន្ថែម {qty} ទៅលើ **{item_name}** ជាជោគជ័យ! ស្តុកសរុប: {stock[item_name]}")
+    updates = response.get("result", [])
+    for update in updates:
+        update_id = update["update_id"]
+        save_last_offset(update_id + 1)
 
-async def sell_item(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if len(context.args) < 2:
-        await update.message.reply_text("⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/sell [ឈ្មោះ] [ចំនួន]` (ឧ: `/sell shirt 2`)")
-        return
-    
-    item_name = context.args[0].lower()
-    try:
-        qty = int(context.args[1])
-    except ValueError:
-        await update.message.reply_text("⚠️ ចំនួនត្រូវតែជាតួលេខ!")
-        return
+        if "message" not in update:
+            continue
+            
+        message = update["message"]
+        chat_id = message["chat"]["id"]
+        text = message.get("text", "").strip()
 
-    stock = load_stock()
-    if item_name not in stock or stock[item_name] < qty:
-        current_qty = stock.get(item_name, 0)
-        await update.message.reply_text(f"❌ ស្តុកទំនិញ **{item_name}** មិនគ្រាន់ទេ។ សល់ក្នុងស្តុកត្រឹមតែ: {current_qty}")
-        return
-    
-    stock[item_name] -= qty
-    save_stock(stock)
-    
-    await update.message.reply_text(f"📉 បានកាត់កងលក់ចេញ {qty} ពី **{item_name}**! ស្តុកនៅសល់: {stock[item_name]}")
+        if text == "/start":
+            msg = (
+                "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានដំណើរការជោគជ័យហើយ!\n\n"
+                "បញ្ជី Commands:\n"
+                "👉 /stock - មើលបញ្ជីទំនិញ\n"
+                "👉 /check [ឈ្មោះ] - ឆែកស្តុកទំនិញ\n"
+                "👉 /add [ឈ្មោះ] [ចំនួន] - បន្ថែមស្តុក\n"
+                "👉 /sell [ឈ្មោះ] [ចំនួន] - លក់ចេញ"
+            )
+            send_message(chat_id, msg)
 
-if __name__ == '__main__':
-    application = ApplicationBuilder().token(TOKEN).build()
-    
-    application.add_handler(CommandHandler('start', start))
-    application.add_handler(CommandHandler('stock', show_stock))
-    application.add_handler(CommandHandler('list', show_stock))
-    application.add_handler(CommandHandler('check', check_item))
-    application.add_handler(CommandHandler('add', add_stock))
-    application.add_handler(CommandHandler('sell', sell_item))
-    
-    print("Bot កំពុងរត់...")
-    application.run_polling()
+        elif text == "/stock" or text == "/list":
+            stock = load_stock()
+            if not stock:
+                send_message(chat_id, "📦 គ្មានទំនិញក្នុងស្តុកទេនាពេលនេះ។")
+            else:
+                resp = "📦 **បញ្ជីស្តុក Oneday Clothing:**\n"
+                for item, qty in stock.items():
+                    resp += f"- {item}: {qty}\n"
+                send_message(chat_id, resp)
+
+        elif text.startswith("/check"):
+            parts = text.split()
+            if len(parts) < 2:
+                send_message(chat_id, "⚠️ សូមបញ្ចូលឈ្មោះទំនិញ (ឧ: `/check shirt`)")
+            else:
+                item_name = parts[1].lower()
+                stock = load_stock()
+                if item_name in stock:
+                    send_message(chat_id, f"🔍 ទំនិញ **{item_name}** សល់: **{stock[item_name]}**")
+                else:
+                    send_message(chat_id, f"❌ រកមិនឃើញទំនិញ '{item_name}' ទេ។")
+
+        elif text.startswith("/add"):
+            parts = text.split()
+            if len(parts) < 3:
+                send_message(chat_id, "⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/add [ឈ្មោះ] [ចំនួន]`")
+            else:
+                item_name = parts[1].lower()
+                try:
+                    qty = int(parts[2])
+                    stock = load_stock()
+                    stock[item_name] = stock.get(item_name, 0) + qty
+                    save_stock(stock)
+                    send_message(chat_id, f"✅ បានបន្ថែម {qty} ទៅលើ **{item_name}**! ស្តុកសរុប: {stock[item_name]}")
+                except ValueError:
+                    send_message(chat_id, "⚠️ ចំនួនត្រូវតែជាតួលេខ!")
+
+        elif text.startswith("/sell"):
+            parts = text.split()
+            if len(parts) < 3:
+                send_message(chat_id, "⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/sell [ឈ្មោះ] [ចំនួន]`")
+            else:
+                item_name = parts[1].lower()
+                try:
+                    qty = int(parts[2])
+                    stock = load_stock()
+                    if item_name not in stock or stock[item_name] < qty:
+                        curr = stock.get(item_name, 0)
+                        send_message(chat_id, f"❌ ស្តុក **{item_name}** មិនគ្រាន់ទេ។ សល់ត្រឹមតែ: {curr}")
+                    else:
+                        stock[item_name] -= qty
+                        save_stock(stock)
+                        send_message(chat_id, f"📉 បានលក់ចេញ {qty} ពី **{item_name}**! ស្តុកនៅសល់: {stock[item_name]}")
+                except ValueError:
+                    send_message(chat_id, "⚠️ ចំនួនត្រូវតែជាតួលេខ!")
+
+if __name__ == "__main__":
+    process_messages()
