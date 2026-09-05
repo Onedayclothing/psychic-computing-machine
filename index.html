@@ -141,13 +141,11 @@
 
     <div class="cover-container">
         <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
-            <!-- Cover 1 (New First) -->
             <div class="cover-slide-item">
                 <div class="cover-image-box">
                     <video autoplay loop muted playsinline preload="metadata"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
                 </div>
             </div>
-            <!-- Cover 2 (Previous) -->
             <div class="cover-slide-item">
                 <div class="cover-image-box">
                     <video autoplay loop muted playsinline preload="metadata"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
@@ -346,6 +344,30 @@
     </div>
 
     <script>
+        // ==========================================
+        // ប្រព័ន្ធគ្រប់គ្រងស្តុក (STOCK CONTROL DATABASE)
+        // អ្នកអាចកែប្រែចំនួនស្តុកខាងក្រោមនេះដោយផ្ទាល់
+        // ==========================================
+        let stockData = {
+            "Ref: 1_S": 10,
+            "Ref: 1_M": 15,
+            "Ref: 1_L": 8,
+            "Ref: 1_XL": 0,  // ឧទាហរណ៍៖ ទំហំនេះអស់ស្តុក
+            "Ref: 1_XXL": 5,
+            
+            "Ref: 2_S": 6,
+            "Ref: 2_M": 12,
+            "Ref: 2_L": 4,
+            "Ref: 2_XL": 2,
+            "Ref: 2_XXL": 1,
+            
+            "Ref: 3_S": 5,
+            "Ref: 3_M": 10,
+            "Ref: 3_L": 5,
+            "Ref: 3_XL": 3,
+            "Ref: 3_XXL": 2
+        };
+
         let currentLang = 'km';
         let cart = {};
         let currentGender = 'men';
@@ -547,16 +569,25 @@
             filterProducts();
         };
 
+        // មុខងារដាក់ចូលកន្ត្រក ព្រមទាំងឆែកស្តុកស្វ័យប្រវត្តិ
         function addToCart(titleKey, price, cardId, refText) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
-            let itemKey = `${titleKey}_${selectedSize}`;
+            let stockKey = `${refText}_${selectedSize}`;
 
-            if (cart[itemKey]) {
-                cart[itemKey].qty += 1;
+            let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
+            let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
+
+            if (currentQtyInCart >= currentStock) {
+                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) អស់ស្តុកហើយ ឬលើសចំនួនក្នុងស្តុក (សល់ចំនួន: ${currentStock})។`);
+                return;
+            }
+
+            if (cart[stockKey]) {
+                cart[stockKey].qty += 1;
             } else {
-                cart[itemKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
+                cart[stockKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
             }
 
             renderCart();
@@ -564,7 +595,15 @@
 
         function changeQty(itemKey, delta) {
             if (cart[itemKey]) {
-                cart[itemKey].qty += delta;
+                let newQty = cart[itemKey].qty + delta;
+                let availableStock = stockData[itemKey] !== undefined ? stockData[itemKey] : 0;
+
+                if (delta > 0 && newQty > availableStock) {
+                    alert(`សូមអភ័យទោស! ស្តុកក្នុងហាងមានត្រឹមតែ ${availableStock} ប៉ុណ្ណោះ។`);
+                    return;
+                }
+
+                cart[itemKey].qty = newQty;
                 if (cart[itemKey].qty <= 0) delete cart[itemKey];
             }
             renderCart();
@@ -655,6 +694,14 @@
                 phoneInput.classList.add('error');
                 alert(translations[currentLang].alert_phone_invalid);
                 return;
+            }
+
+            // កាត់ស្តុកចេញពី stockData ស្វ័យប្រវត្តពេលកុម្មង់สำเร็จ
+            for (let key in cart) {
+                if (stockData[key] !== undefined) {
+                    stockData[key] -= cart[key].qty;
+                    if (stockData[key] < 0) stockData[key] = 0;
+                }
             }
 
             let telegramUsername = "OneDayClothingAgent";
