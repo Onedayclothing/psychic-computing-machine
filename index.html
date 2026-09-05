@@ -327,7 +327,7 @@
 
             <div class="modal-footer" id="modal-footer" style="display: none;">
                 <div class="modal-total-row">
-                    <span class="modal-total-label" data-key="total_label">តម្លៃសរុប (รวม)</span>
+                    <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
                     <span class="modal-total-amount" id="modal-total-price">$0.00</span>
                 </div>
                 <button onclick="openTelegram()" class="btn-modal-telegram">
@@ -343,7 +343,7 @@
         let cart = {};
         let currentGender = 'men';
         let currentType = 'all';
-        const deliveryFee = 2.00; // ថ្លៃដឹក định dạng $2
+        const deliveryFee = 2.00;
 
         const translations = {
             km: {
@@ -643,7 +643,6 @@
             let telegramUsername = "OneDayClothingAgent";
             let t = translations[currentLang];
             
-            // សារ Telegram ដែលគ្មាន Emoji ទាំងស្រុងតាមការស្នើសុំ
             let message = `${t.msg_hello}\n\n`;
             
             let index = 1;
