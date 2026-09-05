@@ -141,13 +141,11 @@
 
     <div class="cover-container">
         <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
-            <!-- Cover 1 (New First) -->
             <div class="cover-slide-item">
                 <div class="cover-image-box">
                     <video autoplay loop muted playsinline preload="metadata"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
                 </div>
             </div>
-            <!-- Cover 2 (Previous) -->
             <div class="cover-slide-item">
                 <div class="cover-image-box">
                     <video autoplay loop muted playsinline preload="metadata"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
@@ -346,6 +344,37 @@
     </div>
 
     <script>
+        // ==========================================
+        // តភ្ជាប់ស្តុកស្វ័យប្រវត្តិពី Google Sheets CSV
+        // ==========================================
+        let stockData = {};
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvkD0AmmidUi0GfyOh0wAz0jdASv2Yt8bGIHznpGTQ3fkTnI7wc6w5D58-BanK0Nb3KAsqnM3He_Xn/pub?output=csv";
+
+        async function fetchStockFromGoogleSheet() {
+            try {
+                let response = await fetch(csvUrl);
+                let data = await response.text();
+                let rows = data.split('\n');
+                
+                for (let i = 1; i < rows.length; i++) {
+                    let cols = rows[i].split(',');
+                    if (cols.length >= 4) {
+                        let ref = cols[0].trim().replace(/^["']|["']$/g, '');       // ឧ. 1
+                        let size = cols[2].trim().replace(/^["']|["']$/g, '');      // ឧ. S, M, L
+                        let stock = parseInt(cols[3].trim()) || 0;                 // ចំនួនស្តុក
+                        
+                        if (ref && size) {
+                            let stockKey = `Ref: ${ref}_${size}`;
+                            stockData[stockKey] = stock;
+                        }
+                    }
+                }
+                console.log("Stock loaded successfully:", stockData);
+            } catch (error) {
+                console.error("Error loading stock:", error);
+            }
+        }
+
         let currentLang = 'km';
         let cart = {};
         let currentGender = 'men';
@@ -544,6 +573,7 @@
         }
 
         window.onload = function() {
+            fetchStockFromGoogleSheet();
             filterProducts();
         };
 
@@ -551,12 +581,20 @@
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
-            let itemKey = `${titleKey}_${selectedSize}`;
+            let stockKey = `${refText}_${selectedSize}`;
 
-            if (cart[itemKey]) {
-                cart[itemKey].qty += 1;
+            let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
+            let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
+
+            if (currentStock === 0 || currentQtyInCart >= currentStock) {
+                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) ក្នុង Google Sheet អស់ស្តុកហើយ (ចំនួនស្តុក: ${currentStock})។`);
+                return;
+            }
+
+            if (cart[stockKey]) {
+                cart[stockKey].qty += 1;
             } else {
-                cart[itemKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
+                cart[stockKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
             }
 
             renderCart();
@@ -564,7 +602,15 @@
 
         function changeQty(itemKey, delta) {
             if (cart[itemKey]) {
-                cart[itemKey].qty += delta;
+                let newQty = cart[itemKey].qty + delta;
+                let availableStock = stockData[itemKey] !== undefined ? stockData[itemKey] : 0;
+
+                if (delta > 0 && newQty > availableStock) {
+                    alert(`សូមអភ័យទោស! ស្តុកក្នុង Google Sheet មានត្រឹមតែ ${availableStock} ប៉ុណ្ណោះ។`);
+                    return;
+                }
+
+                cart[itemKey].qty = newQty;
                 if (cart[itemKey].qty <= 0) delete cart[itemKey];
             }
             renderCart();
