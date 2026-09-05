@@ -81,7 +81,7 @@
         .modal-title { font-size: 16px; font-weight: 900; }
         .btn-close { background: #f1f5f9; border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; }
 
-        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 220px; }
+        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 260px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 8px 0; }
         .item-info { font-size: 12px; font-weight: 800; }
         .item-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; }
@@ -92,17 +92,10 @@
         .summary-box { border-top: 1px solid var(--border-color); padding-top: 8px; padding-bottom: 4px; display: flex; flex-direction: column; gap: 4px; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
-        .checkout-form { border-top: 1px solid var(--border-color); padding-top: 10px; display: none; flex-direction: column; gap: 8px; margin-top: 6px; }
-        .checkout-form.active { display: flex; }
-        .form-group { display: flex; flex-direction: column; gap: 3px; }
-        .form-label { font-size: 10px; font-weight: 800; color: var(--primary); }
-        .form-input { width: 100%; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 11px; outline: none; background: #f8fafc; }
-
         .modal-footer { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
         .modal-total-label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
         .modal-total-amount { font-size: 17px; font-weight: 900; color: var(--primary); }
-        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 11px; border-radius: 10px; font-weight: 800; font-size: 12px; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -275,17 +268,30 @@
                 <div class="summary-row"><span data-key="delivery_label">ថ្លៃដឹក (Delivery Fee)</span><span>$2.00</span></div>
             </div>
 
-            <div class="checkout-form" id="checkout-form-section">
-                <div class="form-group"><label class="form-label" data-key="label_name">ឈ្មោះរបស់អ្នក (Name)</label><input type="text" id="custName" class="form-input" placeholder="បំពេញឈ្មោះ..."></div>
-                <div class="form-group"><label class="form-label" data-key="label_phone">លេខទូរស័ព្ទ (Phone Number)</label><input type="tel" id="custPhone" class="form-input" placeholder="បំពេញលេខទូរស័ព្ទ..."></div>
-                <div class="form-group"><label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label><input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង..."></div>
-            </div>
-
             <div class="modal-footer" id="modal-footer" style="display: none;">
                 <div class="modal-total-row">
                     <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
                     <span class="modal-total-amount" id="modal-total-price">$0.00</span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal / Form Container -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📝 <span data-key="checkout_title">ព័ត៌មានសម្រាប់ការកុម្មង់</span></div>
+                <button class="btn-close" onclick="toggleCheckoutModal()">✕</button>
+            </div>
+            
+            <div class="checkout-form active" style="display: flex;">
+                <div class="form-group"><label class="form-label" data-key="label_name">ឈ្មោះរបស់អ្នក (Name)</label><input type="text" id="custName" class="form-input" placeholder="បំពេញឈ្មោះ..."></div>
+                <div class="form-group"><label class="form-label" data-key="label_phone">លេខទូរស័ព្ទ (Phone Number)</label><input type="tel" id="custPhone" class="form-input" placeholder="បំពេញលេខទូរស័ព្ទ..."></div>
+                <div class="form-group"><label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label><input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង..."></div>
+            </div>
+
+            <div class="modal-footer" style="display: flex; margin-top: 15px;">
                 <button onclick="openTelegram()" class="btn-modal-telegram"><span data-key="btn_order_now">Order Now</span></button>
             </div>
         </div>
@@ -307,6 +313,7 @@
                 p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្អាតប្រណិត",
                 select_size: "SIZE", add_to_cart: "ដាក់ចូលកន្ត្រក", total_label: "តម្លៃសរុប", subtotal_label: "តម្លៃទំនិញ", delivery_label: "ថ្លៃដឹក (Delivery Fee)",
                 items_unit: "មុខ", btn_order_now: "Order Now", btn_view_cart: "🛒 មើលកន្ត្រក", cart_title: "ទំនិញក្នុងកន្ត្រករបស់អ្នក", empty_cart: "មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ",
+                checkout_title: "ព័ត៌មានសម្រាប់ការកុម្មង់",
                 label_name: "ឈ្មោះរបស់អ្នក (Name)", label_phone: "លេខទូរស័ព្ទ (Phone Number)", label_address: "ទីតាំងទទួលទំនិញ (Delivery Location)",
                 msg_hello: "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖", msg_subtotal: "តម្លៃទំនិញ", msg_delivery: "ថ្លៃដឹកជញ្ជូន", msg_name: "ឈ្មោះ", msg_phone: "លេខទូរស័ព្ទ", msg_address: "ទីតាំង", msg_total: "តម្លៃសរុបទាំងអស់",
                 alert_fill: "សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងឱ្យបានត្រឹមត្រូវ!"
@@ -319,6 +326,7 @@
                 p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "Olive green mandarin collar long-sleeve shirt, premium style.",
                 select_size: "SIZE", add_to_cart: "Add to Cart", total_label: "Total Amount", subtotal_label: "Subtotal", delivery_label: "Delivery Fee",
                 items_unit: "items", btn_order_now: "Order Now", btn_view_cart: "🛒 View Cart", cart_title: "Your Shopping Cart", empty_cart: "Your cart is currently empty",
+                checkout_title: "Checkout Information",
                 label_name: "Your Name", label_phone: "Phone Number", label_address: "Delivery Location",
                 msg_hello: "Hello Oneday Clothing! I would like to order:", msg_subtotal: "Subtotal", msg_delivery: "Delivery Fee", msg_name: "Name", msg_phone: "Phone", msg_address: "Location", msg_total: "Grand Total",
                 alert_fill: "Please fill in your name, phone number, and location!"
@@ -331,6 +339,7 @@
                 p4_title: "橄榄绿立领长袖衬衫", p4_desc: "橄榄绿立领长袖衬衫，高级时尚剪裁。",
                 select_size: "尺码", add_to_cart: "加入购物车", total_label: "总金额", subtotal_label: "商品小计", delivery_label: "配送费 (Delivery Fee)",
                 items_unit: "件", btn_order_now: "Order Now", btn_view_cart: "🛒 查看购物车", cart_title: "您的购物车", empty_cart: "购物车是空的",
+                checkout_title: "结账信息",
                 label_name: "您的姓名", label_phone: "联系电话", label_address: "收货地址",
                 msg_hello: "您好 Oneday Clothing！我想订购以下商品：", msg_subtotal: "商品小计", msg_delivery: "配送费", msg_name: "姓名", msg_phone: "电话", msg_address: "地址", msg_total: "总计",
                 alert_fill: "请填写您的姓名、电话和收货地址！"
@@ -350,10 +359,11 @@
         }
 
         function toggleCartModal() { 
-            let modal = document.getElementById('cartModal');
-            modal.classList.toggle('active');
-            // បិទฟોર્មបំពេញពេលបើកមើលកន្ត្រកធម្មតា
-            document.getElementById('checkout-form-section').classList.remove('active');
+            document.getElementById('cartModal').classList.toggle('active');
+        }
+
+        function toggleCheckoutModal() {
+            document.getElementById('checkoutModal').classList.toggle('active');
         }
 
         function prepareOrder() {
@@ -361,10 +371,7 @@
                 alert(translations[currentLang].empty_cart);
                 return;
             }
-            let modal = document.getElementById('cartModal');
-            modal.classList.add('active');
-            // បើកបង្ហាញฟોર્មបំពេញពេលចុច Order Now
-            document.getElementById('checkout-form-section').classList.add('active');
+            toggleCheckoutModal();
         }
 
         function selectSize(element) {
@@ -493,7 +500,6 @@
                 cartList.innerHTML = `<div class="empty-msg">${translations[currentLang].empty_cart}</div>`;
                 modalFooter.style.display = 'none';
                 summaryBox.style.display = 'none';
-                document.getElementById('checkout-form-section').classList.remove('active');
             } else {
                 cartList.innerHTML = itemsHtml;
                 modalFooter.style.display = 'flex';
