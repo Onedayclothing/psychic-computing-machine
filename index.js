@@ -1,7 +1,7 @@
 const { Telegraf } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
-const http = require('http'); // បន្ថែមសម្រាប់បើក Port ឱ្យ Render Web Service
+const http = require('http');
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 if (!BOT_TOKEN) {
@@ -12,8 +12,8 @@ if (!BOT_TOKEN) {
 const bot = new Telegraf(BOT_TOKEN);
 const STOCK_FILE = path.join(__dirname, 'stock.json');
 
-// បញ្ជីឈ្មោះផលិតផលតាមកូដ (Ref) ដែលត្រូវគ្នាជាមួយ Website
-const productNames = {
+// បញ្ជីឈ្មោះផលិតផលទាំងអស់នៅលើ Website ស្របតាម Reference Code
+const allProducts = {
     "182": "T-Shirt Polo Collab OneDay",
     "183": "Olive Green Mandarin Collar Long-Sleeve Shirt",
     "prod-2": "Outfit Smart Casual (Full Set)",
@@ -38,27 +38,24 @@ bot.start((ctx) => {
     ctx.reply(
         "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានតភ្ជាប់ជាមួយប្រព័ន្ធរៀបចំរួចរាល់!\n\n" +
         "បញ្ជី Commands:\n" +
-        "👉 `/stock` - មើលបញ្ជីស្តុកទាំងអស់\n" +
+        "👉 `/stock` - មើលបញ្ជីស្តុកផលិតផលទាំងអស់\n" +
         "👉 `/add [កូដ] [ខ្នាត] [ចំនួន]` (ឧ: `/add 182 m 5`)\n" +
         "👉 `/sell [កូដ] [ខ្នាត] [ចំនួន]` (ឧ: `/sell 182 m 2`)"
     );
 });
 
+// Command /stock នឹងបង្ហាញគ្រប់ផលិតផលទាំងអស់នៅលើ Website តែម្ដង
 bot.command(['stock', 'list'], (ctx) => {
     const stock = loadStock();
-    if (Object.keys(stock).length === 0) {
-        return ctx.reply("📦 គ្មានទំនិញក្នុងស្តុកទេ។");
-    }
+    let resp = "📦 **បញ្ជីស្តុកផលិតផលទាំងអស់ (Oneday Clothing):**\n\n";
 
-    let resp = "📦 **បញ្ជីស្តុក Oneday Clothing:**\n\n";
-
-    for (const [code, sizes] of Object.entries(stock)) {
-        let name = productNames[code] || `Product Ref: ${code}`;
-        let s = sizes["S"] ?? 0;
-        let m = sizes["M"] ?? 0;
-        let l = sizes["L"] ?? 0;
-        let xl = sizes["XL"] ?? 0;
-        let xxl = sizes["XXL"] ?? 0;
+    for (const [code, name] of Object.entries(allProducts)) {
+        let productStock = stock[code] || {};
+        let s = productStock["S"] ?? 0;
+        let m = productStock["M"] ?? 0;
+        let l = productStock["L"] ?? 0;
+        let xl = productStock["XL"] ?? 0;
+        let xxl = productStock["XXL"] ?? 0;
 
         resp += `🔹 **${name}** (Ref: ${code})\n`;
         resp += `SIZE : S:${s} | M:${m} | L:${l} | XL:${xl} | XXL:${xxl}\n\n`;
@@ -78,6 +75,9 @@ bot.command('add', (ctx) => {
     const qty = parseInt(args[2]);
 
     if (isNaN(qty)) return ctx.reply("⚠️ ចំនួនត្រូវតែជាតួលេខ!");
+    if (!allProducts[itemCode]) {
+        return ctx.reply(`⚠️ មិនមានកូដទំនិញ '${itemCode}' ນີ້នៅលើ Website ទេ!`);
+    }
 
     const stock = loadStock();
     if (!stock[itemCode]) {
@@ -88,7 +88,7 @@ bot.command('add', (ctx) => {
     stock[itemCode][size] += qty;
     saveStock(stock);
 
-    ctx.reply(`✅ បានបន្ថែម ${qty} ទៅកូដ \`${itemCode}\` (ខ្នាត ${size})! ស្តុកសរុប: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
+    ctx.reply(`✅ បានបន្ថែម ${qty} ទៅកូដ \`${itemCode}\` (${allProducts[itemCode]}) ខ្នាត ${size}!\nស្តុកសរុប: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
 });
 
 bot.command('sell', (ctx) => {
@@ -102,6 +102,9 @@ bot.command('sell', (ctx) => {
     const qty = parseInt(args[2]);
 
     if (isNaN(qty)) return ctx.reply("⚠️ ចំនួនត្រូវតែជាតួលេខ!");
+    if (!allProducts[itemCode]) {
+        return ctx.reply(`⚠️ មិនមានកូដទំនិញ '${itemCode}' នេះនៅលើ Website ទេ!`);
+    }
 
     const stock = loadStock();
     if (!stock[itemCode] || stock[itemCode][size] < qty) {
@@ -112,14 +115,12 @@ bot.command('sell', (ctx) => {
     stock[itemCode][size] -= qty;
     saveStock(stock);
 
-    ctx.reply(`📉 បានលក់ចេញ ${qty} ពីកូដ \`${itemCode}\` (ខ្នាត ${size})! នៅសល់: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
+    ctx.reply(`📉 បានលក់ចេញ ${qty} ពីកូដ \`${itemCode}\` (${allProducts[itemCode]}) ខ្នាត ${size}!\nនៅសល់: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
 });
 
-// ចាប់ផ្តើម Telegram Bot
 bot.launch();
 console.log('🤖 Telegram Bot is running...');
 
-// បង្កើត HTTP Server តូចមួយដើម្បីឱ្យ Render Web Service ស្គាល់ Port និងអត់ឡើង Error "Exited with status 1"
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
