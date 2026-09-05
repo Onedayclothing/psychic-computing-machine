@@ -1,6 +1,7 @@
 const { Telegraf } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
+const http = require('http'); // បន្ថែមសម្រាប់បើក Port ឱ្យ Render Web Service
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 if (!BOT_TOKEN) {
@@ -114,8 +115,18 @@ bot.command('sell', (ctx) => {
     ctx.reply(`📉 បានលក់ចេញ ${qty} ពីកូដ \`${itemCode}\` (ខ្នាត ${size})! នៅសល់: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
 });
 
+// ចាប់ផ្តើម Telegram Bot
 bot.launch();
 console.log('🤖 Telegram Bot is running...');
+
+// បង្កើត HTTP Server តូចមួយដើម្បីឱ្យ Render Web Service ស្គាល់ Port និងអត់ឡើង Error "Exited with status 1"
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Oneday Clothing Bot is running!\n');
+}).listen(PORT, () => {
+    console.log(`🌐 Server is listening on port ${PORT}`);
+});
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
