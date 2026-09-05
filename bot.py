@@ -111,7 +111,7 @@ def process_messages():
             if len(parts) < 3:
                 send_message(chat_id, "⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/sell [ឈ្មោះ] [ចំនួន]`")
             else:
-5                   item_name = parts[1].lower()
+                item_name = parts[1].lower()
                 try:
                     qty = int(parts[2])
                     stock = load_stock()
@@ -126,7 +126,6 @@ def process_messages():
                     send_message(chat_id, "⚠️ ចំនួនត្រូវតែជាតួលេខ!")
 
 if __name__ == "__main__":
-    # រត់ស្តាប់សារបន្តបន្ទាប់គ្នា لمدة ៤៥ វិនាទី ក្នុងពេល Actions ដំណើរការម្ដងៗ
     start_time = time.time()
     while time.time() - start_time < 45:
         process_messages()
