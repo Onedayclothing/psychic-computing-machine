@@ -12,12 +12,12 @@ if (!BOT_TOKEN) {
 const bot = new Telegraf(BOT_TOKEN);
 const STOCK_FILE = path.join(__dirname, 'stock.json');
 
-// បញ្ជីឈ្មោះផលិតផលទាំងអស់នៅលើ Website ស្របតាម Reference Code
+// 📌 ត្រូវដាក់លេខ Ref (1, 2, 3, 4...) ឱ្យត្រូវគ្នាបេះបិទជាមួយ index.html តាមលំដាប់ card
 const allProducts = {
-    "182": "T-Shirt Polo Collab OneDay",
-    "183": "Olive Green Mandarin Collar Long-Sleeve Shirt",
-    "prod-2": "Outfit Smart Casual (Full Set)",
-    "prod-3": "Elegant Women Dress"
+    "1": "T-Shirt Polo Collab OneDay",
+    "2": "Olive Green Mandarin Collar Long-Sleeve Shirt",
+    "3": "Outfit Smart Casual (Full Set)",
+    "4": "Elegant Women Dress"
 };
 
 function loadStock() {
@@ -36,15 +36,14 @@ function saveStock(data) {
 
 bot.start((ctx) => {
     ctx.reply(
-        "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានតភ្ជាប់ជាមួយប្រព័ន្ធរៀបចំរួចរាល់!\n\n" +
+        "សួស្តី! Bot គ្រប់គ្រងស្តុក Oneday Clothing បានតភ្ជាប់រួចរាល់!\n\n" +
         "បញ្ជី Commands:\n" +
         "👉 `/stock` - មើលបញ្ជីស្តុកផលិតផលទាំងអស់\n" +
-        "👉 `/add [កូដ] [ខ្នាត] [ចំនួន]` (ឧ: `/add 182 m 5`)\n" +
-        "👉 `/sell [កូដ] [ខ្នាត] [ចំនួន]` (ឧ: `/sell 182 m 2`)"
+        "👉 `/add [Ref] [ខ្នាត] [ចំនួន]` (ឧ: `/add 1 m 5`)\n" +
+        "👉 `/sell [Ref] [ខ្នាត] [ចំនួន]` (ឧ: `/sell 1 m 2`)"
     );
 });
 
-// Command /stock នឹងបង្ហាញគ្រប់ផលិតផលទាំងអស់នៅលើ Website តែម្ដង
 bot.command(['stock', 'list'], (ctx) => {
     const stock = loadStock();
     let resp = "📦 **បញ្ជីស្តុកផលិតផលទាំងអស់ (Oneday Clothing):**\n\n";
@@ -67,7 +66,7 @@ bot.command(['stock', 'list'], (ctx) => {
 bot.command('add', (ctx) => {
     const args = ctx.message.text.split(' ').slice(1);
     if (args.length < 3) {
-        return ctx.reply("⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/add [កូដ] [ខ្នាត] [ចំនួន]`", { parse_mode: 'Markdown' });
+        return ctx.reply("⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/add [Ref] [ខ្នាត] [ចំនួន]`", { parse_mode: 'Markdown' });
     }
 
     const itemCode = args[0];
@@ -76,7 +75,7 @@ bot.command('add', (ctx) => {
 
     if (isNaN(qty)) return ctx.reply("⚠️ ចំនួនត្រូវតែជាតួលេខ!");
     if (!allProducts[itemCode]) {
-        return ctx.reply(`⚠️ មិនមានកូដទំនិញ '${itemCode}' ນີ້នៅលើ Website ទេ!`);
+        return ctx.reply(`⚠️ មិនមានលេខ Ref '${itemCode}' នេះនៅលើ Website ទេ!`);
     }
 
     const stock = loadStock();
@@ -88,13 +87,13 @@ bot.command('add', (ctx) => {
     stock[itemCode][size] += qty;
     saveStock(stock);
 
-    ctx.reply(`✅ បានបន្ថែម ${qty} ទៅកូដ \`${itemCode}\` (${allProducts[itemCode]}) ខ្នាត ${size}!\nស្តុកសរុប: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
+    ctx.reply(`✅ បានបន្ថែម ${qty} ទៅ Ref: \`${itemCode}\` (${allProducts[itemCode]}) ខ្នាត ${size}!\nស្តុកសរុប: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
 });
 
 bot.command('sell', (ctx) => {
     const args = ctx.message.text.split(' ').slice(1);
     if (args.length < 3) {
-        return ctx.reply("⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/sell [កូដ] [ខ្នាត] [ចំនួន]`", { parse_mode: 'Markdown' });
+        return ctx.reply("⚠️ ទម្រង់ខុស! ប្រើប្រាស់: `/sell [Ref] [ខ្នាត] [ចំនួន]`", { parse_mode: 'Markdown' });
     }
 
     const itemCode = args[0];
@@ -103,19 +102,19 @@ bot.command('sell', (ctx) => {
 
     if (isNaN(qty)) return ctx.reply("⚠️ ចំនួនត្រូវតែជាតួលេខ!");
     if (!allProducts[itemCode]) {
-        return ctx.reply(`⚠️ មិនមានកូដទំនិញ '${itemCode}' នេះនៅលើ Website ទេ!`);
+        return ctx.reply(`⚠️ មិនមានលេខ Ref '${itemCode}' នេះនៅលើ Website ទេ!`);
     }
 
     const stock = loadStock();
     if (!stock[itemCode] || stock[itemCode][size] < qty) {
         const currentQty = stock[itemCode] ? stock[itemCode][size] || 0 : 0;
-        return ctx.reply(`❌ ស្តុកកូដ \`${itemCode}\` ខ្នាត ${size} មិនគ្រាន់ទេ។ សល់ត្រឹមតែ: ${currentQty}`, { parse_mode: 'Markdown' });
+        return ctx.reply(`❌ ស្តុក Ref: \`${itemCode}\` ខ្នាត ${size} មិនគ្រាន់ទេ។ សល់ត្រឹមតែ: ${currentQty}`, { parse_mode: 'Markdown' });
     }
 
     stock[itemCode][size] -= qty;
     saveStock(stock);
 
-    ctx.reply(`📉 បានលក់ចេញ ${qty} ពីកូដ \`${itemCode}\` (${allProducts[itemCode]}) ខ្នាត ${size}!\nនៅសល់: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
+    ctx.reply(`📉 បានលក់ចេញ ${qty} ពី Ref: \`${itemCode}\` (${allProducts[itemCode]}) ខ្នាត ${size}!\nនៅសល់: ${stock[itemCode][size]}`, { parse_mode: 'Markdown' });
 });
 
 bot.launch();
