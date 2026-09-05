@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oneday Clothing | Premium Collection</title>
     
-    <!-- CSS Style Structure -->
     <style>
         :root {
             --primary: #0f172a;
@@ -71,8 +70,11 @@
         
         .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin-bottom: 8px; }
         .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 6px 0; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); transition: all 0.2s; }
-        .size-btn:hover { border-color: var(--accent); }
+        .size-btn:hover:not(.out-of-stock) { border-color: var(--accent); }
         .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        
+        /* Out of Stock Style for Size Buttons */
+        .size-btn.out-of-stock { background: #e2e8f0; color: #94a3b8; text-decoration: line-through; cursor: not-allowed; border-color: #cbd5e1; opacity: 0.6; }
 
         .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.2px; }
         .btn-add:active { transform: scale(0.98); opacity: 0.9; }
@@ -130,7 +132,6 @@
 </head>
 <body>
 
-    <!-- 1. Top Navigation Bar Section -->
     <nav>
         <div class="logo">Oneday<span>.</span></div>
         <div class="nav-right">
@@ -143,7 +144,6 @@
         </div>
     </nav>
 
-    <!-- 2. FB Cover Banner Section -->
     <div class="cover-container">
         <div class="cover-image-box">
             <video autoplay loop muted playsinline>
@@ -156,14 +156,12 @@
         </div>
     </div>
 
-    <!-- 3. Professional Menu Bar -->
     <div class="menu-wrapper">
         <div class="categories">
             <button class="cat-btn active" onclick="selectMainCategory('men')" data-key="cat_men">បុរស</button>
             <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី</button>
         </div>
 
-        <!-- Sub-options for Men -->
         <div class="sub-categories active" id="sub-men">
             <button class="sub-btn active" onclick="selectSubCategory('men', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'tops', this)" data-key="cat_tops">អាវ</button>
@@ -171,7 +169,6 @@
             <button class="sub-btn" onclick="selectSubCategory('men', 'outerwear', this)" data-key="cat_outerwear">អាវក្រៅ</button>
         </div>
 
-        <!-- Sub-options for Women -->
         <div class="sub-categories" id="sub-women">
             <button class="sub-btn active" onclick="selectSubCategory('women', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('women', 'tops', this)" data-key="cat_tops">អាវ</button>
@@ -180,11 +177,9 @@
         </div>
     </div>
 
-    <!-- 4. Main Product Container Area (2 Columns Grid with 9:16 Ratio) -->
     <div class="container">
-        <!-- ===== PRODUCT CARD 1 (Men - Tops) ===== -->
-        <div class="card" id="prod-1" data-gender="men" data-type="tops">
-            <span class="badge" data-key="badge_bestseller">Bestseller</span>
+        <div class="card" id="prod-1" data-gender="men" data-type="tops" data-ref="182">
+            <span class="badge" data-key="badge_bestseller">Ref:182</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
                     <source src="Man_walking_in_fashion_studio_202608272139.mp4" type="video/mp4">
@@ -193,7 +188,7 @@
 
             <div>
                 <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
-                <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab ស្អាតសាមញ្ញ</div>
+                <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab ស្ាតសាមញ្ញ</div>
                 <div class="price">$15.00</div>
             </div>
             
@@ -201,21 +196,20 @@
                 <div class="size-header">
                     <div class="size-label" data-key="select_size">SIZE</div>
                 </div>
-                <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                <div class="size-grid" data-product="prod-1">
+                    <button class="size-btn" data-size="S" onclick="selectSize(this)">S</button>
+                    <button class="size-btn" data-size="M" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" data-size="L" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" data-size="XL" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" data-size="XXL" onclick="selectSize(this)">XXL</button>
                 </div>
                 
                 <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
-        <!-- ===== PRODUCT CARD 2 (Men - Tops) - Olive Green Mandarin Collar Long-Sleeve Shirt ($6) ===== -->
-        <div class="card" id="prod-4" data-gender="men" data-type="tops">
-            <span class="badge" data-key="badge_new">New</span>
+        <div class="card" id="prod-4" data-gender="men" data-type="tops" data-ref="183">
+            <span class="badge" data-key="badge_new">Ref:183</span>
             <div class="img-box">
                 <video autoplay loop muted playsinline>
                     <source src="Model_walking_in_fashion_studio_202608272237.mp4" type="video/mp4">
@@ -232,19 +226,18 @@
                 <div class="size-header">
                     <div class="size-label" data-key="select_size">SIZE</div>
                 </div>
-                <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                <div class="size-grid" data-product="prod-4">
+                    <button class="size-btn" data-size="S" onclick="selectSize(this)">S</button>
+                    <button class="size-btn" data-size="M" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" data-size="L" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" data-size="XL" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" data-size="XXL" onclick="selectSize(this)">XXL</button>
                 </div>
                 
                 <button class="btn-add" onclick="addToCart('p4_title', 6.00, 'prod-4')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
-        <!-- ===== PRODUCT CARD 3 (Men - Outerwear) ===== -->
         <div class="card" id="prod-2" data-gender="men" data-type="outerwear">
             <span class="badge" data-key="badge_new">New</span>
             <div class="img-box">
@@ -264,18 +257,17 @@
                     <div class="size-label" data-key="select_size">SIZE</div>
                 </div>
                 <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                    <button class="size-btn" data-size="S" onclick="selectSize(this)">S</button>
+                    <button class="size-btn active" data-size="M" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" data-size="L" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" data-size="XL" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" data-size="XXL" onclick="selectSize(this)">XXL</button>
                 </div>
                 
                 <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
-        <!-- ===== PRODUCT CARD 4 (Women - Tops) ===== -->
         <div class="card" id="prod-3" data-gender="women" data-type="tops">
             <span class="badge" data-key="badge_women">Trend</span>
             <div class="img-box">
@@ -293,11 +285,11 @@
                     <div class="size-label" data-key="select_size">SIZE</div>
                 </div>
                 <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                    <button class="size-btn" data-size="S" onclick="selectSize(this)">S</button>
+                    <button class="size-btn active" data-size="M" onclick="selectSize(this)">M</button>
+                    <button class="size-btn" data-size="L" onclick="selectSize(this)">L</button>
+                    <button class="size-btn" data-size="XL" onclick="selectSize(this)">XL</button>
+                    <button class="size-btn" data-size="XXL" onclick="selectSize(this)">XXL</button>
                 </div>
                 
                 <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
@@ -305,7 +297,6 @@
         </div>
     </div>
 
-    <!-- 5. Bottom Floating Checkout Bar Section -->
     <div class="cart-checkout-bar">
         <div class="bar-content">
             <div onclick="toggleCartModal()" style="cursor: pointer;">
@@ -316,7 +307,6 @@
         </div>
     </div>
 
-    <!-- 6. Cart Items Modal Drawer with Customer Info Form -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -328,7 +318,6 @@
                 <div class="empty-msg" data-key="empty_cart">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
             </div>
 
-            <!-- Price Breakdown Summary (Subtotal, Delivery Fee) -->
             <div class="summary-box" id="summary-box" style="display: none;">
                 <div class="summary-row">
                     <span data-key="subtotal_label">តម្លៃទំនិញ</span>
@@ -340,7 +329,6 @@
                 </div>
             </div>
 
-            <!-- Customer Details Form (Name, Phone, Location) -->
             <div class="checkout-form" id="checkout-form-section" style="display: none;">
                 <div class="form-group">
                     <label class="form-label" data-key="label_name">ឈ្មោះរបស់អ្នក (Name)</label>
@@ -368,13 +356,13 @@
         </div>
     </div>
 
-    <!-- 7. Interactive JavaScript & Multi-Language Dictionary Section -->
     <script>
         let currentLang = 'km';
         let cart = {};
         let currentGender = 'men';
         let currentType = 'all';
         const deliveryFee = 2.00;
+        let stockData = {};
 
         const translations = {
             km: {
@@ -389,7 +377,7 @@
                 badge_new: "New",
                 badge_women: "Trend",
                 p1_title: "T-Shirt Polo Collab OneDay",
-                p1_desc: "អាវយឺត Polo រចនាបែប Collab ស្អាតសាមញ្ញ",
+                p1_desc: "អាវយឺត Polo រចនាបែប Collab ស្ាតសាមញ្ញ",
                 p2_title: "Outfit Smart Casual (Full Set)",
                 p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ",
                 p3_title: "Elegant Women Dress",
@@ -415,7 +403,8 @@
                 msg_phone: "លេខទូរស័ព្ទ",
                 msg_address: "ទីតាំង",
                 msg_total: "តម្លៃសរុបទាំងអស់",
-                alert_fill: "សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងឱ្យបានត្រឹមត្រូវ!"
+                alert_fill: "សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងឱ្យបានត្រឹមត្រូវ!",
+                alert_stock: "សុំទោស Size នេះអស់ស្តុកហើយ!"
             },
             en: {
                 cover_title: "BUILD YOUR DREAM STYLE",
@@ -455,7 +444,8 @@
                 msg_phone: "Phone",
                 msg_address: "Location",
                 msg_total: "Grand Total",
-                alert_fill: "Please fill in your name, phone number, and location!"
+                alert_fill: "Please fill in your name, phone number, and location!",
+                alert_stock: "Sorry, this size is out of stock!"
             },
             zh: {
                 cover_title: "打造您的理想风格",
@@ -495,7 +485,8 @@
                 msg_phone: "电话",
                 msg_address: "地址",
                 msg_total: "总计",
-                alert_fill: "请填写您的姓名、电话和收货地址！"
+                alert_fill: "请填写您的姓名、电话和收货地址！",
+                alert_stock: "抱歉，此尺码已售罄！"
             }
         };
 
@@ -515,11 +506,63 @@
             document.getElementById('cartModal').classList.toggle('active');
         }
 
+        window.onload = function() {
+            loadStockData();
+            filterProducts();
+        };
+
+        function loadStockData() {
+            fetch('stock.json')
+                .then(response => response.json())
+                .then(data => {
+                    stockData = data;
+                    updateUIStock();
+                })
+                .catch(error => {
+                    console.log("Error loading stock.json:", error);
+                });
+        }
+
+        function updateUIStock() {
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                let ref = card.getAttribute('data-ref');
+                if (ref && stockData[ref]) {
+                    let productStock = stockData[ref];
+                    let sizeGrid = card.querySelector('.size-grid');
+                    let buttons = sizeGrid.querySelectorAll('.size-btn');
+                    let firstAvailable = null;
+
+                    buttons.forEach(btn => {
+                        let size = btn.getAttribute('data-size');
+                        let stockQty = productStock[size] !== undefined ? productStock[size] : 0;
+                        
+                        btn.setAttribute('data-stock', stockQty);
+                        if (stockQty <= 0) {
+                            btn.classList.add('out-of-stock');
+                        } else {
+                            btn.classList.remove('out-of-stock');
+                            if (!firstAvailable) firstAvailable = btn;
+                        }
+                    });
+
+                    let activeBtn = sizeGrid.querySelector('.size-btn.active');
+                    if (!activeBtn || parseInt(activeBtn.getAttribute('data-stock')) <= 0) {
+                        buttons.forEach(b => b.classList.remove('active'));
+                        if (firstAvailable) firstAvailable.classList.add('active');
+                    }
+                }
+            });
+        }
+
         function selectSize(element) {
-            let buttons = element.parentElement.getElementsByClassName('size-btn');
-            for (let btn of buttons) {
-                btn.classList.remove('active');
+            let stock = parseInt(element.getAttribute('data-stock'));
+            if (!isNaN(stock) && stock <= 0) {
+                alert(translations[currentLang].alert_stock);
+                return;
             }
+            let buttons = element.parentElement.getElementsByClassName('size-btn');
+            for (let btn of buttons) btn.classList.remove('active');
             element.classList.add('active');
         }
 
@@ -586,14 +629,19 @@
             });
         }
 
-        window.onload = function() {
-            filterProducts();
-        };
-
         function addToCart(titleKey, price, cardId) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
-            let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+            
+            if (activeSizeBtn) {
+                let stock = parseInt(activeSizeBtn.getAttribute('data-stock'));
+                if (!isNaN(stock) && stock <= 0) {
+                    alert(translations[currentLang].alert_stock);
+                    return;
+                }
+            }
+
+            let selectedSize = activeSizeBtn ? activeSizeBtn.getAttribute('data-size') : 'M';
             let itemKey = `${titleKey}_${selectedSize}`;
 
             if (cart[itemKey]) {
@@ -635,7 +683,7 @@
                     <div class="cart-item">
                         <div>
                             <div class="item-info">${localizedTitle}</div>
-                            <div class="item-sub">Size: ${item.size} | $${item.price.toFixed(2)}</div>
+                            <div class="item-sub">Size: ${item.size} \vert{}$${item.price.toFixed(2)}</div>
                         </div>
                         <div class="qty-controls">
                             <button class="btn-qty" onclick="changeQty('${key}', -1)">-</button>
@@ -690,22 +738,4 @@
                 let itemTotal = item.price * item.qty;
                 subtotalPrice += itemTotal;
                 let localizedTitle = t[item.titleKey] || item.titleKey;
-                message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${itemTotal.toFixed(2)}\n`;
-                index++;
-            }
-
-            let grandTotal = subtotalPrice + deliveryFee;
-
-            message += `\n- ${t.msg_subtotal}: $${subtotalPrice.toFixed(2)}`;
-            message += `\n- ${t.msg_delivery}: $${deliveryFee.toFixed(2)}`;
-            message += `\n- ${t.msg_total}: $${grandTotal.toFixed(2)}`;
-            message += `\n\n[ព័ត៌មានអតិថិជន]\n- ${t.msg_name}: ${name}\n- ${t.msg_phone}: ${phone}\n- ${t.msg_address}: ${address}`;
-
-            let encodedMessage = encodeURIComponent(message);
-            let webUrl = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
-            window.location.href = webUrl;
-        }
-    </script>
-
-</body>
-</html>
+                message += `${index}.${localizedTitle} (Size: ${item.size}) x${
