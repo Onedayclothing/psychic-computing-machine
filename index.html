@@ -24,14 +24,15 @@
         nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: var(--accent); }
         .logo span { color: var(--primary); }
-        .nav-right { display: flex; align-items: center; gap: 10px; }
+        .nav-right { display: flex; align-items: center; gap: 8px; }
 
         .lang-select { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; outline: none; }
-        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); }
+        
+        /* Guide Button next to Language Switcher */
+        .guide-top-btn { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .guide-top-btn:hover { background: var(--accent-light); color: var(--accent); border-color: #bae6fd; }
 
-        /* Guide Banner Button */
-        .guide-banner { background: var(--accent-light); border-bottom: 1px solid #bae6fd; padding: 10px 16px; text-align: center; }
-        .guide-btn { background: transparent; border: none; color: var(--accent); font-size: 12px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); }
 
         .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
         .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
@@ -109,8 +110,7 @@
         .modal-total-amount { font-size: 18px; font-weight: 900; color: var(--accent); }
         .btn-modal-telegram { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
 
-        /* Guide Step Text styling */
-        .guide-step { font-size: 12px; line-height: 1.6; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
+        .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -118,6 +118,9 @@
     <nav>
         <div class="logo">Oneday<span>.</span></div>
         <div class="nav-right">
+            <button class="guide-top-btn" onclick="toggleGuideModal()">
+                💡 <span data-key="guide_btn_text">របៀបកុម្មង់</span>
+            </button>
             <select class="lang-select" onchange="changeLanguage(this.value)">
                 <option value="km">🇰🇭 KH</option>
                 <option value="en">🇬🇧 EN</option>
@@ -126,13 +129,6 @@
             <button class="cart-btn" onclick="toggleCartModal()">🛒 <span id="cart-count">0</span></button>
         </div>
     </nav>
-
-    <!-- Guide Button Banner -->
-    <div class="guide-banner">
-        <button class="guide-btn" onclick="toggleGuideModal()">
-            💡 <span data-key="guide_btn_text">របៀបកុម្មង់ទំនិញ (How to Order)</span>
-        </button>
-    </div>
 
     <div class="cover-container">
         <div class="cover-image-box">
@@ -280,13 +276,13 @@
     <div class="modal-overlay" id="guideModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">💡 <span data-key="guide_title">ណែនាំពីរបៀបកុម្មង់ទំនិញ</span></div>
+                <div class="modal-title">💡 <span data-key="guide_title">របៀបកុម្មង់ទំនិញ</span></div>
                 <button class="btn-close" onclick="toggleGuideModal()">✕</button>
             </div>
-            <div style="padding: 10px 0; display: flex; flex-direction: column; gap: 10px;">
-                <div class="guide-step" data-key="guide_step1">១. ជ្រើសរើសទំហំ (Size) និងចុចប៊ូតុង **"ដាក់ចូលកន្ត្រក"** លើទំនិញដែលអ្នកពេញចិត្ត។</div>
-                <div class="guide-step" data-key="guide_step2">២. ចុចលើរូបកន្ត្រក ឬប៊ូតុង **"មើលកន្ត្រក"** ដើម្បីត្រួតពិនិត្យទំនិញដែលបានជ្រើសរើស។</div>
-                <div class="guide-step" data-key="guide_step3">៣. ចុចប៊ូតុង **"Order Now"** រួចបំពេញ ឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងរបស់អ្នក។</div>
+            <div style="padding: 10px 0; display: flex; flex-direction: column; gap: 8px;">
+                <div class="guide-step" data-key="guide_step1">១. ជ្រើសរើសទំហំ (Size) និងចុចប៊ូតុង "ដាក់ចូលកន្ត្រក" លើទំនិញដែលអ្នកពេញចិត្ត។</div>
+                <div class="guide-step" data-key="guide_step2">២. ចុចលើរូបកន្ត្រក ឬប៊ូតុង "មើលកន្ត្រក" ដើម្បីត្រួតពិនិត្យទំនិញដែលបានជ្រើសរើស។</div>
+                <div class="guide-step" data-key="guide_step3">៣. ចុចប៊ូតុង "Order Now" រួចបំពេញ ឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងរបស់អ្នក។</div>
                 <div class="guide-step" data-key="guide_step4">៤. ចុចបញ្ជូនសារទៅកាន់ Telegram ហាងជាការស្រេច!</div>
             </div>
         </div>
@@ -366,7 +362,7 @@
                 select_size: "SIZE", add_to_cart: "ដាក់ចូលកន្ត្រក", total_label: "តម្លៃសរុប", subtotal_label: "តម្លៃទំនិញ", delivery_label: "ថ្លៃដឹក (Delivery Fee)",
                 items_unit: "មុខ", btn_order_now: "Order Now", btn_view_cart: "🛒 មើលកន្ត្រក", cart_title: "ទំនិញក្នុងកន្ត្រករបស់អ្នក", empty_cart: "មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ",
                 checkout_title: "ព័ត៌មានសម្រាប់ការកុម្មង់",
-                guide_btn_text: "របៀបកុម្មង់ទំនិញ (How to Order)", guide_title: "ណែនាំពីរបៀបកុម្មង់ទំនិញ",
+                guide_btn_text: "របៀបកុម្មង់", guide_title: "របៀបកុម្មង់ទំនិញ",
                 guide_step1: "១. ជ្រើសរើសទំហំ (Size) និងចុចប៊ូតុង \"ដាក់ចូលកន្ត្រក\" លើទំនិញដែលអ្នកពេញចិត្ត។",
                 guide_step2: "២. ចុចលើរូបកន្ត្រក ឬប៊ូតុង \"មើលកន្ត្រក\" ដើម្បីត្រួតពិនិត្យទំនិញដែលបានជ្រើសរើស។",
                 guide_step3: "៣. ចុចប៊ូតុង \"Order Now\" រួចបំពេញ ឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងរបស់អ្នក។",
@@ -384,11 +380,11 @@
                 select_size: "SIZE", add_to_cart: "Add to Cart", total_label: "Total Amount", subtotal_label: "Subtotal", delivery_label: "Delivery Fee",
                 items_unit: "items", btn_order_now: "Order Now", btn_view_cart: "🛒 View Cart", cart_title: "Your Shopping Cart", empty_cart: "Your cart is currently empty",
                 checkout_title: "Checkout Information",
-                guide_btn_text: "How to Order", guide_title: "Ordering Guide",
-                guide_step1: "1. Select your size and click \"Add to Cart\" on your favorite items.",
-                guide_step2: "2. Click the cart icon or \"View Cart\" button to review your items.",
-                guide_step3: "3. Click \"Order Now\" and fill in your name, phone number, and location.",
-                guide_step4: "4. Send the order message directly to our Telegram!",
+                guide_btn_text: "How to Order", guide_title: "How to Order",
+                guide_step1: "១. ជ្រើសរើសទំហំ (Size) និងចុចប៊ូតុង \"ដាក់ចូលកន្ត្រក\" លើទំនិញដែលអ្នកពេញចិត្ត។",
+                guide_step2: "២. ចុចលើរូបកន្ត្រក ឬប៊ូតុង \"មើលកន្ត្រក\" ដើម្បីត្រួតពិនិត្យទំនិញដែលបានជ្រើសរើស។",
+                guide_step3: "៣. ចុចប៊ូតុង \"Order Now\" រួចបំពេញ ឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងរបស់អ្នក។",
+                guide_step4: "៤. ចុចបញ្ជូនសារទៅកាន់ Telegram ហាងជាការស្រេច!",
                 label_name: "Your Name", label_phone: "Phone Number", label_address: "Delivery Location",
                 msg_hello: "Hello Oneday Clothing! I would like to order:", msg_subtotal: "Subtotal", msg_delivery: "Delivery Fee", msg_name: "Name", msg_phone: "Phone", msg_address: "Location", msg_total: "Grand Total",
                 alert_fill: "Please fill in your name, phone number, and location!"
@@ -402,11 +398,11 @@
                 select_size: "尺码", add_to_cart: "加入购物车", total_label: "总金额", subtotal_label: "商品小计", delivery_label: "配送费 (Delivery Fee)",
                 items_unit: "件", btn_order_now: "Order Now", btn_view_cart: "🛒 查看购物车", cart_title: "您的购物车", empty_cart: "购物车是空的",
                 checkout_title: "结账信息",
-                guide_btn_text: "如何购买", guide_title: "购物指南",
-                guide_step1: "1. 选择尺码并点击您喜欢的商品上的“加入购物车”。",
-                guide_step2: "2. 点击购物车图标或“查看购物车”按钮检查所選商品。",
-                guide_step3: "3. 点击“Order Now”并填写您的姓名、电话和地址。",
-                guide_step4: "4. 将订单发送至我们的电报客服即可！",
+                guide_btn_text: "如何购买", guide_title: "如何购买",
+                guide_step1: "១. ជ្រើសរើសទំហំ (Size) និងចុចប៊ូតុង \"ដាក់ចូលកន្ត្រក\" លើទំនិញដែលអ្នកពេញចិត្ត។",
+                guide_step2: "២. ចុចលើរូបកន្ត្រក ឬប៊ូតុង \"មើលកន្ត្រក\" ដើម្បីត្រួតពិនិត្យទំនិញដែលបានជ្រើសរើស។",
+                guide_step3: "៣. ចុចប៊ូតុង \"Order Now\" រួចបំពេញ ឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងរបស់អ្នក។",
+                guide_step4: "៤. ចុចបញ្ជូនសារទៅកាន់ Telegram ហាងជាការស្រេច!",
                 label_name: "您的姓名", label_phone: "联系电话", label_address: "收货地址",
                 msg_hello: "您好 Oneday Clothing！我想订购以下商品：", msg_subtotal: "商品小计", msg_delivery: "配送费", msg_name: "姓名", msg_phone: "电话", msg_address: "地址", msg_total: "总计",
                 alert_fill: "请填写您的姓名、电话和收货地址！"
