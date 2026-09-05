@@ -77,6 +77,10 @@
         .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 6px 0; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); }
         .size-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
+        /* រចនាប័ទ្មអក្សរបង្ហាញស្តុកតូចក្រោម Size */
+        .stock-hint-box { font-size: 10px; color: var(--text-muted); font-weight: 700; text-align: center; margin-bottom: 8px; min-height: 15px; }
+        .stock-hint-box span { color: var(--accent); font-weight: 900; }
+
         .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: background 0.2s; }
         .btn-add:active { background: var(--accent); }
 
@@ -184,7 +188,6 @@
     </div>
 
     <div class="container">
-        <!-- Product 1 -->
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge">Ref: 1</span>
             <div class="img-box">
@@ -198,17 +201,17 @@
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
                 <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">S</button>
+                    <button class="size-btn active" onclick="selectSize(this, 'prod-1', 'Ref: 1')">M</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">L</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">XL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">XXL</button>
                 </div>
+                <div class="stock-hint-box" id="stock-hint-prod-1">ស្តុកនៅសល់: <span>...</span></div>
                 <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1', 'Ref: 1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
-        <!-- Product 2 -->
         <div class="card" id="prod-4" data-gender="men" data-type="tops">
             <span class="badge">Ref: 2</span>
             <div class="img-box">
@@ -222,17 +225,17 @@
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
                 <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">S</button>
+                    <button class="size-btn active" onclick="selectSize(this, 'prod-4', 'Ref: 2')">M</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">L</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">XL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">XXL</button>
                 </div>
+                <div class="stock-hint-box" id="stock-hint-prod-4">ស្តុកនៅសល់: <span>...</span></div>
                 <button class="btn-add" onclick="addToCart('p4_title', 6.00, 'prod-4', 'Ref: 2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
-        <!-- Product 3 -->
         <div class="card" id="prod-2" data-gender="men" data-type="tops">
             <span class="badge">Ref: 3</span>
             <div class="img-box">
@@ -246,12 +249,13 @@
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
                 <div class="size-grid">
-                    <button class="size-btn" onclick="selectSize(this)">S</button>
-                    <button class="size-btn active" onclick="selectSize(this)">M</button>
-                    <button class="size-btn" onclick="selectSize(this)">L</button>
-                    <button class="size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">S</button>
+                    <button class="size-btn active" onclick="selectSize(this, 'prod-2', 'Ref: 3')">M</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">L</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">XL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">XXL</button>
                 </div>
+                <div class="stock-hint-box" id="stock-hint-prod-2">ស្តុកនៅសល់: <span>...</span></div>
                 <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2', 'Ref: 3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
@@ -270,7 +274,6 @@
         </div>
     </div>
 
-    <!-- Guide Modal -->
     <div class="modal-overlay" id="guideModal" onclick="handleModalClick(event, 'guideModal')">
         <div class="modal-content">
             <div class="modal-header">
@@ -286,7 +289,6 @@
         </div>
     </div>
 
-    <!-- Cart Modal -->
     <div class="modal-overlay" id="cartModal" onclick="handleModalClick(event, 'cartModal')">
         <div class="modal-content">
             <div class="modal-header">
@@ -310,7 +312,6 @@
         </div>
     </div>
 
-    <!-- Checkout Modal -->
     <div class="modal-overlay" id="checkoutModal" onclick="handleModalClick(event, 'checkoutModal')">
         <div class="modal-content">
             <div class="modal-header">
@@ -479,10 +480,47 @@
             openModal('checkoutModal');
         }
 
-        function selectSize(element) {
+        // មុខងារទាញទិន្នន័យស្តុកភ្លាមៗពេលបើកវេបសាយ និងពេលចុច Size
+        async function fetchLiveStock(cardId, refText, selectedSize) {
+            let hintSpan = document.querySelector(`#stock-hint-${cardId} span`);
+            if (hintSpan) hintSpan.innerText = "...";
+
+            try {
+                let response = await fetch(csvUrl + "&t=" + new Date().getTime());
+                let data = await response.text();
+                let rows = data.split('\n');
+                
+                for (let i = 1; i < rows.length; i++) {
+                    let cols = rows[i].split(',');
+                    if (cols.length >= 4) {
+                        let ref = cols[0].trim().replace(/^["']|["']$/g, '');
+                        let size = cols[2].trim().replace(/^["']|["']$/g, '');
+                        let stock = parseInt(cols[3].trim()) || 0;
+                        if (ref && size) {
+                            stockData[`Ref: ${ref}_${size}`] = stock;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching live stock:", error);
+            }
+
+            let stockKey = `${refText}_${selectedSize}`;
+            let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
+            
+            if (hintSpan) {
+                hintSpan.innerText = currentStock > 0 ? `${currentStock} (មានក្នុងស្តុក)` : "អស់ស្តុក (Out of stock)";
+                hintSpan.style.color = currentStock > 0 ? "#0284c7" : "#ef4444";
+            }
+        }
+
+        function selectSize(element, cardId, refText) {
             let buttons = element.parentElement.getElementsByClassName('size-btn');
             for (let btn of buttons) btn.classList.remove('active');
             element.classList.add('active');
+            
+            let selectedSize = element.innerText;
+            fetchLiveStock(cardId, refText, selectedSize);
         }
 
         function selectMainCategory(gender) {
@@ -544,36 +582,22 @@
             });
         }
 
+        // ដំណើរការពេលចូលវេបសាយដំបូង ដើម្បីបង្ហាញស្តុក Size M ដែលរើសស្រាប់
         window.onload = function() {
             filterProducts();
+            fetchLiveStock('prod-1', 'Ref: 1', 'M');
+            fetchLiveStock('prod-4', 'Ref: 2', 'M');
+            fetchLiveStock('prod-2', 'Ref: 3', 'M');
         };
 
-        // Real-time Stock Check ពេលចុចដាក់ចូលកន្ត្រក (អត់ Delay)
         async function addToCart(titleKey, price, cardId, refText) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
             let stockKey = `${refText}_${selectedSize}`;
 
-            try {
-                let response = await fetch(csvUrl + "&t=" + new Date().getTime());
-                let data = await response.text();
-                let rows = data.split('\n');
-                
-                for (let i = 1; i < rows.length; i++) {
-                    let cols = rows[i].split(',');
-                    if (cols.length >= 4) {
-                        let ref = cols[0].trim().replace(/^["']|["']$/g, '');
-                        let size = cols[2].trim().replace(/^["']|["']$/g, '');
-                        let stock = parseInt(cols[3].trim()) || 0;
-                        if (ref && size) {
-                            stockData[`Ref: ${ref}_${size}`] = stock;
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error("Error updating live stock:", error);
-            }
+            // ទាញស្តុកចុងក្រោយម្តងទៀតមុនបញ្ជាក់ការទិញ
+            await fetchLiveStock(cardId, refText, selectedSize);
 
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
