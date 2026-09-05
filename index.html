@@ -147,7 +147,7 @@
         </div>
     </div>
 
-    <!-- 3. Professional Dropdown / Accordion Menu Bar (ដកប៊ូតុង "ទាំងអស់" ចេញ និងបង្ហាញត្រឹម បុរស/នារី) -->
+    <!-- 3. Professional Menu Bar -->
     <div class="menu-wrapper">
         <div class="categories">
             <button class="cat-btn active" onclick="selectMainCategory('men')" data-key="cat_men">បុរស</button>
@@ -173,11 +173,11 @@
 
     <!-- 4. Main Product Container Area -->
     <div class="container">
-        <!-- ===== PRODUCT CARD 1 (Men - Tops) ===== -->
+        <!-- ===== PRODUCT CARD 1 (Men - Tops) - រូបភាពថ្មី IMG_5604.jpeg ===== -->
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
-                <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
+                <img src="IMG_5604.jpeg" alt="T-Shirt Polo Collab OneDay">
             </div>
 
             <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
@@ -290,7 +290,7 @@
     <script>
         let currentLang = 'km';
         let cart = {};
-        let currentGender = 'men'; // Default to men
+        let currentGender = 'men';
         let currentType = 'all';
 
         const translations = {
@@ -464,7 +464,6 @@
             });
         }
 
-        // Run initial filter to show men products by default
         window.onload = function() {
             filterProducts();
         };
