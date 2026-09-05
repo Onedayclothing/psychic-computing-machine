@@ -696,7 +696,7 @@
                 subtotalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
                 
-                message += `${index}. ${localizedTitle}\n`;
+                message += `${index}. [${item.ref}] ${localizedTitle}\n`;
                 message += `    Size: ${item.size} × ${item.qty} — $${itemTotal.toFixed(2)}\n`;
                 index++;
             }
