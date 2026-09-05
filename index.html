@@ -81,7 +81,7 @@
         .modal-title { font-size: 16px; font-weight: 900; }
         .btn-close { background: #f1f5f9; border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; }
 
-        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 160px; }
+        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 220px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 8px 0; }
         .item-info { font-size: 12px; font-weight: 800; }
         .item-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; }
@@ -92,7 +92,8 @@
         .summary-box { border-top: 1px solid var(--border-color); padding-top: 8px; padding-bottom: 4px; display: flex; flex-direction: column; gap: 4px; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
-        .checkout-form { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+        .checkout-form { border-top: 1px solid var(--border-color); padding-top: 10px; display: none; flex-direction: column; gap: 8px; margin-top: 6px; }
+        .checkout-form.active { display: flex; }
         .form-group { display: flex; flex-direction: column; gap: 3px; }
         .form-label { font-size: 10px; font-weight: 800; color: var(--primary); }
         .form-input { width: 100%; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 11px; outline: none; background: #f8fafc; }
@@ -249,13 +250,13 @@
 
     <div class="cart-checkout-bar">
         <div class="bar-content">
-            <div style="cursor: pointer;">
+            <div style="cursor: pointer;" onclick="toggleCartModal()">
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
             <div class="bar-buttons">
                 <button onclick="toggleCartModal()" class="btn-cart-view" data-key="btn_view_cart">🛒 មើលកន្ត្រក</button>
-                <button onclick="openTelegram()" class="btn-telegram"><span data-key="btn_order_now">Order Now</span></button>
+                <button onclick="prepareOrder()" class="btn-telegram"><span data-key="btn_order_now">Order Now</span></button>
             </div>
         </div>
     </div>
@@ -274,7 +275,7 @@
                 <div class="summary-row"><span data-key="delivery_label">ថ្លៃដឹក (Delivery Fee)</span><span>$2.00</span></div>
             </div>
 
-            <div class="checkout-form" id="checkout-form-section" style="display: none;">
+            <div class="checkout-form" id="checkout-form-section">
                 <div class="form-group"><label class="form-label" data-key="label_name">ឈ្មោះរបស់អ្នក (Name)</label><input type="text" id="custName" class="form-input" placeholder="បំពេញឈ្មោះ..."></div>
                 <div class="form-group"><label class="form-label" data-key="label_phone">លេខទូរស័ព្ទ (Phone Number)</label><input type="tel" id="custPhone" class="form-input" placeholder="បំពេញលេខទូរស័ព្ទ..."></div>
                 <div class="form-group"><label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label><input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង..."></div>
@@ -348,7 +349,23 @@
             renderCart();
         }
 
-        function toggleCartModal() { document.getElementById('cartModal').classList.toggle('active'); }
+        function toggleCartModal() { 
+            let modal = document.getElementById('cartModal');
+            modal.classList.toggle('active');
+            // បិទฟોર્មបំពេញពេលបើកមើលកន្ត្រកធម្មតា
+            document.getElementById('checkout-form-section').classList.remove('active');
+        }
+
+        function prepareOrder() {
+            if (Object.keys(cart).length === 0) {
+                alert(translations[currentLang].empty_cart);
+                return;
+            }
+            let modal = document.getElementById('cartModal');
+            modal.classList.add('active');
+            // បើកបង្ហាញฟોર્មបំពេញពេលចុច Order Now
+            document.getElementById('checkout-form-section').classList.add('active');
+        }
 
         function selectSize(element) {
             let buttons = element.parentElement.getElementsByClassName('size-btn');
@@ -445,7 +462,6 @@
         function renderCart() {
             let cartList = document.getElementById('cart-list');
             let modalFooter = document.getElementById('modal-footer');
-            let checkoutForm = document.getElementById('checkout-form-section');
             let summaryBox = document.getElementById('summary-box');
             let totalItems = 0;
             let subtotalPrice = 0;
@@ -476,12 +492,11 @@
             if (Object.keys(cart).length === 0) {
                 cartList.innerHTML = `<div class="empty-msg">${translations[currentLang].empty_cart}</div>`;
                 modalFooter.style.display = 'none';
-                checkoutForm.style.display = 'none';
                 summaryBox.style.display = 'none';
+                document.getElementById('checkout-form-section').classList.remove('active');
             } else {
                 cartList.innerHTML = itemsHtml;
                 modalFooter.style.display = 'flex';
-                checkoutForm.style.display = 'flex';
                 summaryBox.style.display = 'flex';
             }
 
