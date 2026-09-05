@@ -260,7 +260,6 @@
 
         <!-- Product 4 -->
         <div class="card" id="prod-3" data-gender="women" data-type="tops">
-            <span class="badge">Ref: 4</span>
             <div class="img-box">
                 <img src="woman_dress_preview.jpeg" alt="Elegant Women Dress" loading="lazy">
             </div>
@@ -278,7 +277,7 @@
                     <button class="size-btn" onclick="selectSize(this)">XL</button>
                     <button class="size-btn" onclick="selectSize(this)">XXL</button>
                 </div>
-                <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3', 'Ref: 4')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+                <button class="btn-add" onclick="addToCart('p3_title', 22.00, 'prod-3', '')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
     </div>
@@ -613,10 +612,12 @@
                 subtotalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
 
+                let refDisplay = item.ref ? `[${item.ref}] ` : '';
+
                 itemsHtml += `
                     <div class="cart-item">
                         <div>
-                            <div class="item-info">[${item.ref}] ${localizedTitle}</div>
+                            <div class="item-info">${refDisplay}${localizedTitle}</div>
                             <div class="item-sub">Size: ${item.size} | $${item.price.toFixed(2)}</div>
                         </div>
                         <div class="qty-controls">
@@ -696,7 +697,8 @@
                 subtotalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
                 
-                message += `${index}. [${item.ref}] ${localizedTitle}\n`;
+                let refPart = item.ref ? `[${item.ref}] ` : '';
+                message += `${index}. ${refPart}${localizedTitle}\n`;
                 message += `    Size: ${item.size} × ${item.qty} — $${itemTotal.toFixed(2)}\n`;
                 index++;
             }
