@@ -141,11 +141,13 @@
 
     <div class="cover-container">
         <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
+            <!-- Cover 1 (New First) -->
             <div class="cover-slide-item">
                 <div class="cover-image-box">
                     <video autoplay loop muted playsinline preload="metadata"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
                 </div>
             </div>
+            <!-- Cover 2 (Previous) -->
             <div class="cover-slide-item">
                 <div class="cover-image-box">
                     <video autoplay loop muted playsinline preload="metadata"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
@@ -344,19 +346,6 @@
     </div>
 
     <script>
-        // ==========================================
-        // ប្រព័ន្ធស្តុកស្វ័យប្រវត្តិ (Auto 0 Stock)
-        // ==========================================
-        let stockData = {};
-
-        function getStockWithAutoRef(refText, size) {
-            let key = `${refText}_${size}`;
-            if (stockData[key] === undefined) {
-                stockData[key] = 0; // កំណត់ស្តុកដើមជា 0 ស្វ័យប្រវត្តិសម្រាប់ផលិតផលថ្មី
-            }
-            return stockData[key];
-        }
-
         let currentLang = 'km';
         let cart = {};
         let currentGender = 'men';
@@ -562,20 +551,12 @@
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
-            
-            let currentStock = getStockWithAutoRef(refText, selectedSize);
-            let stockKey = `${refText}_${selectedSize}`;
-            let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
+            let itemKey = `${titleKey}_${selectedSize}`;
 
-            if (currentStock === 0 || currentQtyInCart >= currentStock) {
-                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) អស់ស្តុកហើយ ឬលើសចំនួនក្នុងស្តុក (ចំនួនក្នុងស្តុក: ${currentStock})។`);
-                return;
-            }
-
-            if (cart[stockKey]) {
-                cart[stockKey].qty += 1;
+            if (cart[itemKey]) {
+                cart[itemKey].qty += 1;
             } else {
-                cart[stockKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
+                cart[itemKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
             }
 
             renderCart();
@@ -583,15 +564,7 @@
 
         function changeQty(itemKey, delta) {
             if (cart[itemKey]) {
-                let newQty = cart[itemKey].qty + delta;
-                let availableStock = stockData[itemKey] !== undefined ? stockData[itemKey] : 0;
-
-                if (delta > 0 && newQty > availableStock) {
-                    alert(`សូមអភ័យទោស! ស្តុកក្នុងហាងមានត្រឹមតែ ${availableStock} ប៉ុណ្ណោះ។`);
-                    return;
-                }
-
-                cart[itemKey].qty = newQty;
+                cart[itemKey].qty += delta;
                 if (cart[itemKey].qty <= 0) delete cart[itemKey];
             }
             renderCart();
@@ -682,14 +655,6 @@
                 phoneInput.classList.add('error');
                 alert(translations[currentLang].alert_phone_invalid);
                 return;
-            }
-
-            // កាត់ស្តុកចេញស្វ័យប្រវត្តិពេលកុម្មង់สำเร็จ
-            for (let key in cart) {
-                if (stockData[key] !== undefined) {
-                    stockData[key] -= cart[key].qty;
-                    if (stockData[key] < 0) stockData[key] = 0;
-                }
             }
 
             let telegramUsername = "OneDayClothingAgent";
