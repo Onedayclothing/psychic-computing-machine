@@ -10,50 +10,50 @@
     <style>
         :root {
             --primary: #0f172a;
-            --accent: #00c2ff;
+            --accent: #0284c7;
             --accent-light: #e0f2fe;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --border-color: #e2e8f0;
+            --border-color: #cbd5e1;
             --text-muted: #64748b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kantumruy Pro', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
-        nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
+        nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: var(--accent); }
         .logo span { color: var(--primary); }
         .nav-right { display: flex; align-items: center; gap: 10px; }
 
         .lang-select { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; outline: none; }
-        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); }
 
         .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
         .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
         .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; }
-        .cover-info { text-align: center; padding: 14px; }
+        .cover-info { text-align: center; padding: 14px; background: linear-gradient(to bottom, #ffffff, #f8fafc); }
         .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
-        .main-title { font-size: 18px; font-weight: 900; text-transform: uppercase; }
+        .main-title { font-size: 18px; font-weight: 900; text-transform: uppercase; color: var(--primary); }
 
         .menu-wrapper { padding: 0 12px 14px; max-width: 480px; margin: 0 auto; }
         .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 8px; }
-        .cat-btn { flex: 1; background: transparent; border: none; padding: 8px 0; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; }
-        .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .cat-btn { flex: 1; background: transparent; border: none; padding: 8px 0; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
+        .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
         .sub-categories { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
         .sub-categories.active { display: flex; }
         .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); }
-        .sub-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+        .sub-btn.active { background: var(--accent); color: #ffffff; border-color: var(--accent); }
 
         .container { max-width: 480px; margin: 0 auto; padding: 0 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
-        .img-box { background: #ffffff; aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #f1f5f9; position: relative; }
+        .img-box { background: #f8fafc; aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #e2e8f0; position: relative; }
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; }
         
-        .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.85); color: white; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 6px; z-index: 10; }
-        .prod-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; min-height: 30px; line-height: 1.4; }
+        .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.9); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 10; }
+        .prod-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; min-height: 30px; line-height: 1.4; color: var(--primary); }
         .prod-desc { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; min-height: 26px; line-height: 1.4; }
         .price { font-size: 15px; font-weight: 900; color: var(--accent); margin-bottom: 8px; }
 
@@ -62,40 +62,51 @@
         
         .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin-bottom: 8px; }
         .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 6px 0; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); }
-        .size-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .size-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; }
+        .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: background 0.2s; }
+        .btn-add:active { background: var(--accent); }
 
-        .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; }
+        .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
         .bar-content { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .total-price { font-size: 17px; font-weight: 900; color: var(--primary); }
         .total-label { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
         .bar-buttons { display: flex; gap: 8px; }
         .btn-cart-view { background: #f1f5f9; color: var(--primary); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; }
-        .btn-telegram { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; }
+        .btn-telegram { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; backdrop-filter: blur(4px); }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; max-width: 480px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; }
+        .modal-content { background: white; border-radius: 24px 24px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; max-width: 480px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; box-shadow: 0 -10px 25px rgba(0,0,0,0.1); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px; }
-        .modal-title { font-size: 16px; font-weight: 900; }
-        .btn-close { background: #f1f5f9; border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; }
+        .modal-title { font-size: 16px; font-weight: 900; color: var(--primary); }
+        .btn-close { background: #f1f5f9; border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; color: var(--text-muted); }
 
         #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 260px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 8px 0; }
-        .item-info { font-size: 12px; font-weight: 800; }
-        .item-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0; }
+        .item-info { font-size: 12px; font-weight: 800; color: var(--primary); }
+        .item-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
         .qty-controls { display: flex; align-items: center; gap: 8px; }
-        .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 24px; height: 24px; border-radius: 6px; font-weight: 900; cursor: pointer; }
+        .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 26px; height: 26px; border-radius: 8px; font-weight: 900; cursor: pointer; }
         .empty-msg { text-align: center; color: var(--text-muted); padding: 20px 0; font-size: 12px; }
 
-        .summary-box { border-top: 1px solid var(--border-color); padding-top: 8px; padding-bottom: 4px; display: flex; flex-direction: column; gap: 4px; }
+        .summary-box { border-top: 1px solid var(--border-color); padding-top: 10px; padding-bottom: 4px; display: flex; flex-direction: column; gap: 6px; }
         .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
-        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+        /* Fixed checkout form layout: stacked vertically with clear spacing and pleasant accent styling */
+        .checkout-form { border-top: 1px solid var(--border-color); padding-top: 12px; display: none; flex-direction: column; gap: 10px; margin-top: 8px; }
+        .checkout-form.active { display: flex; }
+        .form-group { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+        .form-label { font-size: 11px; font-weight: 800; color: var(--primary); }
+        .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 12px; outline: none; background: #f8fafc; color: var(--primary); transition: border-color 0.2s; }
+        .form-input:focus { border-color: var(--accent); background: #ffffff; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+
+        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
         .modal-total-label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .modal-total-amount { font-size: 17px; font-weight: 900; color: var(--primary); }
+        .modal-total-amount { font-size: 18px; font-weight: 900; color: var(--accent); }
+        .btn-modal-telegram { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); transition: opacity 0.2s; }
+        .btn-modal-telegram:active { opacity: 0.9; }
     </style>
 </head>
 <body>
@@ -254,6 +265,7 @@
         </div>
     </div>
 
+    <!-- Cart Modal (Only items and summary, no order form) -->
     <div class="modal-overlay" id="cartModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -277,7 +289,7 @@
         </div>
     </div>
 
-    <!-- Checkout Modal / Form Container -->
+    <!-- Checkout Modal (Shows form fields vertically when Order Now is clicked) -->
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -285,13 +297,26 @@
                 <button class="btn-close" onclick="toggleCheckoutModal()">✕</button>
             </div>
             
-            <div class="checkout-form active" style="display: flex;">
-                <div class="form-group"><label class="form-label" data-key="label_name">ឈ្មោះរបស់អ្នក (Name)</label><input type="text" id="custName" class="form-input" placeholder="បំពេញឈ្មោះ..."></div>
-                <div class="form-group"><label class="form-label" data-key="label_phone">លេខទូរស័ព្ទ (Phone Number)</label><input type="tel" id="custPhone" class="form-input" placeholder="បំពេញលេខទូរស័ព្ទ..."></div>
-                <div class="form-group"><label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label><input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង..."></div>
+            <div class="checkout-form active">
+                <div class="form-group">
+                    <label class="form-label" data-key="label_name">ឈ្មោះរបស់អ្នក (Name)</label>
+                    <input type="text" id="custName" class="form-input" placeholder="បំពេញឈ្មោះ...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-key="label_phone">លេខទូរស័ព្ទ (Phone Number)</label>
+                    <input type="tel" id="custPhone" class="form-input" placeholder="បំពេញលេខទូរស័ព្ទ...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label>
+                    <input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង...">
+                </div>
             </div>
 
             <div class="modal-footer" style="display: flex; margin-top: 15px;">
+                <div class="modal-total-row">
+                    <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
+                    <span class="modal-total-amount" id="checkout-total-price">$0.00</span>
+                </div>
                 <button onclick="openTelegram()" class="btn-modal-telegram"><span data-key="btn_order_now">Order Now</span></button>
             </div>
         </div>
@@ -513,6 +538,7 @@
             document.getElementById('subtotal-amount').innerText = '$' + subtotalPrice.toFixed(2);
             document.getElementById('total-price').innerText = '$' + grandTotal.toFixed(2);
             document.getElementById('modal-total-price').innerText = '$' + grandTotal.toFixed(2);
+            document.getElementById('checkout-total-price').innerText = '$' + grandTotal.toFixed(2);
         }
 
         function openTelegram() {
