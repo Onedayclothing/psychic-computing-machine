@@ -147,16 +147,15 @@
         </div>
     </div>
 
-    <!-- 3. Professional Dropdown / Accordion Menu Bar -->
+    <!-- 3. Professional Dropdown / Accordion Menu Bar (ដកប៊ូតុង "ទាំងអស់" ចេញ និងបង្ហាញត្រឹម បុរស/នារី) -->
     <div class="menu-wrapper">
         <div class="categories">
-            <button class="cat-btn" onclick="selectMainCategory('men')" data-key="cat_men">បុរស (Men)</button>
-            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី (Women)</button>
-            <button class="cat-btn active" onclick="selectMainCategory('all')" data-key="cat_all">ទាំងអស់ (All)</button>
+            <button class="cat-btn active" onclick="selectMainCategory('men')" data-key="cat_men">បុរស</button>
+            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី</button>
         </div>
 
         <!-- Sub-options for Men -->
-        <div class="sub-categories" id="sub-men">
+        <div class="sub-categories active" id="sub-men">
             <button class="sub-btn active" onclick="selectSubCategory('men', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'tops', this)" data-key="cat_tops">អាវ</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'pants', this)" data-key="cat_pants">ខោ</button>
@@ -291,15 +290,14 @@
     <script>
         let currentLang = 'km';
         let cart = {};
-        let currentGender = 'all';
+        let currentGender = 'men'; // Default to men
         let currentType = 'all';
 
         const translations = {
             km: {
                 cover_title: "BUILD YOUR DREAM STYLE",
-                cat_all: "ទាំងអស់ (All)",
-                cat_men: "បុរស (Men)",
-                cat_women: "នារី (Women)",
+                cat_men: "បុរស",
+                cat_women: "នារី",
                 cat_tops: "អាវ",
                 cat_pants: "ខោ",
                 cat_outerwear: "អាវក្រៅ",
@@ -325,7 +323,6 @@
             },
             en: {
                 cover_title: "BUILD YOUR DREAM STYLE",
-                cat_all: "All",
                 cat_men: "Men",
                 cat_women: "Women",
                 cat_tops: "Tops",
@@ -353,7 +350,6 @@
             },
             zh: {
                 cover_title: "打造您的理想风格",
-                cat_all: "全部",
                 cat_men: "男装",
                 cat_women: "女装",
                 cat_tops: "上衣",
@@ -456,21 +452,22 @@
                 let cardGender = card.getAttribute('data-gender');
                 let cardType = card.getAttribute('data-type');
 
-                if (currentGender === 'all') {
-                    card.style.display = 'block';
-                } else if (currentGender === 'men' || currentGender === 'women') {
-                    if (cardGender === currentGender) {
-                        if (currentType === 'all' || cardType === currentType) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
+                if (cardGender === currentGender) {
+                    if (currentType === 'all' || cardType === currentType) {
+                        card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
                     }
+                } else {
+                    card.style.display = 'none';
                 }
             });
         }
+
+        // Run initial filter to show men products by default
+        window.onload = function() {
+            filterProducts();
+        };
 
         function addToCart(titleKey, price, cardId) {
             let card = document.getElementById(cardId);
