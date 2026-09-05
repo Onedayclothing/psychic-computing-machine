@@ -77,7 +77,6 @@
         .size-btn { border: 1px solid var(--border-color); background: #f8fafc; padding: 6px 0; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; color: var(--primary); }
         .size-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-        /* រចនាប័ទ្មអក្សរបង្ហាញស្តុកតូចក្រោម Size */
         .stock-hint-box { font-size: 10px; color: var(--text-muted); font-weight: 700; text-align: center; margin-bottom: 8px; min-height: 15px; }
         .stock-hint-box span { color: var(--accent); font-weight: 900; }
 
@@ -480,7 +479,6 @@
             openModal('checkoutModal');
         }
 
-        // មុខងារទាញទិន្នន័យស្តុកភ្លាមៗពេលបើកវេបសាយ និងពេលចុច Size
         async function fetchLiveStock(cardId, refText, selectedSize) {
             let hintSpan = document.querySelector(`#stock-hint-${cardId} span`);
             if (hintSpan) hintSpan.innerText = "...";
@@ -582,7 +580,6 @@
             });
         }
 
-        // ដំណើរការពេលចូលវេបសាយដំបូង ដើម្បីបង្ហាញស្តុក Size M ដែលរើសស្រាប់
         window.onload = function() {
             filterProducts();
             fetchLiveStock('prod-1', 'Ref: 1', 'M');
@@ -596,14 +593,13 @@
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
             let stockKey = `${refText}_${selectedSize}`;
 
-            // ទាញស្តុកចុងក្រោយម្តងទៀតមុនបញ្ជាក់ការទិញ
             await fetchLiveStock(cardId, refText, selectedSize);
 
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
 
-            if (currentStock === 0 || currentQtyInCart >= currentStock) {
-                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) ក្នុង Google Sheet អស់ស្តុកហើយ (ចំនួនស្តុក: ${currentStock})។`);
+            if (currentStock === 0 || (currentQtyInCart + 1) > currentStock) {
+                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) ទិញបានតែ ${currentStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${currentStock}។`);
                 return;
             }
 
@@ -622,7 +618,7 @@
                 let availableStock = stockData[itemKey] !== undefined ? stockData[itemKey] : 0;
 
                 if (delta > 0 && newQty > availableStock) {
-                    alert(`សូមអភ័យទោស! ស្តុកក្នុង Google Sheet មានត្រឹមតែ ${availableStock} ប៉ុណ្ណោះ។`);
+                    alert(`សូមអភ័យទោស! ទំនិញនេះទិញបានតែ ${availableStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${availableStock}។`);
                     return;
                 }
 
