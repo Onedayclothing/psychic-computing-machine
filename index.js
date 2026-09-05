@@ -8,7 +8,6 @@ bot.command(['stock', 'list'], (ctx) => {
     resp += "🔹 **ផ្នែក បុរស**\n";
     resp += "• **អាវ**\n\n";
 
-    // Mapping រវាងកូដ Ref និងឈ្មោះផលិតផលនៅលើ Website
     const productNames = {
         "182": "T-Shirt Polo Collab OneDay",
         "183": "Olive Green Mandarin Collar Long-Sleeve Shirt"
