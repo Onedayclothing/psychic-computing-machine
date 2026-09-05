@@ -41,25 +41,22 @@
         .sub-title { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
         .main-title { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
 
-        /* Professional Dropdown / Accordion Menu Bar */
+        /* Premium Menu & Option Selectors */
         .menu-wrapper { padding: 0 16px 16px; max-width: 420px; margin: 0 auto; }
-        
-        /* Main Category Segmented Control */
-        .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 10px; }
+        .categories { display: flex; background: #e2e8f0; padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 12px; }
         .cat-btn { flex: 1; background: transparent; border: none; padding: 10px 0; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.3s ease; }
         .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        /* Sub-Categories (Tops, Pants, Outerwear) */
-        .sub-categories { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; animation: fadeIn 0.3s ease; }
+        .sub-categories { display: none; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
         .sub-categories.active { display: flex; }
-        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
-        .sub-btn:hover { border-color: var(--accent); color: var(--primary); }
+        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 16px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
         .sub-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(15,23,42,0.2); }
 
         /* Product Container & Cards */
         .container { max-width: 420px; margin: 0 auto; padding: 0 16px; }
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
         
+        /* កែប្រែត្រង់នេះ៖ ប្រើ contain និង background ស ដើម្បីបង្ហាញពេញរូបរាង មិនឱ្យដាច់ក្បាល់ */
         .img-box { background: #ffffff; height: 380px; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 14px; border: 1px solid #f1f5f9; position: relative; }
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; }
         
@@ -85,7 +82,7 @@
         .bar-content { max-width: 400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
         .total-price { font-size: 19px; font-weight: 900; color: var(--primary); }
         .total-label { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-        .btn-telegram { background: var(--accent); color: white; border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); transition: transform 0.1s; cursor: pointer; }
+        .btn-telegram { background: var(--accent); color: white; border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); transition: transform 0.1s; }
         .btn-telegram:active { transform: scale(0.96); }
 
         /* Slide-up Cart Modal Drawer */
@@ -111,11 +108,11 @@
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
         .modal-total-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
         .modal-total-amount { font-size: 20px; font-weight: 900; color: var(--primary); }
-        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 14px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); cursor: pointer; }
+        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 14px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -147,22 +144,21 @@
         </div>
     </div>
 
-    <!-- 3. Professional Menu Bar -->
+    <!-- 3. Category & Sub-Category Menu Bar -->
     <div class="menu-wrapper">
         <div class="categories">
-            <button class="cat-btn active" onclick="selectMainCategory('men')" data-key="cat_men">បុរស</button>
-            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី</button>
+            <button class="cat-btn" onclick="selectMainCategory('men')" data-key="cat_men">បុរស (Men)</button>
+            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី (Women)</button>
+            <button class="cat-btn active" onclick="selectMainCategory('all')" data-key="cat_all">ទាំងអស់ (All)</button>
         </div>
 
-        <!-- Sub-options for Men -->
-        <div class="sub-categories active" id="sub-men">
+        <div class="sub-categories" id="sub-men">
             <button class="sub-btn active" onclick="selectSubCategory('men', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'tops', this)" data-key="cat_tops">អាវ</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'pants', this)" data-key="cat_pants">ខោ</button>
             <button class="sub-btn" onclick="selectSubCategory('men', 'outerwear', this)" data-key="cat_outerwear">អាវក្រៅ</button>
         </div>
 
-        <!-- Sub-options for Women -->
         <div class="sub-categories" id="sub-women">
             <button class="sub-btn active" onclick="selectSubCategory('women', 'all', this)" data-key="sub_all">ទាំងអស់</button>
             <button class="sub-btn" onclick="selectSubCategory('women', 'tops', this)" data-key="cat_tops">អាវ</button>
@@ -173,11 +169,11 @@
 
     <!-- 4. Main Product Container Area -->
     <div class="container">
-        <!-- ===== PRODUCT CARD 1 (Men - Tops) - រូបភាពថ្មី IMG_5604.jpeg ===== -->
+        <!-- ===== PRODUCT CARD 1 (Men - Tops) ===== -->
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge" data-key="badge_bestseller">Bestseller</span>
             <div class="img-box">
-                <img src="IMG_5604.jpeg" alt="T-Shirt Polo Collab OneDay">
+                <img src="5C81E760-6028-4B66-9ABF-E29488F99C5C.jpeg" alt="T-Shirt Polo Collab OneDay">
             </div>
 
             <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
@@ -258,7 +254,7 @@
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <button onclick="openTelegram()" class="btn-telegram">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></button>
+            <a href="https://t.me/OneDayClothingAgent" id="telegram-link" class="btn-telegram" target="_blank">📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span></a>
         </div>
     </div>
 
@@ -279,9 +275,9 @@
                     <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
                     <span class="modal-total-amount" id="modal-total-price">$0.00</span>
                 </div>
-                <button onclick="openTelegram()" class="btn-modal-telegram">
+                <a href="https://t.me/OneDayClothingAgent" id="modal-telegram-link" class="btn-modal-telegram" target="_blank">
                     📲 <span data-key="btn_order_telegram">កុម្មង់ទិញតាម Telegram</span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -290,12 +286,13 @@
     <script>
         let currentLang = 'km';
         let cart = {};
-        let currentGender = 'men';
+        let currentGender = 'all';
         let currentType = 'all';
 
         const translations = {
             km: {
                 cover_title: "BUILD YOUR DREAM STYLE",
+                cat_all: "ទាំងអស់",
                 cat_men: "បុរស",
                 cat_women: "នារី",
                 cat_tops: "អាវ",
@@ -323,6 +320,7 @@
             },
             en: {
                 cover_title: "BUILD YOUR DREAM STYLE",
+                cat_all: "All",
                 cat_men: "Men",
                 cat_women: "Women",
                 cat_tops: "Tops",
@@ -350,6 +348,7 @@
             },
             zh: {
                 cover_title: "打造您的理想风格",
+                cat_all: "全部",
                 cat_men: "男装",
                 cat_women: "女装",
                 cat_tops: "上衣",
@@ -452,21 +451,21 @@
                 let cardGender = card.getAttribute('data-gender');
                 let cardType = card.getAttribute('data-type');
 
-                if (cardGender === currentGender) {
-                    if (currentType === 'all' || cardType === currentType) {
-                        card.style.display = 'block';
+                if (currentGender === 'all') {
+                    card.style.display = 'block';
+                } else if (currentGender === 'men' || currentGender === 'women') {
+                    if (cardGender === currentGender) {
+                        if (currentType === 'all' || cardType === currentType) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     } else {
                         card.style.display = 'none';
                     }
-                } else {
-                    card.style.display = 'none';
                 }
             });
         }
-
-        window.onload = function() {
-            filterProducts();
-        };
 
         function addToCart(titleKey, price, cardId) {
             let card = document.getElementById(cardId);
@@ -534,27 +533,26 @@
             document.getElementById('items-count').innerText = totalItems;
             document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
             document.getElementById('modal-total-price').innerText = '$' + totalPrice.toFixed(2);
+
+            updateTelegramLink(totalPrice);
         }
 
-        function openTelegram() {
+        function updateTelegramLink(totalPrice) {
             let telegramUsername = "OneDayClothingAgent";
             let message = `${translations[currentLang].msg_hello}\n`;
             let index = 1;
-            let totalPrice = 0;
 
             for (let key in cart) {
                 let item = cart[key];
-                let itemTotal = item.price * item.qty;
-                totalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
-                message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${itemTotal.toFixed(2)}\n`;
+                message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${(item.price * item.qty).toFixed(2)}\n`;
                 index++;
             }
             message += `\n${translations[currentLang].msg_total}: $${totalPrice.toFixed(2)}`;
 
             let encodedMessage = encodeURIComponent(message);
-            let webUrl = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
-            window.location.href = webUrl;
+            document.getElementById('telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
+            document.getElementById('modal-telegram-link').href = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
         }
     </script>
 
