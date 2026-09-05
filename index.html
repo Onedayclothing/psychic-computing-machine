@@ -88,34 +88,38 @@
         /* Slide-up Cart Modal Drawer */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; animation: fadeIn 0.3s ease; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-height: 80vh; overflow-y: auto; max-width: 480px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .modal-content { background: white; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; max-width: 480px; width: 100%; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px; }
         .modal-title { font-size: 16px; font-weight: 900; }
         .btn-close { background: #f1f5f9; border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .btn-close:hover { background: #e2e8f0; }
 
         /* Cart Items Display List */
-        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 14px; max-height: 200px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 10px 0; }
+        #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 160px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f8fafc; padding: 8px 0; }
         .item-info { font-size: 12px; font-weight: 800; }
         .item-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
         .qty-controls { display: flex; align-items: center; gap: 8px; }
         .btn-qty { background: var(--accent-light); color: var(--accent); border: none; width: 24px; height: 24px; border-radius: 6px; font-weight: 900; cursor: pointer; transition: transform 0.1s; }
         .btn-qty:active { transform: scale(0.9); }
-        .empty-msg { text-align: center; color: var(--text-muted); padding: 25px 0; font-size: 12px; font-weight: 600; }
+        .empty-msg { text-align: center; color: var(--text-muted); padding: 20px 0; font-size: 12px; font-weight: 600; }
+
+        /* Summary breakdown list */
+        .summary-box { border-top: 1px solid var(--border-color); padding-top: 8px; padding-bottom: 4px; display: flex; flex-direction: column; gap: 4px; }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 700; }
 
         /* Checkout Form Inputs Styles */
-        .checkout-form { border-top: 1px solid var(--border-color); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
-        .form-group { display: flex; flex-direction: column; gap: 4px; }
-        .form-label { font-size: 11px; font-weight: 800; color: var(--primary); }
-        .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 12px; outline: none; background: #f8fafc; transition: border-color 0.2s; }
+        .checkout-form { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+        .form-group { display: flex; flex-direction: column; gap: 3px; }
+        .form-label { font-size: 10px; font-weight: 800; color: var(--primary); }
+        .form-input { width: 100%; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 11px; outline: none; background: #f8fafc; transition: border-color 0.2s; }
         .form-input:focus { border-color: var(--accent); background: #ffffff; }
 
-        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .modal-footer { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
-        .modal-total-label { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .modal-total-amount { font-size: 18px; font-weight: 900; color: var(--primary); }
-        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 13px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
+        .modal-total-label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .modal-total-amount { font-size: 17px; font-weight: 900; color: var(--primary); }
+        .btn-modal-telegram { width: 100%; background: var(--accent); color: white; border: none; padding: 11px; border-radius: 10px; font-weight: 800; font-size: 12px; text-decoration: none; text-align: center; display: block; box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3); cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
         .btn-modal-telegram:active { transform: scale(0.98); }
 
         @keyframes fadeIn {
@@ -277,7 +281,7 @@
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
                 <div class="total-price" id="total-price">$0.00</div>
             </div>
-            <button onclick="toggleCartModal()" class="btn-telegram">🛒 <span data-key="btn_order_now">Order Now</span></button>
+            <button onclick="toggleCartModal()" class="btn-telegram"><span data-key="btn_order_now">Order Now</span></button>
         </div>
     </div>
 
@@ -293,6 +297,18 @@
                 <div class="empty-msg" data-key="empty_cart">មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ</div>
             </div>
 
+            <!-- Price Breakdown Summary (Subtotal, Delivery Fee) -->
+            <div class="summary-box" id="summary-box" style="display: none;">
+                <div class="summary-row">
+                    <span data-key="subtotal_label">តម្លៃទំនិញ</span>
+                    <span id="subtotal-amount">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span data-key="delivery_label">ថ្លៃដឹក (Delivery Fee)</span>
+                    <span>$2.00</span>
+                </div>
+            </div>
+
             <!-- Customer Details Form (Name, Phone, Location) -->
             <div class="checkout-form" id="checkout-form-section" style="display: none;">
                 <div class="form-group">
@@ -305,17 +321,17 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label>
-                    <input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង ឬ כתบ...">
+                    <input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង...">
                 </div>
             </div>
 
             <div class="modal-footer" id="modal-footer" style="display: none;">
                 <div class="modal-total-row">
-                    <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
+                    <span class="modal-total-label" data-key="total_label">តម្លៃសរុប (รวม)</span>
                     <span class="modal-total-amount" id="modal-total-price">$0.00</span>
                 </div>
                 <button onclick="openTelegram()" class="btn-modal-telegram">
-                    📲 <span data-key="btn_order_now">Order Now</span>
+                    <span data-key="btn_order_now">Order Now</span>
                 </button>
             </div>
         </div>
@@ -327,6 +343,7 @@
         let cart = {};
         let currentGender = 'men';
         let currentType = 'all';
+        const deliveryFee = 2.00; // ថ្លៃដឹក định dạng $2
 
         const translations = {
             km: {
@@ -348,7 +365,9 @@
                 p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង",
                 select_size: "SIZE",
                 add_to_cart: "ដាក់ចូលកន្ត្រក",
-                total_label: "សរុប",
+                total_label: "តម្លៃសរុប",
+                subtotal_label: "តម្លៃទំនិញ",
+                delivery_label: "ថ្លៃដឹក (Delivery Fee)",
                 items_unit: "មុខ",
                 btn_order_now: "Order Now",
                 cart_title: "ទំនិញក្នុងកន្ត្រករបស់អ្នក",
@@ -357,10 +376,12 @@
                 label_phone: "លេខទូរស័ព្ទ (Phone Number)",
                 label_address: "ទីតាំងទទួលទំនិញ (Location)",
                 msg_hello: "ជម្រាបសួរ Oneday Clothing! ខ្ញុំចង់កុម្មង់ទិញ៖",
+                msg_subtotal: "តម្លៃទំនិញ",
+                msg_delivery: "ថ្លៃដឹកជញ្ជូន",
                 msg_name: "ឈ្មោះ",
                 msg_phone: "លេខទូរស័ព្ទ",
                 msg_address: "ទីតាំង",
-                msg_total: "តម្លៃសរុប",
+                msg_total: "តម្លៃសរុបទាំងអស់",
                 alert_fill: "សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងទីតាំងឱ្យបានត្រឹមត្រូវ!"
             },
             en: {
@@ -382,7 +403,9 @@
                 p3_desc: "Elegant women dress, perfect for casual outings.",
                 select_size: "SIZE",
                 add_to_cart: "Add to Cart",
-                total_label: "Total",
+                total_label: "Total Amount",
+                subtotal_label: "Subtotal",
+                delivery_label: "Delivery Fee",
                 items_unit: "items",
                 btn_order_now: "Order Now",
                 cart_title: "Your Shopping Cart",
@@ -391,10 +414,12 @@
                 label_phone: "Phone Number",
                 label_address: "Delivery Location",
                 msg_hello: "Hello Oneday Clothing! I would like to order:",
+                msg_subtotal: "Subtotal",
+                msg_delivery: "Delivery Fee",
                 msg_name: "Name",
                 msg_phone: "Phone",
                 msg_address: "Location",
-                msg_total: "Total Amount",
+                msg_total: "Grand Total",
                 alert_fill: "Please fill in your name, phone number, and location!"
             },
             zh: {
@@ -416,7 +441,9 @@
                 p3_desc: "时尚女士连衣裙，适合日常出行。",
                 select_size: "尺码",
                 add_to_cart: "加入购物车",
-                total_label: "合计",
+                total_label: "总金额",
+                subtotal_label: "商品小计",
+                delivery_label: "配送费 (Delivery Fee)",
                 items_unit: "件",
                 btn_order_now: "Order Now",
                 cart_title: "您的购物车",
@@ -425,10 +452,12 @@
                 label_phone: "联系电话",
                 label_address: "收货地址",
                 msg_hello: "您好 Oneday Clothing！我想订购以下商品：",
+                msg_subtotal: "商品小计",
+                msg_delivery: "配送费",
                 msg_name: "姓名",
                 msg_phone: "电话",
                 msg_address: "地址",
-                msg_total: "总金额",
+                msg_total: "总计",
                 alert_fill: "请填写您的姓名、电话和收货地址！"
             }
         };
@@ -553,15 +582,16 @@
             let cartList = document.getElementById('cart-list');
             let modalFooter = document.getElementById('modal-footer');
             let checkoutForm = document.getElementById('checkout-form-section');
+            let summaryBox = document.getElementById('summary-box');
             let totalItems = 0;
-            let totalPrice = 0;
+            let subtotalPrice = 0;
             let itemsHtml = '';
 
             for (let key in cart) {
                 let item = cart[key];
                 let itemTotal = item.price * item.qty;
                 totalItems += item.qty;
-                totalPrice += itemTotal;
+                subtotalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
 
                 itemsHtml += `
@@ -583,16 +613,21 @@
                 cartList.innerHTML = `<div class="empty-msg">${translations[currentLang].empty_cart}</div>`;
                 modalFooter.style.display = 'none';
                 checkoutForm.style.display = 'none';
+                summaryBox.style.display = 'none';
             } else {
                 cartList.innerHTML = itemsHtml;
                 modalFooter.style.display = 'flex';
                 checkoutForm.style.display = 'flex';
+                summaryBox.style.display = 'flex';
             }
+
+            let grandTotal = subtotalPrice > 0 ? subtotalPrice + deliveryFee : 0;
 
             document.getElementById('cart-count').innerText = totalItems;
             document.getElementById('items-count').innerText = totalItems;
-            document.getElementById('total-price').innerText = '$' + totalPrice.toFixed(2);
-            document.getElementById('modal-total-price').innerText = '$' + totalPrice.toFixed(2);
+            document.getElementById('subtotal-amount').innerText = '$' + subtotalPrice.toFixed(2);
+            document.getElementById('total-price').innerText = '$' + grandTotal.toFixed(2);
+            document.getElementById('modal-total-price').innerText = '$' + grandTotal.toFixed(2);
         }
 
         function openTelegram() {
@@ -607,22 +642,28 @@
 
             let telegramUsername = "OneDayClothingAgent";
             let t = translations[currentLang];
+            
+            // សារ Telegram ដែលគ្មាន Emoji ទាំងស្រុងតាមការស្នើសុំ
             let message = `${t.msg_hello}\n\n`;
             
             let index = 1;
-            let totalPrice = 0;
+            let subtotalPrice = 0;
 
             for (let key in cart) {
                 let item = cart[key];
                 let itemTotal = item.price * item.qty;
-                totalPrice += itemTotal;
+                subtotalPrice += itemTotal;
                 let localizedTitle = t[item.titleKey] || item.titleKey;
                 message += `${index}. ${localizedTitle} (Size: ${item.size}) x${item.qty} = $${itemTotal.toFixed(2)}\n`;
                 index++;
             }
 
-            message += `\n${t.msg_total}: $${totalPrice.toFixed(2)}`;
-            message += `\n\n📌 ព័ត៌មានអតិថិជន:\n👤 ${t.msg_name}: ${name}\n📞 ${t.msg_phone}: ${phone}\n📍 ${t.msg_address}: ${address}`;
+            let grandTotal = subtotalPrice + deliveryFee;
+
+            message += `\n- ${t.msg_subtotal}: $${subtotalPrice.toFixed(2)}`;
+            message += `\n- ${t.msg_delivery}: $${deliveryFee.toFixed(2)}`;
+            message += `\n- ${t.msg_total}: $${grandTotal.toFixed(2)}`;
+            message += `\n\n[ព័ត៌មានអតិថិជន]\n- ${t.msg_name}: ${name}\n- ${t.msg_phone}: ${phone}\n- ${t.msg_address}: ${address}`;
 
             let encodedMessage = encodeURIComponent(message);
             let webUrl = `https://t.me/${telegramUsername}?text=${encodedMessage}`;
