@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oneday Clothing | Premium Collection</title>
     
-    <!-- Google Fonts for Khmer Support -->
-    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Hanuman:wght@400;700&family=Suwannaphum:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts for Clean Khmer Support -->
+    <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -19,8 +19,8 @@
             --text-muted: #64748b;
         }
 
-        /* Fixed font-family to support Khmer text properly without breaking */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Battambang', 'Hanuman', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        /* Use Kantumruy Pro for clean Khmer text rendering without breaking */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kantumruy Pro', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
         nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; }
@@ -55,7 +55,7 @@
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; }
         
         .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.85); color: white; font-size: 9px; font-weight: 800; padding: 3px 6px; border-radius: 6px; z-index: 10; }
-        .prod-title { font-size: 12px; font-weight: 800; margin-bottom: 2px; min-height: 30px; line-height: 1.4; }
+        .prod-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; min-height: 30px; line-height: 1.4; }
         .prod-desc { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; min-height: 26px; line-height: 1.4; }
         .price { font-size: 15px; font-weight: 900; color: var(--accent); margin-bottom: 8px; }
 
@@ -158,7 +158,7 @@
             </div>
             <div>
                 <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
-                <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាបែប Collab ស្ាតសាមញ្ញ</div>
+                <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាម៉ូដទាន់សម័យ ងាយពាក់</div>
                 <div class="price">$15.00</div>
             </div>
             <div>
@@ -182,7 +182,7 @@
             </div>
             <div>
                 <div class="prod-title" data-key="p4_title">Olive Green Mandarin Collar Long-Sleeve Shirt</div>
-                <div class="prod-desc" data-key="p4_desc">អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្ាតប្រណិត</div>
+                <div class="prod-desc" data-key="p4_desc">អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្អាតប្រណិត</div>
                 <div class="price">$6.00</div>
             </div>
             <div>
@@ -206,7 +206,7 @@
             </div>
             <div>
                 <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
-                <div class="prod-desc" data-key="p2_desc">Outfit Smart Casual ដែលមើលទៅទាន់សម័យ</div>
+                <div class="prod-desc" data-key="p2_desc">ឈុតសម្លៀកបំពាក់ Smart Casual ទាន់សម័យ</div>
                 <div class="price">$20.00</div>
             </div>
             <div>
@@ -297,10 +297,10 @@
         const translations = {
             km: {
                 cover_title: "BUILD YOUR DREAM STYLE", cat_men: "បុរស", cat_women: "នារី", cat_tops: "អាវ", cat_pants: "ខោ", cat_outerwear: "អាវក្រៅ", sub_all: "ទាំងអស់",
-                p1_title: "T-Shirt Polo Collab OneDay", p1_desc: "អាវយឺត Polo រចនាបែប Collab សាមញ្ញ",
-                p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "Outfit Smart Casual ដែលមើលទៅទាន់សម័យ",
+                p1_title: "T-Shirt Polo Collab OneDay", p1_desc: "អាវយឺត Polo រចនាម៉ូដទាន់សម័យ ងាយពាក់",
+                p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "ឈុតសម្លៀកបំពាក់ Smart Casual ទាន់សម័យ",
                 p3_title: "Elegant Women Dress", p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង",
-                p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ប្រណិត",
+                p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្អាតប្រណិត",
                 select_size: "SIZE", add_to_cart: "ដាក់ចូលកន្ត្រក", total_label: "តម្លៃសរុប", subtotal_label: "តម្លៃទំនិញ", delivery_label: "ថ្លៃដឹក (Delivery Fee)",
                 items_unit: "មុខ", btn_order_now: "Order Now", cart_title: "ទំនិញក្នុងកន្ត្រករបស់អ្នក", empty_cart: "មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ",
                 label_name: "ឈ្មោះរបស់អ្នក (Name)", label_phone: "លេខទូរស័ព្ទ (Phone Number)", label_address: "ទីតាំងទទួលទំនិញ (Location)",
