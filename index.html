@@ -345,28 +345,17 @@
 
     <script>
         // ==========================================
-        // ប្រព័ន្ធគ្រប់គ្រងស្តុក (STOCK CONTROL DATABASE)
-        // អ្នកអាចកែប្រែចំនួនស្តុកខាងក្រោមនេះដោយផ្ទាល់
+        // ប្រព័ន្ធស្តុកស្វ័យប្រវត្តិ (Auto 0 Stock)
         // ==========================================
-        let stockData = {
-            "Ref: 1_S": 10,
-            "Ref: 1_M": 0,
-            "Ref: 1_L": 0,
-            "Ref: 1_XL": 0,  // ឧទាហរណ៍៖ ទំហំនេះអស់ស្តុក
-            "Ref: 1_XXL": 0,
-            
-            "Ref: 2_S": 6,
-            "Ref: 2_M": 12,
-            "Ref: 2_L": 4,
-            "Ref: 2_XL": 2,
-            "Ref: 2_XXL": 1,
-            
-            "Ref: 3_S": 5,
-            "Ref: 3_M": 10,
-            "Ref: 3_L": 5,
-            "Ref: 3_XL": 3,
-            "Ref: 3_XXL": 2
-        };
+        let stockData = {};
+
+        function getStockWithAutoRef(refText, size) {
+            let key = `${refText}_${size}`;
+            if (stockData[key] === undefined) {
+                stockData[key] = 0; // កំណត់ស្តុកដើមជា 0 ស្វ័យប្រវត្តិសម្រាប់ផលិតផលថ្មី
+            }
+            return stockData[key];
+        }
 
         let currentLang = 'km';
         let cart = {};
@@ -569,18 +558,17 @@
             filterProducts();
         };
 
-        // មុខងារដាក់ចូលកន្ត្រក ព្រមទាំងឆែកស្តុកស្វ័យប្រវត្តិ
         function addToCart(titleKey, price, cardId, refText) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
+            
+            let currentStock = getStockWithAutoRef(refText, selectedSize);
             let stockKey = `${refText}_${selectedSize}`;
-
-            let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
 
-            if (currentQtyInCart >= currentStock) {
-                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) អស់ស្តុកហើយ ឬលើសចំនួនក្នុងស្តុក (សល់ចំនួន: ${currentStock})។`);
+            if (currentStock === 0 || currentQtyInCart >= currentStock) {
+                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) អស់ស្តុកហើយ ឬលើសចំនួនក្នុងស្តុក (ចំនួនក្នុងស្តុក: ${currentStock})។`);
                 return;
             }
 
@@ -696,7 +684,7 @@
                 return;
             }
 
-            // កាត់ស្តុកចេញពី stockData ស្វ័យប្រវត្តពេលកុម្មង់สำเร็จ
+            // កាត់ស្តុកចេញស្វ័យប្រវត្តិពេលកុម្មង់สำเร็จ
             for (let key in cart) {
                 if (stockData[key] !== undefined) {
                     stockData[key] -= cart[key].qty;
