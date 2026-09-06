@@ -331,6 +331,34 @@
         .btn-modal-telegram { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
+        
+        /* Whoo Map Style Customizing */
+        .whoo-pin-pulse {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            background: #ff3b30;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 59, 48, 0.6), 0 8px 16px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .whoo-pin-pulse::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 59, 48, 0.4);
+            animation: pulseWhoo 1.8s infinite ease-out;
+            z-index: -1;
+        }
+        @keyframes pulseWhoo {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
     </style>
 
     <script>
@@ -664,32 +692,34 @@
         </div>
     </div>
 
-    <!-- Modal Interactive Map Picker (CartoDB Voyager Clean Theme) -->
+    <!-- Modal Interactive Map Picker (Whoo App Style - CartoDB Dark Matter) -->
     <div class="modal-overlay" id="mapPickerModal" style="z-index: 300;" onclick="handleModalClick(event, 'mapPickerModal')">
-        <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column;">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <span>📍 ជ្រើសរើសទីតាំងលើ Map</span>
+        <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column; background: #0b0f19; color: #ffffff;">
+            <div class="modal-header" style="border-bottom-color: #1e293b;">
+                <div class="modal-title" style="color: #ffffff;">
+                    <span>📍 ជ្រើសរើសទីតាំងលើ Map (Whoo Style)</span>
                 </div>
-                <button class="btn-close" onclick="closeModal('mapPickerModal')">✕</button>
+                <button class="btn-close" style="background: #1e293b; color: #94a3b8;" onclick="closeModal('mapPickerModal')">✕</button>
             </div>
             
-            <div style="position: relative; flex-grow: 1; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color);">
-                <div id="map" style="width: 100%; height: 100%;"></div>
+            <div style="position: relative; flex-grow: 1; border-radius: 20px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div id="map" style="width: 100%; height: 100%; background: #121621;"></div>
                 
-                <!-- Pin រូបក្រហមចំកណ្តាល Map + Shadow -->
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%); z-index: 1000; pointer-events: none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" style="width: 32px; height: 32px; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));">
+                <!-- Pin Whoo Pulse Effect ស្អាត Premium -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; pointer-events: none;">
+                    <div class="whoo-pin-pulse">
+                        <div style="width: 10px; height: 10px; background: white; border-radius: 50%;"></div>
+                    </div>
                 </div>
 
-                <!-- ប៊ូតុង GPS ទីតាំងបច្ចុប្បន្ន -->
-                <button onclick="locateUser()" style="position: absolute; bottom: 20px; right: 15px; z-index: 1000; background: var(--card-bg); border: 1px solid var(--border-color); width: 42px; height: 42px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                <!-- ប៊ូតុង GPS ទីតាំងបច្ចុប្បន្ន (Whoo Glassmorphism Theme) -->
+                <button onclick="locateUser()" style="position: absolute; bottom: 20px; right: 15px; z-index: 1000; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; width: 46px; height: 46px; border-radius: 50%; box-shadow: 0 8px 20px rgba(0,0,0,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px;">
                     🎯
                 </button>
             </div>
 
-            <div style="margin-top: 12px;">
-                <button onclick="confirmMapLocation()" class="btn-modal-telegram">
+            <div style="margin-top: 14px;">
+                <button onclick="confirmMapLocation()" class="btn-modal-telegram" style="background: linear-gradient(135deg, #ff3b30, #ff2d55); box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4); font-size: 14px; padding: 14px;">
                     បញ្ជាក់ទីតាំងនេះ
                 </button>
             </div>
@@ -874,14 +904,15 @@
             openModal('checkoutModal');
         }
 
-        /* Map Functions (CartoDB Voyager Premium Theme) */
+        /* Map Functions (Whoo App Style - CartoDB Dark Matter / No API Key) */
         function openMapModal() {
             openModal('mapPickerModal');
             setTimeout(() => {
                 if (!pickerMap) {
                     pickerMap = L.map('map', { zoomControl: false, attributionControl: false }).setView([currentCenter.lat, currentCenter.lng], 15);
                     
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    // CartoDB Dark Matter (Whoo App Vibe - Free & No API Key Needed)
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                         maxZoom: 19,
                         subdomains: 'abcd'
                     }).addTo(pickerMap);
