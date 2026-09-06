@@ -8,6 +8,10 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     
+    <!-- Leaflet CSS & JS សម្រាប់ Interactive Map Picker (Free 100%) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
         :root {
             --primary: #0f172a;
@@ -627,7 +631,12 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label>
-                    <input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង..." oninput="clearError(this)">
+                    <div style="display: flex; gap: 6px;">
+                        <input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង ឬជ្រើសរើសលើ Map..." oninput="clearError(this)">
+                        <button type="button" onclick="openMapModal()" style="background: var(--accent-light); color: var(--accent); border: 1px solid var(--border-color); padding: 0 10px; border-radius: 10px; font-weight:800; font-size:11px; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:4px;">
+                            📍 Map
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -647,6 +656,38 @@
         </div>
     </div>
 
+    <!-- Modal Interactive Map Picker ដូចក្នុង Grab/NHAM24 -->
+    <div class="modal-overlay" id="mapPickerModal" style="z-index: 300;" onclick="handleModalClick(event, 'mapPickerModal')">
+        <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span>📍 ជ្រើសរើសទីតាំងរបស់អ្នក</span>
+                </div>
+                <button class="btn-close" onclick="closeModal('mapPickerModal')">✕</button>
+            </div>
+            
+            <div style="position: relative; flex-grow: 1; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color);">
+                <div id="map" style="width: 100%; height: 100%;"></div>
+                
+                <!-- Pin រូបក្រហមចំកណ្តាល Map -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%); z-index: 1000; pointer-events: none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" style="width: 36px; height: 36px;">
+                </div>
+
+                <!-- ប៊ូតុង GPS ទីតាំងបច្ចុប្បន្ន -->
+                <button onclick="locateUser()" style="position: absolute; bottom: 20px; right: 15px; z-index: 1000; background: var(--card-bg); border: 1px solid var(--border-color); width: 42px; height: 42px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    🎯
+                </button>
+            </div>
+
+            <div style="margin-top: 12px;">
+                <button onclick="confirmMapLocation()" class="btn-modal-telegram">
+                    បញ្ជាក់ទីតាំងនេះ
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let stockData = {};
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvkD0AmmidUi0GfyOh0wAz0jdASv2Yt8bGIHznpGTQ3fkTnI7wc6w5D58-BanK0Nb3KAsqnM3He_Xn/pub?output=csv";
@@ -656,6 +697,9 @@
         let currentGender = 'men';
         let currentType = 'all';
         const deliveryFee = 2.00;
+
+        let pickerMap = null;
+        let currentCenter = { lat: 11.5564, lng: 104.9282 }; // ភ្នំពេញ (Default)
 
         const langFlags = {
             km: 'IMG_5833.png',
@@ -720,7 +764,6 @@
             }
         };
 
-        // System Dark Mode & Auto Switcher (Cambodia Time UTC+7)
         function checkAutoTheme() {
             let options = { timeZone: 'Asia/Phnom_Penh', hour: 'numeric', hour12: false };
             let cambodiaHour = parseInt(new Intl.DateTimeFormat([], options).format(new Date()));
@@ -823,6 +866,51 @@
             openModal('checkoutModal');
         }
 
+        /* Map Functions */
+        function openMapModal() {
+            openModal('mapPickerModal');
+            setTimeout(() => {
+                if (!pickerMap) {
+                    pickerMap = L.map('map', { zoomControl: false }).setView([currentCenter.lat, currentCenter.lng], 15);
+                    
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '© OpenStreetMap'
+                    }).addTo(pickerMap);
+
+                    pickerMap.on('move', function() {
+                        let center = pickerMap.getCenter();
+                        currentCenter = { lat: center.lat, lng: center.lng };
+                    });
+                } else {
+                    pickerMap.invalidateSize();
+                }
+            }, 200);
+        }
+
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    let lat = position.coords.latitude;
+                    let lng = position.coords.longitude;
+                    currentCenter = { lat: lat, lng: lng };
+                    if (pickerMap) {
+                        pickerMap.setView([lat, lng], 17);
+                    }
+                }, function() {
+                    alert("មិនអាចទាញយក GPS បានទេ សូមបើក Location Service លើទូរស័ព្ទ!");
+                });
+            }
+        }
+
+        function confirmMapLocation() {
+            let mapUrl = `https://maps.google.com/?q=${currentCenter.lat.toFixed(6)},${currentCenter.lng.toFixed(6)}`;
+            document.getElementById('custAddress').value = mapUrl;
+            clearError(document.getElementById('custAddress'));
+            closeModal('mapPickerModal');
+        }
+
+        /* Stock CSV Functions */
         async function loadCSVData() {
             try {
                 let response = await fetch(csvUrl + "&t=" + new Date().getTime());
