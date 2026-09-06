@@ -206,7 +206,7 @@
                     <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">XL</button>
                     <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">XXL</button>
                 </div>
-                <div class="stock-hint-box" id="stock-hint-prod-1">ស្តុកនៅសល់: <span>...</span></div>
+                <div class="stock-hint-box" id="stock-hint-prod-1"><span id="stock-text-prod-1">ស្តុកនៅសល់: </span><span>...</span></div>
                 <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1', 'Ref: 1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
@@ -230,7 +230,7 @@
                     <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">XL</button>
                     <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">XXL</button>
                 </div>
-                <div class="stock-hint-box" id="stock-hint-prod-4">ស្តុកនៅសល់: <span>...</span></div>
+                <div class="stock-hint-box" id="stock-hint-prod-4"><span id="stock-text-prod-4">ស្តុកនៅសល់: </span><span>...</span></div>
                 <button class="btn-add" onclick="addToCart('p4_title', 6.00, 'prod-4', 'Ref: 2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
@@ -254,7 +254,7 @@
                     <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">XL</button>
                     <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">XXL</button>
                 </div>
-                <div class="stock-hint-box" id="stock-hint-prod-2">ស្តុកនៅសល់: <span>...</span></div>
+                <div class="stock-hint-box" id="stock-hint-prod-2"><span id="stock-text-prod-2">ស្តុកនៅសល់: </span><span>...</span></div>
                 <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2', 'Ref: 3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
@@ -480,8 +480,11 @@
         }
 
         async function fetchLiveStock(cardId, refText, selectedSize) {
-            let hintSpan = document.querySelector(`#stock-hint-${cardId} span`);
-            if (hintSpan) hintSpan.innerText = "";
+            let stockBox = document.getElementById(`stock-hint-${cardId}`);
+            let textSpan = document.getElementById(`stock-text-${cardId}`);
+            let numSpan = stockBox.querySelector('span:last-child');
+            
+            if (numSpan) numSpan.innerText = "...";
 
             try {
                 let response = await fetch(csvUrl + "&t=" + new Date().getTime());
@@ -507,12 +510,15 @@
             let stockKey = `${refText}_${selectedSize}`;
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             
-            if (hintSpan) {
+            if (stockBox && textSpan && numSpan) {
                 if (currentStock === '.') {
-                    hintSpan.innerText = "";
+                    textSpan.style.display = "none";
+                    numSpan.innerText = "";
                 } else {
-                    hintSpan.innerText = currentStock > 0 ? `${currentStock} (មានក្នុងស្តុក)` : "អស់ស្តុក (Out of stock)";
-                    hintSpan.style.color = currentStock > 0 ? "#0284c7" : "#ef4444";
+                    textSpan.style.display = "inline";
+                    textSpan.innerText = "ស្តុកនៅសល់: ";
+                    numSpan.innerText = currentStock > 0 ? `${currentStock} (មានក្នុងស្តុក)` : "អស់ស្តុក (Out of stock)";
+                    numSpan.style.color = currentStock > 0 ? "#0284c7" : "#ef4444";
                 }
             }
         }
