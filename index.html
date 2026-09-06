@@ -2,7 +2,8 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <!-- បិទមិនឱ្យ Zoom In (ពង្រីក) បានឡើយ ប៉ុន្តែទំព័រនៅតែបង្ហាញទំហំ Standard ធម្មតា -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Oneday Clothing | Premium Collection</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
@@ -332,20 +333,6 @@
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         }, false);
-
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-
-        document.addEventListener('gesturechange', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-
-        document.addEventListener('touchmove', function(e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
     </script>
 </head>
 <body>
@@ -741,7 +728,6 @@
             let options = { timeZone: 'Asia/Phnom_Penh', hour: 'numeric', hour12: false };
             let cambodiaHour = parseInt(new Intl.DateTimeFormat([], options).format(new Date()));
             
-            // 7 PM (19:00) ដល់ 6 AM (06:00) -> Night Mode
             if (cambodiaHour >= 19 || cambodiaHour < 6) {
                 setTheme(true);
             } else {
@@ -753,10 +739,10 @@
             let img = document.getElementById('themeImg');
             if (isDark) {
                 document.body.classList.add('dark-mode');
-                if (img) img.src = 'IMG_5829.png'; // Day mode icon when in dark theme
+                if (img) img.src = 'IMG_5829.png'; 
             } else {
                 document.body.classList.remove('dark-mode');
-                if (img) img.src = 'IMG_5830.png'; // Night mode icon when in light theme
+                if (img) img.src = 'IMG_5830.png'; 
             }
         }
 
@@ -768,7 +754,6 @@
         function changeLanguage(lang) {
             currentLang = lang;
             
-            // Update Flag Image based on selected language
             let flagImg = document.getElementById('langFlagImg');
             if (flagImg && langFlags[lang]) {
                 flagImg.src = langFlags[lang];
