@@ -18,12 +18,19 @@
             --text-muted: #64748b;
         }
 
-        /* ប្រើ pan-x pan-y ដើមី្បឱ្យការ Zoom Out បង្រួម និង Scroll ដើរទន់ស្រួលបំផុត */
-        html, body {
-            touch-action: pan-x pan-y;
+        /* ប្រើប្រាស់ pinch-zoom និង pan-x pan-y ដើមី្បឱ្យ iOS Safari ធ្វើការ Zoom Out និង Swipe Switch Web ស្រួល 10000% */
+        html {
+            touch-action: pan-x pan-y pinch-zoom;
             -webkit-text-size-adjust: 100%;
-            overflow-x: hidden;
             width: 100%;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary);
+            padding-bottom: 120px;
+            width: 100%;
+            overflow-x: clip; /* ការពារ Overflow ដោយមិន blocking native touch scroll */
         }
 
         * { 
@@ -34,9 +41,7 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
-        body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
-
-        /* បង្ខំ Font size 16px លើ Input ការពារ iOS Safari អូតូ Zoom In ពេលវាយអក្សរ */
+        /* ការពារ iOS Safari អូតូ Zoom In ពេលចុចលើ Input */
         input, select, textarea {
             font-size: 16px !important;
         }
@@ -157,34 +162,6 @@
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
     </style>
-
-    <script>
-        // ស្ទាក់ Block តែពេលអ្នកប្រើយកម្រាមដៃពីរមក Zoom In (Scale > 1) តែប៉ុណ្ណោះ 
-        // ទុកឱ្យ Zoom Out (Scale < 1) ដើរស្រួល ១០០% ហើយមិនប៉ះពាល់ដល់ Button Click ឡើយ
-        document.addEventListener('gesturechange', function(e) {
-            if (e.scale > 1.0) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        document.addEventListener('gesturestart', function(e) {
-            if (e.scale > 1.0) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // ប្រព័ន្ធការពារស្វ័យប្រវត្តិតាមដាន Viewport Size
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', function() {
-                if (window.visualViewport.scale > 1.0) {
-                    const metaViewport = document.querySelector('meta[name="viewport"]');
-                    if (metaViewport) {
-                        metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-                    }
-                }
-            });
-        }
-    </script>
 </head>
 <body>
 
