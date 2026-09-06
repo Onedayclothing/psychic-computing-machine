@@ -24,7 +24,6 @@
             overflow-x: hidden;
             width: 100%;
             position: relative;
-            /* បិទការ Select អក្សរ និងរូបភាពទូទាំង Web */
             -webkit-user-select: none;
             user-select: none;
         }
@@ -62,7 +61,6 @@
         .cover-slider::-webkit-scrollbar { display: none; }
         .cover-slide-item { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
         
-        /* Overlay ការពារការ Long Press / Download លើ Cover Video */
         .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
         .cover-image-box::after {
             content: "";
@@ -94,7 +92,6 @@
         .container { max-width: 480px; margin: 0 auto; padding: 0 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
-        /* Overlay ការពារការ Long Press / Download លើ Product Image Box */
         .img-box { background: #f8fafc; aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #e2e8f0; position: relative; }
         .img-box::after {
             content: "";
@@ -179,7 +176,6 @@
     </style>
 
     <script>
-        // បិទ Context Menu (Menu សង្កត់ជាប់លើ Android/iOS/PC) ដើមី្បការពារការ Download
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         }, false);
@@ -235,12 +231,12 @@
         <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
             <div class="cover-slide-item">
                 <div class="cover-image-box">
-                    <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline controlslist="nodownload" oncontextmenu="return false;" data-src="VID_20260905221119531.mp4"></video>
                 </div>
             </div>
             <div class="cover-slide-item">
                 <div class="cover-image-box">
-                    <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline controlslist="nodownload" oncontextmenu="return false;" data-src="gemini_generated_video_1CCC7921.mp4"></video>
                 </div>
             </div>
         </div>
@@ -279,7 +275,7 @@
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge">Ref: 1</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Man_walking_in_fashion_studio_202608272139.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline controlslist="nodownload" oncontextmenu="return false;" data-src="Man_walking_in_fashion_studio_202608272139.mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
@@ -303,7 +299,7 @@
         <div class="card" id="prod-4" data-gender="men" data-type="tops">
             <span class="badge">Ref: 2</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Model_walking_in_fashion_studio_202608272237.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline controlslist="nodownload" oncontextmenu="return false;" data-src="Model_walking_in_fashion_studio_202608272237.mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p4_title">Olive Green Mandarin Collar Long-Sleeve Shirt</div>
@@ -327,7 +323,7 @@
         <div class="card" id="prod-2" data-gender="men" data-type="tops">
             <span class="badge">Ref: 3</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline controlslist="nodownload" oncontextmenu="return false;" data-src="Male_model_walking_in_studio_202608271814.mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
@@ -351,7 +347,7 @@
         <div class="card" id="prod-5" data-gender="women" data-type="tops">
             <span class="badge">Ref: 4</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Woman_modeling_shirt_360_rotation_202609061421.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline controlslist="nodownload" oncontextmenu="return false;" data-src="Woman_modeling_shirt_360_rotation_202609061421.mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p5_title">Plaid Sailor Collar Blouse</div>
@@ -525,6 +521,18 @@
                 alert_phone_invalid: "请输入有效的电话号码（至少8位数）！"
             }
         };
+
+        // Function ការពារ Video Sniffer ដោយបម្លែងទៅជា Blob
+        async function loadProtectedVideo(videoElement, videoSrc) {
+            try {
+                const response = await fetch(videoSrc);
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                videoElement.src = blobUrl;
+            } catch (e) {
+                videoElement.src = videoSrc;
+            }
+        }
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -708,6 +716,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Load Protected Blob Videos
+            const videos = document.querySelectorAll('video[data-src]');
+            videos.forEach(v => {
+                loadProtectedVideo(v, v.getAttribute('data-src'));
+            });
+
             filterProducts();
             fetchLiveStock('prod-1', 'Ref: 1', 'M');
             fetchLiveStock('prod-4', 'Ref: 2', 'M');
