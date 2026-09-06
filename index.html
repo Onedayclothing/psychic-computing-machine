@@ -83,7 +83,6 @@
         .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: background 0.2s; }
         .btn-add:active { background: var(--accent); }
 
-        /* Animation Fly to Cart Effect */
         .fly-item {
             position: fixed;
             z-index: 9999;
@@ -221,7 +220,7 @@
                     <button class="size-btn" onclick="selectSize(this, 'prod-1', 'Ref: 1')">XXL</button>
                 </div>
                 <div class="stock-hint-box" id="stock-hint-prod-1"><span id="stock-text-prod-1">ស្តុកនៅសល់: </span><span>...</span></div>
-                <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1', 'Ref: 1')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+                <button class="btn-add" onclick="addToCart('p1_title', 15.00, 'prod-1', 'Ref: 1', event)">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
@@ -245,7 +244,7 @@
                     <button class="size-btn" onclick="selectSize(this, 'prod-4', 'Ref: 2')">XXL</button>
                 </div>
                 <div class="stock-hint-box" id="stock-hint-prod-4"><span id="stock-text-prod-4">ស្តុកនៅសល់: </span><span>...</span></div>
-                <button class="btn-add" onclick="addToCart('p4_title', 6.00, 'prod-4', 'Ref: 2')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+                <button class="btn-add" onclick="addToCart('p4_title', 6.00, 'prod-4', 'Ref: 2', event)">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
 
@@ -269,7 +268,7 @@
                     <button class="size-btn" onclick="selectSize(this, 'prod-2', 'Ref: 3')">XXL</button>
                 </div>
                 <div class="stock-hint-box" id="stock-hint-prod-2"><span id="stock-text-prod-2">ស្តុកនៅសល់: </span><span>...</span></div>
-                <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2', 'Ref: 3')">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+                <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2', 'Ref: 3', event)">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
     </div>
@@ -612,7 +611,6 @@
             fetchLiveStock('prod-2', 'Ref: 3', 'M');
         };
 
-        // Fly to Cart Animation Function
         function playFlyAnimation(event, cardId) {
             let card = document.getElementById(cardId);
             let imgBox = card.querySelector('.img-box video, .img-box img');
@@ -662,7 +660,6 @@
                 }
             }
 
-            // Trigger Fly Animation
             playFlyAnimation(event, cardId);
 
             if (cart[stockKey]) {
@@ -704,7 +701,25 @@
             let subtotalPrice = 0;
             let itemsHtml = '';
 
-            for (let key in cart) {
+            // តម្រៀបទំនិញក្នុង Cart តាម Ref (ពីតូចទៅធំ) និងតាម Size (S, M, L, XL, XXL)
+            const sizeOrder = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5 };
+            
+            let sortedKeys = Object.keys(cart).sort((a, b) => {
+                let itemA = cart[a];
+                let itemB = cart[b];
+                
+                // ប្រៀបធៀប Ref ជាមុន (ឧ. Ref: 1 មុន Ref: 2)
+                let refA = parseInt(itemA.ref.replace(/\D/g, '')) || 0;
+                let refB = parseInt(itemB.ref.replace(/\D/g, '')) || 0;
+                if (refA !== refB) return refA - refB;
+
+                // បើ Ref ដូចគ្នា តម្រៀបតាម Size ពីតូចទៅធំ
+                let orderA = sizeOrder[itemA.size] || 99;
+                let orderB = sizeOrder[itemB.size] || 99;
+                return orderA - orderB;
+            });
+
+            for (let key of sortedKeys) {
                 let item = cart[key];
                 let itemTotal = item.price * item.qty;
                 totalItems += item.qty;
@@ -790,7 +805,17 @@
             let index = 1;
             let subtotalPrice = 0;
 
-            for (let key in cart) {
+            const sizeOrder = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5 };
+            let sortedKeys = Object.keys(cart).sort((a, b) => {
+                let itemA = cart[a];
+                let itemB = cart[b];
+                let refA = parseInt(itemA.ref.replace(/\D/g, '')) || 0;
+                let refB = parseInt(itemB.ref.replace(/\D/g, '')) || 0;
+                if (refA !== refB) return refA - refB;
+                return (sizeOrder[itemA.size] || 99) - (sizeOrder[itemB.size] || 99);
+            });
+
+            for (let key of sortedKeys) {
                 let item = cart[key];
                 let itemTotal = item.price * item.qty;
                 subtotalPrice += itemTotal;
