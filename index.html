@@ -2,8 +2,8 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport ដែលមានប្រសិទ្ធភាពបំផុតសម្រាប់បិទ Zoom លើគ្រប់ Browser -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <!-- បិទមិនឱ្យ Zoom In (ពង្រីក) បានឡើយ ប៉ុន្តែទំព័រនៅតែបង្ហាញទំហំ Standard ធម្មតា -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Oneday Clothing | Premium Collection</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
             --nav-font: 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
+        /* Dark Mode Theme Variables */
         body.dark-mode {
             --primary: #f8fafc;
             --accent: #38bdf8;
@@ -36,9 +37,8 @@
             --input-bg: #0f172a;
         }
 
-        /* បិទ Gesture/Pinch Zoom តាមរយៈ CSS ផ្ទាល់ (ដើរ ១០០% លើគ្រប់ Browser) */
         html, body {
-            touch-action: manipulation;
+            touch-action: pan-x pan-y;
             -webkit-text-size-adjust: 100%;
             overflow-x: hidden;
             width: 100%;
@@ -58,11 +58,12 @@
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; transition: background-color 0.3s, color 0.3s; }
 
         input, select, textarea {
-            font-size: 16px !important; /* ការពារ iOS កុំឱ្យ Auto Zoom ពេលចុច Type */
+            font-size: 16px !important;
             -webkit-user-select: text;
             user-select: text;
         }
 
+        /* Nav Header UI Redesign */
         nav { 
             background: var(--nav-bg); 
             backdrop-filter: blur(12px); 
@@ -79,39 +80,125 @@
             transition: background 0.3s; 
         }
 
-        .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--accent); line-height: 1; font-family: var(--nav-font); }
+        .logo { 
+            font-size: 18px; 
+            font-weight: 800; 
+            letter-spacing: -0.5px; 
+            color: var(--accent); 
+            line-height: 1;
+            font-family: var(--nav-font);
+        }
         .logo span { color: var(--primary); }
 
-        .nav-right { display: flex; align-items: center; gap: 5px; }
-        .nav-icon-img { width: 13px; height: 13px; object-fit: contain; display: inline-block; vertical-align: middle; }
+        .nav-right { 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
+
+        .nav-icon-img {
+            width: 13px;
+            height: 13px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+        }
 
         .guide-top-btn { 
-            background: var(--accent-light); border: 1px solid var(--border-color); color: var(--primary); 
-            padding: 0 8px; height: 30px; border-radius: 16px; font-size: 10px; font-weight: 600; 
-            font-family: var(--nav-font); cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap; line-height: 1;
+            background: var(--accent-light); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary); 
+            padding: 0 8px; 
+            height: 30px;
+            border-radius: 16px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            font-family: var(--nav-font);
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+            white-space: nowrap;
+            line-height: 1;
         }
 
         .theme-toggle-btn { 
-            background: var(--accent-light); border: 1px solid var(--border-color); color: var(--primary); 
-            width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0;
+            background: var(--accent-light); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary); 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+            padding: 0;
         }
-        .theme-toggle-btn img { width: 14px; height: 14px; object-fit: contain; }
 
-        .lang-select-wrapper { position: relative; display: flex; align-items: center; }
-        .lang-flag-img { position: absolute; left: 7px; width: 15px; height: 11px; pointer-events: none; z-index: 2; object-fit: cover; border-radius: 2px; box-shadow: 0 0 1px rgba(0,0,0,0.3); }
+        .theme-toggle-btn img {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+
+        .lang-select-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-flag-img {
+            position: absolute;
+            left: 7px;
+            width: 15px;
+            height: 11px;
+            pointer-events: none;
+            z-index: 2;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 0 1px rgba(0,0,0,0.3);
+        }
 
         .lang-select { 
-            background: var(--accent-light); border: 1px solid var(--border-color); color: var(--primary); 
-            padding: 0 16px 0 26px; height: 30px; border-radius: 16px; font-size: 10px; font-weight: 600; 
-            font-family: var(--nav-font); cursor: pointer; outline: none; -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            background: var(--accent-light); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary); 
+            padding: 0 16px 0 26px; 
+            height: 30px;
+            border-radius: 16px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            font-family: var(--nav-font);
+            cursor: pointer; 
+            outline: none; 
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%22//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230284c7%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 5px center; background-size: 7px auto;
+            background-repeat: no-repeat;
+            background-position: right 5px center;
+            background-size: 7px auto;
         }
 
         .cart-btn { 
-            background: var(--accent-light); color: var(--accent); border: 1px solid var(--border-color); 
-            padding: 0 10px; height: 30px; border-radius: 16px; font-size: 10px; font-weight: 600; 
-            font-family: var(--nav-font); cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.1); position: relative; white-space: nowrap;
+            background: var(--accent-light); 
+            color: var(--accent); 
+            border: 1px solid var(--border-color); 
+            padding: 0 10px; 
+            height: 30px;
+            border-radius: 16px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            font-family: var(--nav-font);
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+            box-shadow: 0 2px 5px rgba(2, 132, 199, 0.1); 
+            position: relative; 
+            white-space: nowrap;
         }
 
         .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; position: relative; }
@@ -120,7 +207,13 @@
         .cover-slide-item { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
         
         .cover-image-box { width: 100%; max-height: 220px; background-color: #0f172a; overflow: hidden; position: relative; }
-        .cover-image-box::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 5; background: transparent; }
+        .cover-image-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 5;
+            background: transparent;
+        }
         .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; pointer-events: none; -webkit-touch-callout: none; }
 
         .cover-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: var(--card-bg); }
@@ -145,7 +238,13 @@
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
         .img-box { background: var(--input-bg); aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid var(--border-color); position: relative; }
-        .img-box::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 5; background: transparent; }
+        .img-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 5;
+            background: transparent;
+        }
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; pointer-events: none; -webkit-touch-callout: none; }
         
         .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.9); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 10; }
@@ -170,8 +269,16 @@
         .btn-add:active { background: var(--accent); }
 
         .fly-item {
-            position: fixed; z-index: 9999; width: 50px; height: 50px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent);
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); pointer-events: none; transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            position: fixed;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
@@ -221,6 +328,12 @@
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
     </style>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        }, false);
+    </script>
 </head>
 <body>
 
@@ -535,19 +648,6 @@
     </div>
 
     <script>
-        // បិទការចុច Context Menu (Right-Click) 
-        document.addEventListener('contextmenu', e => e.preventDefault());
-
-        // បិទ Double Tap Zoom លើ iOS Safari តាមរបៀបលឿន និងច្បាស់
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (e) {
-            let now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
         let stockData = {};
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvkD0AmmidUi0GfyOh0wAz0jdASv2Yt8bGIHznpGTQ3fkTnI7wc6w5D58-BanK0Nb3KAsqnM3He_Xn/pub?output=csv";
 
@@ -557,7 +657,11 @@
         let currentType = 'all';
         const deliveryFee = 2.00;
 
-        const langFlags = { km: 'IMG_5833.png', en: 'IMG_5835.png', zh: 'IMG_5834.png' };
+        const langFlags = {
+            km: 'IMG_5833.png',
+            en: 'IMG_5835.png',
+            zh: 'IMG_5834.png'
+        };
 
         const translations = {
             km: {
@@ -619,10 +723,16 @@
             }
         };
 
+        // System Dark Mode & Auto Switcher (Cambodia Time UTC+7)
         function checkAutoTheme() {
             let options = { timeZone: 'Asia/Phnom_Penh', hour: 'numeric', hour12: false };
             let cambodiaHour = parseInt(new Intl.DateTimeFormat([], options).format(new Date()));
-            setTheme(cambodiaHour >= 19 || cambodiaHour < 6);
+            
+            if (cambodiaHour >= 19 || cambodiaHour < 6) {
+                setTheme(true);
+            } else {
+                setTheme(false);
+            }
         }
 
         function setTheme(isDark) {
@@ -637,17 +747,24 @@
         }
 
         function toggleTheme() {
-            setTheme(!document.body.classList.contains('dark-mode'));
+            let isDark = document.body.classList.contains('dark-mode');
+            setTheme(!isDark);
         }
 
         function changeLanguage(lang) {
             currentLang = lang;
+            
             let flagImg = document.getElementById('langFlagImg');
-            if (flagImg && langFlags[lang]) flagImg.src = langFlags[lang];
+            if (flagImg && langFlags[lang]) {
+                flagImg.src = langFlags[lang];
+            }
 
-            document.querySelectorAll('[data-key]').forEach(el => {
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
             });
             renderCart();
         }
@@ -655,24 +772,49 @@
         function updateCoverDots() {
             const slider = document.getElementById('coverSlider');
             const dots = document.getElementById('coverDots').children;
-            const currentIndex = Math.round(slider.scrollLeft / slider.clientWidth);
+            const scrollLeft = slider.scrollLeft;
+            const slideWidth = slider.clientWidth;
+            const currentIndex = Math.round(scrollLeft / slideWidth);
+            
             for (let i = 0; i < dots.length; i++) {
-                dots[i].classList.toggle('active', i === currentIndex);
+                if (i === currentIndex) {
+                    dots[i].classList.add('active');
+                } else {
+                    dots[i].classList.remove('active');
+                }
             }
         }
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-        function handleModalClick(e, id) { if (e.target.id === id) closeModal(id); }
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
 
-        function toggleCartModal() {
-            let m = document.getElementById('cartModal');
-            m.classList.contains('active') ? closeModal('cartModal') : openModal('cartModal');
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function handleModalClick(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+
+        function toggleCartModal() { 
+            let modal = document.getElementById('cartModal');
+            if (modal.classList.contains('active')) {
+                closeModal('cartModal');
+            } else {
+                openModal('cartModal');
+            }
         }
 
         function toggleGuideModal() {
-            let m = document.getElementById('guideModal');
-            m.classList.contains('active') ? closeModal('guideModal') : openModal('guideModal');
+            let modal = document.getElementById('guideModal');
+            if (modal.classList.contains('active')) {
+                closeModal('guideModal');
+            } else {
+                openModal('guideModal');
+            }
         }
 
         function prepareOrder() {
@@ -688,6 +830,7 @@
             let stockBox = document.getElementById(`stock-hint-${cardId}`);
             let textSpan = document.getElementById(`stock-text-${cardId}`);
             let numSpan = stockBox ? stockBox.querySelector('span:last-child') : null;
+            
             if (numSpan) numSpan.innerText = "...";
 
             try {
@@ -701,14 +844,19 @@
                         let ref = cols[0].trim().replace(/^["']|["']$/g, '').toUpperCase();
                         let size = cols[2].trim().replace(/^["']|["']$/g, '').toUpperCase();
                         let stockVal = cols[3].trim().replace(/^["']|["']$/g, '');
-                        if (ref && size) stockData[`${ref}_${size}`] = stockVal === '.' ? '.' : (parseInt(stockVal) || 0);
+                        
+                        if (ref && size) {
+                            stockData[`${ref}_${size}`] = stockVal === '.' ? '.' : (parseInt(stockVal) || 0);
+                        }
                     }
                 }
             } catch (error) {
                 console.error("Error fetching live stock:", error);
             }
 
-            let stockKey = `${refText.replace('Ref: ', '').trim().toUpperCase()}_${selectedSize.trim().toUpperCase()}`;
+            let cleanRef = refText.replace('Ref: ', '').trim().toUpperCase();
+            let cleanSize = selectedSize.trim().toUpperCase();
+            let stockKey = `${cleanRef}_${cleanSize}`;
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             
             if (stockBox && textSpan && numSpan) {
@@ -728,40 +876,67 @@
             let buttons = element.parentElement.getElementsByClassName('size-btn');
             for (let btn of buttons) btn.classList.remove('active');
             element.classList.add('active');
-            fetchLiveStock(cardId, refText, element.innerText);
+            
+            let selectedSize = element.innerText;
+            fetchLiveStock(cardId, refText, selectedSize);
         }
 
         function selectMainCategory(gender) {
-            currentGender = gender; currentType = 'all';
-            document.querySelectorAll('.categories .cat-btn').forEach(b => b.classList.remove('active'));
+            currentGender = gender;
+            currentType = 'all';
+
+            let catButtons = document.querySelectorAll('.categories .cat-btn');
+            catButtons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            document.getElementById('sub-men').classList.toggle('active', gender === 'men');
-            document.getElementById('sub-women').classList.toggle('active', gender === 'women');
+            document.getElementById('sub-men').classList.remove('active');
+            document.getElementById('sub-women').classList.remove('active');
 
-            resetSubActive(gender === 'men' ? 'sub-men' : 'sub-women');
+            if (gender === 'men') {
+                document.getElementById('sub-men').classList.add('active');
+                resetSubActive('sub-men');
+            } else if (gender === 'women') {
+                document.getElementById('sub-women').classList.add('active');
+                resetSubActive('sub-women');
+            }
+
             filterProducts();
         }
 
         function selectSubCategory(gender, type, element) {
-            currentGender = gender; currentType = type;
-            let buttons = element.parentElement.getElementsByClassName('sub-btn');
+            currentGender = gender;
+            currentType = type;
+
+            let subContainer = element.parentElement;
+            let buttons = subContainer.getElementsByClassName('sub-btn');
             for (let btn of buttons) btn.classList.remove('active');
             element.classList.add('active');
+
             filterProducts();
         }
 
         function resetSubActive(subId) {
-            let buttons = document.getElementById(subId).getElementsByClassName('sub-btn');
+            let subContainer = document.getElementById(subId);
+            let buttons = subContainer.getElementsByClassName('sub-btn');
             for (let btn of buttons) btn.classList.remove('active');
             buttons[0].classList.add('active');
         }
 
         function filterProducts() {
-            document.querySelectorAll('.container .card').forEach(card => {
-                let cGender = card.getAttribute('data-gender');
-                let cType = card.getAttribute('data-type');
-                card.style.display = (cGender === currentGender && (currentType === 'all' || cType === currentType)) ? 'flex' : 'none';
+            let cards = document.querySelectorAll('.container .card');
+            cards.forEach(card => {
+                let cardGender = card.getAttribute('data-gender');
+                let cardType = card.getAttribute('data-type');
+
+                if (cardGender === currentGender) {
+                    if (currentType === 'all' || cardType === currentType) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
 
@@ -775,8 +950,10 @@
         });
 
         function playFlyAnimation(event, cardId) {
-            let imgBox = document.getElementById(cardId).querySelector('.img-box video, .img-box img');
+            let card = document.getElementById(cardId);
+            let imgBox = card.querySelector('.img-box video, .img-box img');
             let cartBtn = document.getElementById('cartButton');
+
             if (!imgBox || !cartBtn) return;
 
             let flyer = document.createElement('video');
@@ -789,6 +966,7 @@
             document.body.appendChild(flyer);
 
             let cartRect = cartBtn.getBoundingClientRect();
+
             setTimeout(() => {
                 flyer.style.top = (cartRect.top + 5) + 'px';
                 flyer.style.left = (cartRect.left + 5) + 'px';
@@ -796,11 +974,15 @@
                 flyer.style.height = '20px';
                 flyer.style.opacity = '0.5';
             }, 50);
-            setTimeout(() => flyer.remove(), 850);
+
+            setTimeout(() => {
+                flyer.remove();
+            }, 850);
         }
 
         async function addToCart(titleKey, price, cardId, refText, event) {
-            let activeSizeBtn = document.getElementById(cardId).querySelector('.size-btn.active');
+            let card = document.getElementById(cardId);
+            let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
             let stockKey = `${refText.replace('Ref: ', '').trim().toUpperCase()}_${selectedSize.trim().toUpperCase()}`;
 
@@ -809,13 +991,21 @@
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
 
-            if (currentStock !== '.' && (currentStock === 0 || (currentQtyInCart + 1) > currentStock)) {
-                alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) ទិញបានតែ ${currentStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${currentStock}។`);
-                return;
+            if (currentStock !== '.') {
+                if (currentStock === 0 || (currentQtyInCart + 1) > currentStock) {
+                    alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) ទិញបានតែ ${currentStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${currentStock}។`);
+                    return;
+                }
             }
 
             playFlyAnimation(event, cardId);
-            cart[stockKey] ? cart[stockKey].qty += 1 : cart[stockKey] = { titleKey, price, size: selectedSize, ref: refText, qty: 1 };
+
+            if (cart[stockKey]) {
+                cart[stockKey].qty += 1;
+            } else {
+                cart[stockKey] = { titleKey: titleKey, price: price, size: selectedSize, ref: refText, qty: 1 };
+            }
+
             renderCart();
         }
 
@@ -823,41 +1013,60 @@
             if (cart[itemKey]) {
                 let newQty = cart[itemKey].qty + delta;
                 let availableStock = stockData[itemKey] !== undefined ? stockData[itemKey] : 0;
-                if (availableStock !== '.' && delta > 0 && newQty > availableStock) {
-                    alert(`សូមអភ័យទោស! ទំនិញនេះទិញបានតែ ${availableStock} ប៉ុណ្ណោះ។`);
-                    return;
+
+                if (availableStock !== '.') {
+                    if (delta > 0 && newQty > availableStock) {
+                        alert(`សូមអភ័យទោស! ទំនិញនេះទិញបានតែ ${availableStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${availableStock}។`);
+                        return;
+                    }
                 }
+
                 cart[itemKey].qty = newQty;
                 if (cart[itemKey].qty <= 0) delete cart[itemKey];
             }
             renderCart();
         }
 
-        function clearError(inputElement) { inputElement.classList.remove('error'); }
+        function clearError(inputElement) {
+            inputElement.classList.remove('error');
+        }
 
         function renderCart() {
             let cartList = document.getElementById('cart-list');
             let modalFooter = document.getElementById('modal-footer');
             let summaryBox = document.getElementById('summary-box');
-            let totalItems = 0, subtotalPrice = 0, itemsHtml = '';
+            let totalItems = 0;
+            let subtotalPrice = 0;
+            let itemsHtml = '';
 
             const sizeOrder = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5 };
+            
             let sortedKeys = Object.keys(cart).sort((a, b) => {
-                let refA = parseInt(cart[a].ref.replace(/\D/g, '')) || 0;
-                let refB = parseInt(cart[b].ref.replace(/\D/g, '')) || 0;
-                return refA !== refB ? refA - refB : (sizeOrder[cart[a].size] || 99) - (sizeOrder[cart[b].size] || 99);
+                let itemA = cart[a];
+                let itemB = cart[b];
+                
+                let refA = parseInt(itemA.ref.replace(/\D/g, '')) || 0;
+                let refB = parseInt(itemB.ref.replace(/\D/g, '')) || 0;
+                if (refA !== refB) return refA - refB;
+
+                let orderA = sizeOrder[itemA.size] || 99;
+                let orderB = sizeOrder[itemB.size] || 99;
+                return orderA - orderB;
             });
 
             for (let key of sortedKeys) {
                 let item = cart[key];
                 let itemTotal = item.price * item.qty;
-                totalItems += item.qty; subtotalPrice += itemTotal;
+                totalItems += item.qty;
+                subtotalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
+
+                let refDisplay = item.ref ? `[${item.ref}] ` : '';
 
                 itemsHtml += `
                     <div class="cart-item">
                         <div>
-                            <div class="item-info">[${item.ref}] ${localizedTitle}</div>
+                            <div class="item-info">${refDisplay}${localizedTitle}</div>
                             <div class="item-sub">Size: ${item.size} | $${item.price.toFixed(2)}</div>
                         </div>
                         <div class="qty-controls">
@@ -865,18 +1074,22 @@
                             <span style="font-weight:800; font-size:12px;">${item.qty}</span>
                             <button class="btn-qty" onclick="changeQty('${key}', 1)">+</button>
                         </div>
-                    </div>`;
+                    </div>
+                `;
             }
 
             if (Object.keys(cart).length === 0) {
                 cartList.innerHTML = `<div class="empty-msg">${translations[currentLang].empty_cart}</div>`;
-                modalFooter.style.display = summaryBox.style.display = 'none';
+                modalFooter.style.display = 'none';
+                summaryBox.style.display = 'none';
             } else {
                 cartList.innerHTML = itemsHtml;
-                modalFooter.style.display = summaryBox.style.display = 'flex';
+                modalFooter.style.display = 'flex';
+                summaryBox.style.display = 'flex';
             }
 
             let grandTotal = subtotalPrice > 0 ? subtotalPrice + deliveryFee : 0;
+
             document.getElementById('cart-count').innerText = totalItems;
             document.getElementById('items-count').innerText = totalItems;
             document.getElementById('subtotal-amount').innerText = '$' + subtotalPrice.toFixed(2);
@@ -904,7 +1117,10 @@
             if (!phone) { phoneInput.classList.add('error'); hasError = true; }
             if (!address) { addressInput.classList.add('error'); hasError = true; }
 
-            if (hasError) { alert(translations[currentLang].alert_fill); return; }
+            if (hasError) {
+                alert(translations[currentLang].alert_fill);
+                return;
+            }
 
             let cleanPhone = phone.replace(/[^0-9]/g, '');
             if (cleanPhone.length < 8) {
@@ -913,15 +1129,25 @@
                 return;
             }
 
-            let message = "🛍️ Oneday Clothing — Order\n\n👤 ព័ត៌មានអតិថិជន\n";
-            message += `• ឈ្មោះ: ${name}\n• លេខទូរស័ព្ទ: ${phone}\n• ទីតាំង: ${address}\n\n📦 ទំនិញ\n`;
+            let telegramUsername = "OneDayClothingAgent";
+            let message = "🛍️ Oneday Clothing — Order\n\n";
+            message += "👤 ព័ត៌មានអតិថិជន\n";
+            message += `• ឈ្មោះ: ${name}\n`;
+            message += `• លេខទូរស័ព្ទ: ${phone}\n`;
+            message += `• ទីតាំង: ${address}\n\n`;
+            message += "📦 ទំនិញ\n";
 
-            let index = 1, subtotalPrice = 0;
+            let index = 1;
+            let subtotalPrice = 0;
+
             const sizeOrder = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5 };
             let sortedKeys = Object.keys(cart).sort((a, b) => {
-                let refA = parseInt(cart[a].ref.replace(/\D/g, '')) || 0;
-                let refB = parseInt(cart[b].ref.replace(/\D/g, '')) || 0;
-                return refA !== refB ? refA - refB : (sizeOrder[cart[a].size] || 99) - (sizeOrder[cart[b].size] || 99);
+                let itemA = cart[a];
+                let itemB = cart[b];
+                let refA = parseInt(itemA.ref.replace(/\D/g, '')) || 0;
+                let refB = parseInt(itemB.ref.replace(/\D/g, '')) || 0;
+                if (refA !== refB) return refA - refB;
+                return (sizeOrder[itemA.size] || 99) - (sizeOrder[itemB.size] || 99);
             });
 
             for (let key of sortedKeys) {
@@ -929,14 +1155,21 @@
                 let itemTotal = item.price * item.qty;
                 subtotalPrice += itemTotal;
                 let localizedTitle = translations[currentLang][item.titleKey] || item.titleKey;
-                message += `${index}. [${item.ref}] ${localizedTitle}\n    Size: ${item.size} × ${item.qty} — $${itemTotal.toFixed(2)}\n`;
+                
+                let refPart = item.ref ? `[${item.ref}] ` : '';
+                message += `${index}. ${refPart}${localizedTitle}\n`;
+                message += `    Size: ${item.size} × ${item.qty} — $${itemTotal.toFixed(2)}\n`;
                 index++;
             }
 
             let grandTotal = subtotalPrice + deliveryFee;
-            message += `\n💰 សរុប\n• តម្លៃទំនិញ: $${subtotalPrice.toFixed(2)}\n• ថ្លៃដឹកជញ្ជូន: $${deliveryFee.toFixed(2)}\n• សរុបទាំងអស់: $${grandTotal.toFixed(2)}`;
 
-            window.location.href = `https://t.me/OneDayClothingAgent?text=${encodeURIComponent(message)}`;
+            message += `\n💰 សរុប\n`;
+            message += `• តម្លៃទំនិញ: $${subtotalPrice.toFixed(2)}\n`;
+            message += `• ថ្លៃដឹកជញ្ជូន: $${deliveryFee.toFixed(2)}\n`;
+            message += `• សរុបទាំងអស់: $${grandTotal.toFixed(2)}`;
+
+            window.location.href = `https://t.me/${telegramUsername}?text=${encodeURIComponent(message)}`;
         }
     </script>
 </body>
