@@ -61,19 +61,107 @@
             user-select: text;
         }
 
-        nav { background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: background 0.3s; }
-        .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: var(--accent); }
+        /* Nav Header UI Redesign */
+        nav { 
+            background: var(--nav-bg); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color); 
+            padding: 10px 14px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 50; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); 
+            transition: background 0.3s; 
+        }
+
+        .logo { 
+            font-size: 20px; 
+            font-weight: 900; 
+            letter-spacing: -0.5px; 
+            color: var(--accent); 
+            line-height: 1;
+        }
         .logo span { color: var(--primary); }
-        .nav-right { display: flex; align-items: center; gap: 8px; }
 
-        .theme-toggle-btn { background: var(--accent-light); border: 1px solid var(--border-color); color: var(--primary); width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .nav-right { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
 
-        .lang-select { background: var(--accent-light); border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; outline: none; }
-        
-        .guide-top-btn { background: var(--accent-light); border: 1px solid var(--border-color); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-        .guide-top-btn:hover { background: var(--accent-light); color: var(--accent); border-color: #bae6fd; }
+        .guide-top-btn { 
+            background: var(--accent-light); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary); 
+            padding: 0 10px; 
+            height: 34px;
+            border-radius: 20px; 
+            font-size: 11px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+            white-space: nowrap;
+            line-height: 1;
+        }
 
-        .cart-btn { background: var(--accent-light); color: var(--accent); border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); position: relative; }
+        .theme-toggle-btn { 
+            background: var(--accent-light); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary); 
+            width: 34px; 
+            height: 34px; 
+            border-radius: 50%; 
+            font-size: 13px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+        }
+
+        .lang-select { 
+            background: var(--accent-light); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary); 
+            padding: 0 22px 0 10px; 
+            height: 34px;
+            border-radius: 20px; 
+            font-size: 11px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            outline: none; 
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%22//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230284c7%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 8px auto;
+        }
+
+        .cart-btn { 
+            background: var(--accent-light); 
+            color: var(--accent); 
+            border: 1px solid var(--border-color); 
+            padding: 0 12px; 
+            height: 34px;
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+            box-shadow: 0 2px 5px rgba(2, 132, 199, 0.1); 
+            position: relative; 
+            white-space: nowrap;
+        }
 
         .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; position: relative; }
         .cover-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
