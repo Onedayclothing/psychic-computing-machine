@@ -18,7 +18,6 @@
             --text-muted: #64748b;
         }
 
-        /* បិទ touch-action zoom ទាំងអស់លើ CSS */
         html, body {
             touch-action: pan-x pan-y;
             -webkit-text-size-adjust: 100%;
@@ -37,7 +36,6 @@
 
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
-        /* ការពារ iOS Safari អូតូ Zoom In ពេលចុចលើ Input */
         input, select, textarea {
             font-size: 16px !important;
         }
@@ -160,7 +158,6 @@
     </style>
 
     <script>
-        // ១. បិទ Multitouch Zoom (ម្រាមដៃ២) ឱ្យដាច់ខាត ១០០% លើ Safari
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
@@ -173,7 +170,6 @@
             }
         }, { passive: false });
 
-        // ២. បិទ Gesture Zoom របស់ iOS
         document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
         }, { passive: false });
@@ -182,7 +178,6 @@
             e.preventDefault();
         }, { passive: false });
 
-        // ៣. បិទ Double Tap Zoom លើ Screen 
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function(event) {
             let now = (new Date()).getTime();
@@ -214,12 +209,12 @@
         <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
             <div class="cover-slide-item">
                 <div class="cover-image-box">
-                    <video autoplay loop muted playsinline preload="metadata"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline preload="none"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
                 </div>
             </div>
             <div class="cover-slide-item">
                 <div class="cover-image-box">
-                    <video autoplay loop muted playsinline preload="metadata"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline preload="none"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
                 </div>
             </div>
         </div>
@@ -258,7 +253,7 @@
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge">Ref: 1</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="metadata"><source src="Man_walking_in_fashion_studio_202608272139.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none"><source src="Man_walking_in_fashion_studio_202608272139.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
@@ -282,7 +277,7 @@
         <div class="card" id="prod-4" data-gender="men" data-type="tops">
             <span class="badge">Ref: 2</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="metadata"><source src="Model_walking_in_fashion_studio_202608272237.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none"><source src="Model_walking_in_fashion_studio_202608272237.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p4_title">Olive Green Mandarin Collar Long-Sleeve Shirt</div>
@@ -306,7 +301,7 @@
         <div class="card" id="prod-2" data-gender="men" data-type="tops">
             <span class="badge">Ref: 3</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="metadata"><source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none"><source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
@@ -330,7 +325,7 @@
         <div class="card" id="prod-5" data-gender="women" data-type="tops">
             <span class="badge">Ref: 4</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="metadata"><source src="Woman_modeling_shirt_360_rotation_202609061421.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none"><source src="Woman_modeling_shirt_360_rotation_202609061421.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p5_title">Plaid Sailor Collar Blouse</div>
@@ -686,13 +681,13 @@
             });
         }
 
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             filterProducts();
             fetchLiveStock('prod-1', 'Ref: 1', 'M');
             fetchLiveStock('prod-4', 'Ref: 2', 'M');
             fetchLiveStock('prod-2', 'Ref: 3', 'M');
             fetchLiveStock('prod-5', 'Ref: 4', 'M');
-        };
+        });
 
         function playFlyAnimation(event, cardId) {
             let card = document.getElementById(cardId);
