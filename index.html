@@ -481,7 +481,7 @@
 
         async function fetchLiveStock(cardId, refText, selectedSize) {
             let hintSpan = document.querySelector(`#stock-hint-${cardId} span`);
-            if (hintSpan) hintSpan.innerText = "...";
+            if (hintSpan) hintSpan.innerText = "";
 
             try {
                 let response = await fetch(csvUrl + "&t=" + new Date().getTime());
@@ -496,7 +496,7 @@
                         let stockVal = cols[3].trim().replace(/^["']|["']$/g, '');
                         
                         if (ref && size) {
-                            stockData[`Ref: ${ref}_${size}`] = stockVal === '+' ? '+' : (parseInt(stockVal) || 0);
+                            stockData[`Ref: ${ref}_${size}`] = stockVal === '.' ? '.' : (parseInt(stockVal) || 0);
                         }
                     }
                 }
@@ -508,9 +508,8 @@
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             
             if (hintSpan) {
-                if (currentStock === '+') {
-                    hintSpan.innerText = "មានក្នុងស្តុក (Unlimited)";
-                    hintSpan.style.color = "#0284c7";
+                if (currentStock === '.') {
+                    hintSpan.innerText = "";
                 } else {
                     hintSpan.innerText = currentStock > 0 ? `${currentStock} (មានក្នុងស្តុក)` : "អស់ស្តុក (Out of stock)";
                     hintSpan.style.color = currentStock > 0 ? "#0284c7" : "#ef4444";
@@ -604,7 +603,7 @@
             let currentStock = stockData[stockKey] !== undefined ? stockData[stockKey] : 0;
             let currentQtyInCart = cart[stockKey] ? cart[stockKey].qty : 0;
 
-            if (currentStock !== '+') {
+            if (currentStock !== '.') {
                 if (currentStock === 0 || (currentQtyInCart + 1) > currentStock) {
                     alert(`សូមអភ័យទោស! ទំនិញនេះ (${refText} - Size ${selectedSize}) ទិញបានតែ ${currentStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${currentStock}។`);
                     return;
@@ -625,7 +624,7 @@
                 let newQty = cart[itemKey].qty + delta;
                 let availableStock = stockData[itemKey] !== undefined ? stockData[itemKey] : 0;
 
-                if (availableStock !== '+') {
+                if (availableStock !== '.') {
                     if (delta > 0 && newQty > availableStock) {
                         alert(`សូមអភ័យទោស! ទំនិញនេះទិញបានតែ ${availableStock} ប៉ុណ្ណោះ ព្រោះក្នុងស្តុកមានតែ ${availableStock}។`);
                         return;
