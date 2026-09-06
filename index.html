@@ -394,8 +394,8 @@
 
     <div class="menu-wrapper">
         <div class="categories">
-            <button class="cat-btn active" onclick="selectMainCategory('men')" data-key="cat_men">បុរស</button>
-            <button class="cat-btn" onclick="selectMainCategory('women')" data-key="cat_women">នារី</button>
+            <button class="cat-btn active" onclick="selectMainCategory('men', this)" data-key="cat_men">បុរស</button>
+            <button class="cat-btn" onclick="selectMainCategory('women', this)" data-key="cat_women">នារី</button>
         </div>
 
         <div class="sub-categories active" id="sub-men">
@@ -668,7 +668,6 @@
                 cover_title: "BUILD YOUR DREAM STYLE", cat_men: "បុរស", cat_women: "នារី", cat_tops: "អាវ", cat_pants: "ខោ", cat_outerwear: "អាវក្រៅ", sub_all: "ទាំងអស់",
                 p1_title: "T-Shirt Polo Collab OneDay", p1_desc: "អាវយឺត Polo រចនាម៉ូដទាន់សម័យ ងាយពាក់",
                 p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "ឈុតសម្លៀកបំពាក់ Smart Casual ទាន់សម័យ",
-                p3_title: "Elegant Women Dress", p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង",
                 p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្អាតប្រណិត",
                 p5_title: "Plaid Sailor Collar Blouse", p5_desc: "អាវនារី ករសាឡាប្រណិត ស្អាតទាន់សម័យ",
                 select_size: "SIZE", add_to_cart: "ដាក់ចូលកន្ត្រក", total_label: "តម្លៃសរុប", subtotal_label: "តម្លៃទំនិញ", delivery_label: "ថ្លៃដឹក (Delivery Fee)",
@@ -687,7 +686,6 @@
                 cover_title: "BUILD YOUR DREAM STYLE", cat_men: "Men", cat_women: "Women", cat_tops: "Tops", cat_pants: "Pants", cat_outerwear: "Outerwear", sub_all: "All",
                 p1_title: "T-Shirt Polo Collab OneDay", p1_desc: "Collab Edition Polo T-Shirt, simple & stylish.",
                 p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "Smart Casual Outfit - Modern & Simple Style.",
-                p3_title: "Elegant Women Dress", p3_desc: "Elegant women dress, perfect for casual outings.",
                 p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "Olive green mandarin collar long-sleeve shirt, premium style.",
                 p5_title: "Plaid Sailor Collar Blouse", p5_desc: "Plaid sailor collar blouse, stylish and elegant.",
                 select_size: "SIZE", add_to_cart: "Add to Cart", total_label: "Total Amount", subtotal_label: "Subtotal", delivery_label: "Delivery Fee",
@@ -706,7 +704,6 @@
                 cover_title: "打造您的理想风格", cat_men: "男装", cat_women: "女装", cat_tops: "上衣", cat_pants: "裤子", cat_outerwear: "外套", sub_all: "全部",
                 p1_title: "OneDay 联名款 Polo 衫", p1_desc: "联名款 Polo 衫，简约时尚百搭。",
                 p2_title: "商务休闲套装 (全套)", p2_desc: "商务休闲套装，时尚简约。",
-                p3_title: "优雅女士连衣裙", p3_desc: "时尚女士连衣裙，适合日常出行。",
                 p4_title: "橄榄绿立领长袖衬衫", p4_desc: "橄榄绿立领长袖衬衫，高级时尚剪裁。",
                 p5_title: "格子海军领衬衫", p5_desc: "格纹海军领女式上衣，时尚优雅。",
                 select_size: "尺码", add_to_cart: "加入购物车", total_label: "总金额", subtotal_label: "商品小计", delivery_label: "配送费 (Delivery Fee)",
@@ -826,18 +823,13 @@
             openModal('checkoutModal');
         }
 
-        async function fetchLiveStock(cardId, refText, selectedSize) {
-            let stockBox = document.getElementById(`stock-hint-${cardId}`);
-            let textSpan = document.getElementById(`stock-text-${cardId}`);
-            let numSpan = stockBox ? stockBox.querySelector('span:last-child') : null;
-            
-            if (numSpan) numSpan.innerText = "...";
-
+        async function loadCSVData() {
             try {
                 let response = await fetch(csvUrl + "&t=" + new Date().getTime());
                 let data = await response.text();
                 let rows = data.split('\n');
                 
+                stockData = {};
                 for (let i = 1; i < rows.length; i++) {
                     let cols = rows[i].split(',');
                     if (cols.length >= 4) {
@@ -852,6 +844,17 @@
                 }
             } catch (error) {
                 console.error("Error fetching live stock:", error);
+            }
+        }
+
+        async function fetchLiveStock(cardId, refText, selectedSize) {
+            let stockBox = document.getElementById(`stock-hint-${cardId}`);
+            let textSpan = document.getElementById(`stock-text-${cardId}`);
+            let numSpan = stockBox ? stockBox.querySelector('span:last-child') : null;
+            
+            if (Object.keys(stockData).length === 0) {
+                if (numSpan) numSpan.innerText = "...";
+                await loadCSVData();
             }
 
             let cleanRef = refText.replace('Ref: ', '').trim().toUpperCase();
@@ -881,13 +884,15 @@
             fetchLiveStock(cardId, refText, selectedSize);
         }
 
-        function selectMainCategory(gender) {
+        function selectMainCategory(gender, element) {
             currentGender = gender;
             currentType = 'all';
 
             let catButtons = document.querySelectorAll('.categories .cat-btn');
             catButtons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (element) {
+                element.classList.add('active');
+            }
 
             document.getElementById('sub-men').classList.remove('active');
             document.getElementById('sub-women').classList.remove('active');
@@ -940,9 +945,10 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             checkAutoTheme();
             filterProducts();
+            await loadCSVData();
             fetchLiveStock('prod-1', 'Ref: 1', 'M');
             fetchLiveStock('prod-4', 'Ref: 2', 'M');
             fetchLiveStock('prod-2', 'Ref: 3', 'M');
@@ -956,7 +962,8 @@
 
             if (!imgBox || !cartBtn) return;
 
-            let flyer = document.createElement('video');
+            let isVideo = imgBox.tagName.toLowerCase() === 'video';
+            let flyer = document.createElement(isVideo ? 'video' : 'img');
             flyer.src = imgBox.currentSrc || imgBox.src;
             flyer.className = 'fly-item';
             
