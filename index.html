@@ -24,6 +24,9 @@
             overflow-x: hidden;
             width: 100%;
             position: relative;
+            /* បិទការ Select អក្សរ និងរូបភាពទូទាំង Web */
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         * { 
@@ -38,6 +41,8 @@
 
         input, select, textarea {
             font-size: 16px !important;
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
@@ -57,8 +62,16 @@
         .cover-slider::-webkit-scrollbar { display: none; }
         .cover-slide-item { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
         
+        /* Overlay ការពារការ Long Press / Download លើ Cover Video */
         .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
-        .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; pointer-events: none; }
+        .cover-image-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 5;
+            background: transparent;
+        }
+        .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; pointer-events: none; -webkit-touch-callout: none; }
 
         .cover-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: #ffffff; }
         .cover-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; transition: all 0.3s ease; }
@@ -81,8 +94,16 @@
         .container { max-width: 480px; margin: 0 auto; padding: 0 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
+        /* Overlay ការពារការ Long Press / Download លើ Product Image Box */
         .img-box { background: #f8fafc; aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #e2e8f0; position: relative; }
-        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; pointer-events: none; }
+        .img-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 5;
+            background: transparent;
+        }
+        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; pointer-events: none; -webkit-touch-callout: none; }
         
         .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.9); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 10; }
         .prod-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; min-height: 30px; line-height: 1.4; color: var(--primary); }
@@ -158,6 +179,11 @@
     </style>
 
     <script>
+        // បិទ Context Menu (Menu សង្កត់ជាប់លើ Android/iOS/PC) ដើមី្បការពារការ Download
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        }, false);
+
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
@@ -209,12 +235,12 @@
         <div class="cover-slider" id="coverSlider" onscroll="updateCoverDots()">
             <div class="cover-slide-item">
                 <div class="cover-image-box">
-                    <video autoplay loop muted playsinline preload="none"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="VID_20260905221119531.mp4" type="video/mp4"></video>
                 </div>
             </div>
             <div class="cover-slide-item">
                 <div class="cover-image-box">
-                    <video autoplay loop muted playsinline preload="none"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="gemini_generated_video_1CCC7921.mp4" type="video/mp4"></video>
                 </div>
             </div>
         </div>
@@ -253,7 +279,7 @@
         <div class="card" id="prod-1" data-gender="men" data-type="tops">
             <span class="badge">Ref: 1</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none"><source src="Man_walking_in_fashion_studio_202608272139.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Man_walking_in_fashion_studio_202608272139.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
@@ -277,7 +303,7 @@
         <div class="card" id="prod-4" data-gender="men" data-type="tops">
             <span class="badge">Ref: 2</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none"><source src="Model_walking_in_fashion_studio_202608272237.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Model_walking_in_fashion_studio_202608272237.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p4_title">Olive Green Mandarin Collar Long-Sleeve Shirt</div>
@@ -301,7 +327,7 @@
         <div class="card" id="prod-2" data-gender="men" data-type="tops">
             <span class="badge">Ref: 3</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none"><source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Male_model_walking_in_studio_202608271814.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
@@ -325,7 +351,7 @@
         <div class="card" id="prod-5" data-gender="women" data-type="tops">
             <span class="badge">Ref: 4</span>
             <div class="img-box">
-                <video autoplay loop muted playsinline preload="none"><source src="Woman_modeling_shirt_360_rotation_202609061421.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline preload="none" controlslist="nodownload" oncontextmenu="return false;"><source src="Woman_modeling_shirt_360_rotation_202609061421.mp4" type="video/mp4"></video>
             </div>
             <div>
                 <div class="prod-title" data-key="p5_title">Plaid Sailor Collar Blouse</div>
