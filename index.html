@@ -18,7 +18,6 @@
             --text-muted: #64748b;
         }
 
-        /* ប្រើ manipulation លើ html/body ដើមី្បឱ្យទាញបង្រួម Zoom Out បានរលូន និងមិនទាក់ */
         html, body {
             touch-action: manipulation;
             -webkit-text-size-adjust: 100%;
@@ -36,7 +35,6 @@
 
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
-        /* បង្ខំទំហំ Font Size 16px ការពារ Safari Auto Zoom-in ពេលចុចលើ Input */
         input, select, textarea {
             font-size: 16px !important;
         }
@@ -157,31 +155,6 @@
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
     </style>
-
-    <script>
-        // បិទតែ Zoom In (ពង្រីក) និង Double Tap តែប៉ុណ្ណោះ ដោយមិនប៉ះពាល់ដល់ Zoom Out (បង្រួម) ឬការប្តូរ Tab ឡើយ
-        document.addEventListener('gesturestart', function (e) {
-            if (e.scale > 1.0) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        document.addEventListener('gesturechange', function (e) {
-            if (e.scale > 1.0) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // បិទ Double Tap Zoom 
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            let now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
-    </script>
 </head>
 <body>
 
@@ -437,7 +410,7 @@
 
         const translations = {
             km: {
-                cover_title: "BUILD YOUR DREAM STYLE", cat_men: "បុរស", cat_women: "នារី", cat_tops: "អាវ", cat_pants: "ខោ", cat_outerwear: "អាវក្រៅ", sub_all: "_all: "ទាំងអស់",
+                cover_title: "BUILD YOUR DREAM STYLE", cat_men: "បុរស", cat_women: "នារី", cat_tops: "អាវ", cat_pants: "ខោ", cat_outerwear: "អាវក្រៅ", sub_all: "ទាំងអស់",
                 p1_title: "T-Shirt Polo Collab OneDay", p1_desc: "អាវយឺត Polo រចនាម៉ូដទាន់សម័យ ងាយពាក់",
                 p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "ឈុតសម្លៀកបំពាក់ Smart Casual ទាន់សម័យ",
                 p3_title: "Elegant Women Dress", p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង",
