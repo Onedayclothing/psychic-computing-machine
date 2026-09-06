@@ -249,7 +249,10 @@
         .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.9); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 10; }
         .prod-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; min-height: 30px; line-height: 1.4; color: var(--primary); }
         .prod-desc { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; min-height: 26px; line-height: 1.4; }
-        .price { font-size: 15px; font-weight: 900; color: var(--accent); margin-bottom: 8px; }
+        
+        .price-box { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
+        .price-icon { width: 15px; height: 15px; object-fit: contain; }
+        .price { font-size: 15px; font-weight: 900; color: var(--accent); }
 
         .size-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
         .size-label { font-size: 9px; font-weight: 800; color: var(--text-muted); }
@@ -279,17 +282,20 @@
 
         .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
         .bar-content { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .total-price { font-size: 17px; font-weight: 900; color: var(--primary); }
+        .total-price { font-size: 17px; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 4px; }
         .total-label { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
         .bar-buttons { display: flex; gap: 8px; }
         .btn-cart-view { background: var(--accent-light); color: var(--primary); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        .btn-telegram { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
+        .btn-telegram { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); display: flex; align-items: center; gap: 6px; }
+
+        .btn-order-img { width: 16px; height: 16px; object-fit: contain; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; display: none; justify-content: flex-end; flex-direction: column; backdrop-filter: blur(4px); pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
         .modal-overlay.active { display: flex; pointer-events: auto; opacity: 1; }
         .modal-content { background: var(--modal-bg); color: var(--primary); border-radius: 24px 24px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; max-width: 480px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; box-shadow: 0 -10px 25px rgba(0,0,0,0.1); border-top: 1px solid var(--border-color); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px; }
         .modal-title { font-size: 16px; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 6px; }
+        .modal-title-img { width: 20px; height: 20px; object-fit: contain; }
         .btn-close { background: var(--accent-light); border: none; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; color: var(--text-muted); }
 
         #cart-list { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; max-height: 260px; }
@@ -316,8 +322,8 @@
         .modal-footer { border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
         .modal-total-row { display: flex; justify-content: space-between; align-items: center; }
         .modal-total-label { font-size: 12px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .modal-total-amount { font-size: 18px; font-weight: 900; color: var(--accent); }
-        .btn-modal-telegram { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+        .modal-total-amount { font-size: 18px; font-weight: 900; color: var(--accent); display: flex; align-items: center; gap: 4px; }
+        .btn-modal-telegram { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
     </style>
@@ -431,7 +437,10 @@
             <div>
                 <div class="prod-title" data-key="p1_title">T-Shirt Polo Collab OneDay</div>
                 <div class="prod-desc" data-key="p1_desc">អាវយឺត Polo រចនាម៉ូដទាន់សម័យ ងាយពាក់</div>
-                <div class="price">$15.00</div>
+                <div class="price-box">
+                    <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                    <div class="price">$15.00</div>
+                </div>
             </div>
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
@@ -457,7 +466,10 @@
             <div>
                 <div class="prod-title" data-key="p4_title">Olive Green Mandarin Collar Long-Sleeve Shirt</div>
                 <div class="prod-desc" data-key="p4_desc">អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្អាតប្រណិត</div>
-                <div class="price">$6.00</div>
+                <div class="price-box">
+                    <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                    <div class="price">$6.00</div>
+                </div>
             </div>
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
@@ -483,7 +495,10 @@
             <div>
                 <div class="prod-title" data-key="p2_title">Outfit Smart Casual (Full Set)</div>
                 <div class="prod-desc" data-key="p2_desc">ឈុតសម្លៀកបំពាក់ Smart Casual ទាន់សម័យ</div>
-                <div class="price">$20.00</div>
+                <div class="price-box">
+                    <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                    <div class="price">$20.00</div>
+                </div>
             </div>
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
@@ -509,7 +524,10 @@
             <div>
                 <div class="prod-title" data-key="p5_title">Plaid Sailor Collar Blouse</div>
                 <div class="prod-desc" data-key="p5_desc">អាវនារី ករសាឡាប្រណិត ស្អាតទាន់សម័យ</div>
-                <div class="price">$7.00</div>
+                <div class="price-box">
+                    <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                    <div class="price">$7.00</div>
+                </div>
             </div>
             <div>
                 <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
@@ -530,14 +548,20 @@
         <div class="bar-content">
             <div style="cursor: pointer;" onclick="toggleCartModal()">
                 <div class="total-label"><span data-key="total_label">សរុប</span> (<span id="items-count">0</span> <span data-key="items_unit">មុខ</span>)</div>
-                <div class="total-price" id="total-price">$0.00</div>
+                <div class="total-price">
+                    <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                    <span id="total-price">$0.00</span>
+                </div>
             </div>
             <div class="bar-buttons">
                 <button onclick="toggleCartModal()" class="btn-cart-view">
                     <img src="IMG_5827.png" alt="Cart" style="width: 14px; height: 14px; object-fit: contain;">
                     <span data-key="btn_view_cart">មើលកន្ត្រក</span>
                 </button>
-                <button onclick="prepareOrder()" class="btn-telegram"><span data-key="btn_order_now">Order Now</span></button>
+                <button onclick="prepareOrder()" class="btn-telegram">
+                    <img src="IMG_5838.png" alt="Order Icon" class="btn-order-img">
+                    <span data-key="btn_order_now">Order Now</span>
+                </button>
             </div>
         </div>
     </div>
@@ -546,7 +570,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">
-                    <img src="IMG_5832.png" alt="Guide" style="width: 20px; height: 20px; object-fit: contain;">
+                    <img src="IMG_5832.png" alt="Guide" class="modal-title-img">
                     <span data-key="guide_title">របៀបកុម្មង់ទំនិញ</span>
                 </div>
                 <button class="btn-close" onclick="closeModal('guideModal')">✕</button>
@@ -564,7 +588,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">
-                    <img src="IMG_5827.png" alt="Cart" style="width: 20px; height: 20px; object-fit: contain;">
+                    <img src="IMG_5827.png" alt="Cart" class="modal-title-img">
                     <span data-key="cart_title">ទំនិញក្នុងកន្ត្រករបស់អ្នក</span>
                 </div>
                 <button class="btn-close" onclick="closeModal('cartModal')">✕</button>
@@ -586,7 +610,10 @@
             <div class="modal-footer" id="modal-footer" style="display: none;">
                 <div class="modal-total-row">
                     <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
-                    <span class="modal-total-amount" id="modal-total-price">$0.00</span>
+                    <div class="modal-total-amount">
+                        <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                        <span id="modal-total-price">$0.00</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -595,7 +622,10 @@
     <div class="modal-overlay" id="checkoutModal" onclick="handleModalClick(event, 'checkoutModal')">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">📝 <span data-key="checkout_title">ព័ត៌មានសម្រាប់ការកុម្មង់</span></div>
+                <div class="modal-title">
+                    <img src="IMG_5839.png" alt="Customer Info Icon" class="modal-title-img">
+                    <span data-key="checkout_title">ព័ត៌មានសម្រាប់ការកុម្មង់</span>
+                </div>
                 <button class="btn-close" onclick="closeModal('checkoutModal')">✕</button>
             </div>
             
@@ -617,9 +647,15 @@
             <div class="modal-footer" style="display: flex; margin-top: 15px;">
                 <div class="modal-total-row">
                     <span class="modal-total-label" data-key="total_label">តម្លៃសរុប</span>
-                    <span class="modal-total-amount" id="checkout-total-price">$0.00</span>
+                    <div class="modal-total-amount">
+                        <img src="IMG_5837.png" alt="Price Icon" class="price-icon">
+                        <span id="checkout-total-price">$0.00</span>
+                    </div>
                 </div>
-                <button onclick="openTelegram()" class="btn-modal-telegram"><span data-key="btn_order_now">Order Now</span></button>
+                <button onclick="openTelegram()" class="btn-modal-telegram">
+                    <img src="IMG_5838.png" alt="Order Icon" class="btn-order-img">
+                    <span data-key="btn_order_now">Order Now</span>
+                </button>
             </div>
         </div>
     </div>
