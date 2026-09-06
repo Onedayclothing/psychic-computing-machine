@@ -629,10 +629,18 @@
                     <label class="form-label" data-key="label_phone">លេខទូរស័ព្ទ (Phone Number)</label>
                     <input type="tel" id="custPhone" class="form-input" placeholder="បំពេញលេខទូរស័ព្ទ (ឧ. 012345678)..." oninput="clearError(this)">
                 </div>
+                
+                <!-- Column 1: ទីតាំងទទួលទំនិញ (Text Address - Required) -->
                 <div class="form-group">
                     <label class="form-label" data-key="label_address">ទីតាំងទទួលទំនិញ (Delivery Location)</label>
+                    <input type="text" id="custAddress" class="form-input" placeholder="បំពេញអាសយដ្ឋាន (ឧ. ផ្ទះ..., ផ្លូវ...)" oninput="clearError(this)">
+                </div>
+
+                <!-- Column 2: ទីតាំងលើ Map (Google Maps Link - Optional) -->
+                <div class="form-group">
+                    <label class="form-label">ទីតាំងលើ Map (Optional)</label>
                     <div style="display: flex; gap: 6px;">
-                        <input type="text" id="custAddress" class="form-input" placeholder="បំពេញទីតាំង ឬជ្រើសរើសលើ Map..." oninput="clearError(this)">
+                        <input type="text" id="custMapUrl" class="form-input" placeholder="ជ្រើសរើសទីតាំងលើ Map (បើមាន)..." readonly style="cursor: pointer;" onclick="openMapModal()">
                         <button type="button" onclick="openMapModal()" style="background: var(--accent-light); color: var(--accent); border: 1px solid var(--border-color); padding: 0 10px; border-radius: 10px; font-weight:800; font-size:11px; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:4px;">
                             📍 Map
                         </button>
@@ -661,7 +669,7 @@
         <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column;">
             <div class="modal-header">
                 <div class="modal-title">
-                    <span>📍 ជ្រើសរើសទីតាំងរបស់អ្នក</span>
+                    <span>📍 ជ្រើសរើសទីតាំងលើ Map</span>
                 </div>
                 <button class="btn-close" onclick="closeModal('mapPickerModal')">✕</button>
             </div>
@@ -905,8 +913,7 @@
 
         function confirmMapLocation() {
             let mapUrl = `https://maps.google.com/?q=${currentCenter.lat.toFixed(6)},${currentCenter.lng.toFixed(6)}`;
-            document.getElementById('custAddress').value = mapUrl;
-            clearError(document.getElementById('custAddress'));
+            document.getElementById('custMapUrl').value = mapUrl;
             closeModal('mapPickerModal');
         }
 
@@ -1202,10 +1209,12 @@
             let nameInput = document.getElementById('custName');
             let phoneInput = document.getElementById('custPhone');
             let addressInput = document.getElementById('custAddress');
+            let mapUrlInput = document.getElementById('custMapUrl');
 
             let name = nameInput.value.trim();
             let phone = phoneInput.value.trim();
             let address = addressInput.value.trim();
+            let mapUrl = mapUrlInput ? mapUrlInput.value.trim() : '';
 
             let hasError = false;
             if (!name) { nameInput.classList.add('error'); hasError = true; }
@@ -1229,8 +1238,11 @@
             message += "👤 ព័ត៌មានអតិថិជន\n";
             message += `• ឈ្មោះ: ${name}\n`;
             message += `• លេខទូរស័ព្ទ: ${phone}\n`;
-            message += `• ទីតាំង: ${address}\n\n`;
-            message += "📦 ទំនិញ\n";
+            message += `• អាសយដ្ឋាន: ${address}\n`;
+            if (mapUrl) {
+                message += `• ទីតាំង Map: ${mapUrl}\n`;
+            }
+            message += "\n📦 ទំនិញ\n";
 
             let index = 1;
             let subtotalPrice = 0;
