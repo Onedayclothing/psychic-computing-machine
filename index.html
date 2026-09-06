@@ -18,8 +18,9 @@
             --text-muted: #64748b;
         }
 
+        /* ប្រើ pan-x pan-y ដើមី្បឱ្យការ Zoom Out បង្រួម និង Scroll ដើរទន់ស្រួលបំផុត */
         html, body {
-            touch-action: manipulation;
+            touch-action: pan-x pan-y;
             -webkit-text-size-adjust: 100%;
             overflow-x: hidden;
             width: 100%;
@@ -35,6 +36,7 @@
 
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
+        /* បង្ខំ Font size 16px លើ Input ការពារ iOS Safari អូតូ Zoom In ពេលវាយអក្សរ */
         input, select, textarea {
             font-size: 16px !important;
         }
@@ -157,22 +159,24 @@
     </style>
 
     <script>
-        // ១. ស្ទាក់បិទ Pinch-to-zoom ពេលប្រើម្រាមដៃ ២ ដោយមិនបិទ Click Event
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) {
+        // ស្ទាក់ Block តែពេលអ្នកប្រើយកម្រាមដៃពីរមក Zoom In (Scale > 1) តែប៉ុណ្ណោះ 
+        // ទុកឱ្យ Zoom Out (Scale < 1) ដើរស្រួល ១០០% ហើយមិនប៉ះពាល់ដល់ Button Click ឡើយ
+        document.addEventListener('gesturechange', function(e) {
+            if (e.scale > 1.0) {
                 e.preventDefault();
             }
         }, { passive: false });
 
-        // ២. ស្ទាក់ទប់ស្កាត់ gesture Event របស់ iOS
         document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
+            if (e.scale > 1.0) {
+                e.preventDefault();
+            }
         }, { passive: false });
 
-        // ៣. បើអេក្រង់ព្យាយាម Zoom គឺរុញ Viewport មកស្មើ 1.0 វិញភ្លាមៗ
+        // ប្រព័ន្ធការពារស្វ័យប្រវត្តិតាមដាន Viewport Size
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', function() {
-                if (window.visualViewport.scale > 1) {
+                if (window.visualViewport.scale > 1.0) {
                     const metaViewport = document.querySelector('meta[name="viewport"]');
                     if (metaViewport) {
                         metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
