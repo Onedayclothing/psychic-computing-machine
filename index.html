@@ -155,6 +155,32 @@
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
     </style>
+
+    <script>
+        // ១. ស្ទាក់បិទ Pinch-to-zoom ពេលប្រើម្រាមដៃ ២ ដោយមិនបិទ Click Event
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // ២. ស្ទាក់ទប់ស្កាត់ gesture Event របស់ iOS
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        // ៣. បើអេក្រង់ព្យាយាម Zoom គឺរុញ Viewport មកស្មើ 1.0 វិញភ្លាមៗ
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', function() {
+                if (window.visualViewport.scale > 1) {
+                    const metaViewport = document.querySelector('meta[name="viewport"]');
+                    if (metaViewport) {
+                        metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
