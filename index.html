@@ -18,9 +18,9 @@
             --text-muted: #64748b;
         }
 
-        /* ប្រើ touch-action: pan-y ដើម្បីអនុញ្ញាតឱ្យ scroll ចុះឡើងបាន ប៉ុន្តែបិទ Zoom / Pinch ដាច់ខាត */
+        /* ប្រើ manipulation ដើម្បីឱ្យការ Scroll/Pan ដើរស្រួល និងមិនទាក់ពេលបង្រួម */
         html, body {
-            touch-action: pan-y;
+            touch-action: manipulation;
             -webkit-text-size-adjust: 100%;
             overflow-x: hidden;
         }
@@ -35,7 +35,7 @@
 
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
-        /* បង្ខំ Font Size Input យ៉ាងតិច 16px ដើម្បីការពារ iOS Safari Auto-Zoom ពេលចុចបំពេញ */
+        /* ការពារ iOS Safari អូតូ Zoom In ពេលចុចលើ Input */
         input, select, textarea {
             font-size: 16px !important;
         }
@@ -158,20 +158,35 @@
     </style>
 
     <script>
-        // បិទ Pinch-to-zoom លើ iOS ទាំងស្រុង
+        // កូដស្ទាក់បិទតែ Zoom In (ពង្រីក) និងបើកផ្លូវឱ្យ Zoom Out (បង្រួម) ដើរស្រួលបំផុត
+        let initialDistance = 0;
+
         document.addEventListener('touchstart', function (e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
+            if (e.touches.length === 2) {
+                // គណនាប្រវែងរវាងម្រាមដៃទាំងពីរពេលចាប់ផ្តើមប៉ះ
+                initialDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
             }
-        }, { passive: false });
+        }, { passive: true });
 
         document.addEventListener('touchmove', function (e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
+            if (e.touches.length === 2 && initialDistance > 0) {
+                let currentDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+
+                // បើម្រាមដៃរីកធំជាងមុន (ព្យាយាម Zoom In) -> បិទចោល
+                if (currentDistance > initialDistance) {
+                    e.preventDefault();
+                }
+                // បើម្រាមដៃរួមតូចជាងមុន (Zoom Out) -> បណ្ដោយឱ្យដំណើរការធម្មតា
             }
         }, { passive: false });
 
-        // បិទ Double Tap Zoom
+        // បិទ Double Tap Zoom លើ Element
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (event) {
             let now = (new Date()).getTime();
