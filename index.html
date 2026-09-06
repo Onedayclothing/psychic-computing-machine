@@ -2,7 +2,7 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Oneday Clothing | Premium Collection</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
@@ -18,10 +18,11 @@
             --text-muted: #64748b;
         }
 
-        /* ប្រើ manipulation ដើម្បីឱ្យការ Scroll/Pan ដើរស្រួល និងមិនទាក់ពេលបង្រួម */
         html, body {
-            touch-action: manipulation;
+            touch-action: pan-x pan-y;
             -webkit-text-size-adjust: 100%;
+            -webkit-user-select: none;
+            user-select: none;
             overflow-x: hidden;
         }
 
@@ -35,9 +36,10 @@
 
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
 
-        /* ការពារ iOS Safari អូតូ Zoom In ពេលចុចលើ Input */
         input, select, textarea {
             font-size: 16px !important;
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
@@ -158,12 +160,24 @@
     </style>
 
     <script>
-        // កូដស្ទាក់បិទតែ Zoom In (ពង្រីក) និងបើកផ្លូវឱ្យ Zoom Out (បង្រួម) ដើរស្រួលបំផុត
+        // ១. បិទ iOS Native Gesture (ទប់ស្កាត់ល្បិចប៉ះមួយទាញមួយ)
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('gesturechange', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('gestureend', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        // ២. បិទ Touch Event ដែលព្យាយាម Zoom In (ទាញរីក) តែទុកឱ្យ Zoom Out (បង្រួម) ដើរធម្មតា
         let initialDistance = 0;
 
         document.addEventListener('touchstart', function (e) {
-            if (e.touches.length === 2) {
-                // គណនាប្រវែងរវាងម្រាមដៃទាំងពីរពេលចាប់ផ្តើមប៉ះ
+            if (e.touches.length >= 2) {
                 initialDistance = Math.hypot(
                     e.touches[0].pageX - e.touches[1].pageX,
                     e.touches[0].pageY - e.touches[1].pageY
@@ -172,21 +186,20 @@
         }, { passive: true });
 
         document.addEventListener('touchmove', function (e) {
-            if (e.touches.length === 2 && initialDistance > 0) {
+            if (e.touches.length >= 2) {
                 let currentDistance = Math.hypot(
                     e.touches[0].pageX - e.touches[1].pageX,
                     e.touches[0].pageY - e.touches[1].pageY
                 );
 
-                // បើម្រាមដៃរីកធំជាងមុន (ព្យាយាម Zoom In) -> បិទចោល
+                // បើម្រាមដៃកំពុងទាញរីកធំជាងមុន (Zoom In) -> បិទដាច់ខាត
                 if (currentDistance > initialDistance) {
                     e.preventDefault();
                 }
-                // បើម្រាមដៃរួមតូចជាងមុន (Zoom Out) -> បណ្ដោយឱ្យដំណើរការធម្មតា
             }
         }, { passive: false });
 
-        // បិទ Double Tap Zoom លើ Element
+        // ៣. បិទ Double Tap Zoom លើអេក្រង់
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (event) {
             let now = (new Date()).getTime();
