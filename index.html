@@ -2,15 +2,13 @@
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <!-- បិទមិនឱ្យ Zoom In (ពង្រីក) បានឡើយ ប៉ុន្តែទំព័រនៅតែបង្ហាញទំហំ Standard ធម្មតា -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Oneday Clothing | Premium Collection</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS & JS សម្រាប់ Interactive Map Picker -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Google Maps JS API ជាមួយ API Key របស់អ្នក -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8QJX6uyTI5wD3avgSpCXFtlv8Izd1RXQ&callback=initMap" async defer></script>
 
     <style>
         :root {
@@ -27,7 +25,6 @@
             --nav-font: 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        /* Dark Mode Theme Variables */
         body.dark-mode {
             --primary: #f8fafc;
             --accent: #38bdf8;
@@ -67,7 +64,6 @@
             user-select: text;
         }
 
-        /* Nav Header UI Redesign */
         nav { 
             background: var(--nav-bg); 
             backdrop-filter: blur(12px); 
@@ -94,19 +90,8 @@
         }
         .logo span { color: var(--primary); }
 
-        .nav-right { 
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-        }
-
-        .nav-icon-img {
-            width: 13px;
-            height: 13px;
-            object-fit: contain;
-            display: inline-block;
-            vertical-align: middle;
-        }
+        .nav-right { display: flex; align-items: center; gap: 5px; }
+        .nav-icon-img { width: 13px; height: 13px; object-fit: contain; display: inline-block; vertical-align: middle; }
 
         .guide-top-btn { 
             background: var(--accent-light); 
@@ -141,29 +126,10 @@
             padding: 0;
         }
 
-        .theme-toggle-btn img {
-            width: 14px;
-            height: 14px;
-            object-fit: contain;
-        }
+        .theme-toggle-btn img { width: 14px; height: 14px; object-fit: contain; }
 
-        .lang-select-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .lang-flag-img {
-            position: absolute;
-            left: 7px;
-            width: 15px;
-            height: 11px;
-            pointer-events: none;
-            z-index: 2;
-            object-fit: cover;
-            border-radius: 2px;
-            box-shadow: 0 0 1px rgba(0,0,0,0.3);
-        }
+        .lang-select-wrapper { position: relative; display: flex; align-items: center; }
+        .lang-flag-img { position: absolute; left: 7px; width: 15px; height: 11px; pointer-events: none; z-index: 2; object-fit: cover; border-radius: 2px; box-shadow: 0 0 1px rgba(0,0,0,0.3); }
 
         .lang-select { 
             background: var(--accent-light); 
@@ -178,7 +144,6 @@
             cursor: pointer; 
             outline: none; 
             -webkit-appearance: none;
-            -moz-appearance: none;
             appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%22//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230284c7%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -211,13 +176,7 @@
         .cover-slide-item { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
         
         .cover-image-box { width: 100%; max-height: 220px; background-color: #0f172a; overflow: hidden; position: relative; }
-        .cover-image-box::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 5;
-            background: transparent;
-        }
+        .cover-image-box::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 5; background: transparent; }
         .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; pointer-events: none; -webkit-touch-callout: none; }
 
         .cover-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: var(--card-bg); }
@@ -242,13 +201,7 @@
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
         .img-box { background: var(--input-bg); aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid var(--border-color); position: relative; }
-        .img-box::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 5;
-            background: transparent;
-        }
+        .img-box::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 5; background: transparent; }
         .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; pointer-events: none; -webkit-touch-callout: none; }
         
         .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.9); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 10; }
@@ -271,19 +224,6 @@
 
         .btn-add { width: 100%; background: var(--primary); color: var(--bg-color); border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: background 0.2s; }
         .btn-add:active { background: var(--accent); }
-
-        .fly-item {
-            position: fixed;
-            z-index: 9999;
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
-            pointer-events: none;
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
 
         .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
         .bar-content { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
@@ -331,34 +271,6 @@
         .btn-modal-telegram { width: 100%; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         .guide-step { font-size: 12px; line-height: 1.8; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
-        
-        /* Whoo Map Style Customizing */
-        .whoo-pin-pulse {
-            position: relative;
-            width: 38px;
-            height: 38px;
-            background: #ff3b30;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(255, 59, 48, 0.6), 0 8px 16px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .whoo-pin-pulse::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(255, 59, 48, 0.4);
-            animation: pulseWhoo 1.8s infinite ease-out;
-            z-index: -1;
-        }
-        @keyframes pulseWhoo {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(2.2); opacity: 0; }
-        }
     </style>
 
     <script>
@@ -670,7 +582,7 @@
                     <div style="display: flex; gap: 6px;">
                         <input type="text" id="custMapUrl" class="form-input" placeholder="ជ្រើសរើសទីតាំងលើ Map (បើមាន)..." readonly style="cursor: pointer;" onclick="openMapModal()">
                         <button type="button" onclick="openMapModal()" style="background: var(--accent-light); color: var(--accent); border: 1px solid var(--border-color); padding: 0 10px; border-radius: 10px; font-weight:800; font-size:11px; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:4px;">
-                            📍 Map
+                            🗺️ Google Map
                         </button>
                     </div>
                 </div>
@@ -692,34 +604,22 @@
         </div>
     </div>
 
-    <!-- Modal Interactive Map Picker (Whoo App Style - CartoDB Dark Matter) -->
+    <!-- Modal Google Maps Direct Picker -->
     <div class="modal-overlay" id="mapPickerModal" style="z-index: 300;" onclick="handleModalClick(event, 'mapPickerModal')">
-        <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column; background: #0b0f19; color: #ffffff;">
-            <div class="modal-header" style="border-bottom-color: #1e293b;">
-                <div class="modal-title" style="color: #ffffff;">
-                    <span>📍 ជ្រើសរើសទីតាំងលើ Map (Whoo Style)</span>
+        <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span>🗺️ ជ្រើសរើសទីតាំងលើ Google Maps</span>
                 </div>
-                <button class="btn-close" style="background: #1e293b; color: #94a3b8;" onclick="closeModal('mapPickerModal')">✕</button>
+                <button class="btn-close" onclick="closeModal('mapPickerModal')">✕</button>
             </div>
             
-            <div style="position: relative; flex-grow: 1; border-radius: 20px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                <div id="map" style="width: 100%; height: 100%; background: #121621;"></div>
-                
-                <!-- Pin Whoo Pulse Effect ស្អាត Premium -->
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; pointer-events: none;">
-                    <div class="whoo-pin-pulse">
-                        <div style="width: 10px; height: 10px; background: white; border-radius: 50%;"></div>
-                    </div>
-                </div>
-
-                <!-- ប៊ូតុង GPS ទីតាំងបច្ចុប្បន្ន (Whoo Glassmorphism Theme) -->
-                <button onclick="locateUser()" style="position: absolute; bottom: 20px; right: 15px; z-index: 1000; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); color: #ffffff; width: 46px; height: 46px; border-radius: 50%; box-shadow: 0 8px 20px rgba(0,0,0,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                    🎯
-                </button>
+            <div style="position: relative; flex-grow: 1; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color);">
+                <div id="googleMap" style="width: 100%; height: 100%;"></div>
             </div>
 
-            <div style="margin-top: 14px;">
-                <button onclick="confirmMapLocation()" class="btn-modal-telegram" style="background: linear-gradient(135deg, #ff3b30, #ff2d55); box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4); font-size: 14px; padding: 14px;">
+            <div style="margin-top: 12px;">
+                <button onclick="confirmGoogleLocation()" class="btn-modal-telegram">
                     បញ្ជាក់ទីតាំងនេះ
                 </button>
             </div>
@@ -736,8 +636,9 @@
         let currentType = 'all';
         const deliveryFee = 2.00;
 
-        let pickerMap = null;
-        let currentCenter = { lat: 11.5564, lng: 104.9282 }; // ភ្នំពេញ (Default)
+        let googleMapObj = null;
+        let googleMarker = null;
+        let currentPos = { lat: 11.5564, lng: 104.9282 };
 
         const langFlags = {
             km: 'IMG_5833.png',
@@ -904,46 +805,63 @@
             openModal('checkoutModal');
         }
 
-        /* Map Functions (Whoo App Style - CartoDB Dark Matter / No API Key) */
+        /* Google Maps Direct API Functions (Dark Mode Style) */
+        function initMap() {
+            // Google Maps JS API Loaded
+        }
+
         function openMapModal() {
             openModal('mapPickerModal');
             setTimeout(() => {
-                if (!pickerMap) {
-                    pickerMap = L.map('map', { zoomControl: false, attributionControl: false }).setView([currentCenter.lat, currentCenter.lng], 15);
-                    
-                    // CartoDB Dark Matter (Whoo App Vibe - Free & No API Key Needed)
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                        maxZoom: 19,
-                        subdomains: 'abcd'
-                    }).addTo(pickerMap);
+                if (!googleMapObj && window.google && window.google.maps) {
+                    // Modern Dark Mode Map Styling for Google Maps
+                    const darkMapStyle = [
+                        { elementType: "geometry", stylers: [{ color: "#212121" }] },
+                        { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+                        { elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
+                        { elementType: "labels.text.stroke", stylers: [{ color: "#212121" }] },
+                        { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#757575" }] },
+                        { featureType: "administrative.country", elementType: "labels.text.fill", stylers: [{ color: "#9e9e9e" }] },
+                        { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#bdbdbd" }] },
+                        { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
+                        { featureType: "road", elementType: "geometry.fill", stylers: [{ color: "#2c2c2c" }] },
+                        { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
+                        { featureType: "road.arterial", elementType: "geometry", stylers: [{ color: "#373737" }] },
+                        { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#3c3c3c" }] },
+                        { featureType: "water", elementType: "geometry", stylers: [{ color: "#000000" }] },
+                        { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#3d3d3d" }] }
+                    ];
 
-                    pickerMap.on('move', function() {
-                        let center = pickerMap.getCenter();
-                        currentCenter = { lat: center.lat, lng: center.lng };
+                    googleMapObj = new google.maps.Map(document.getElementById("googleMap"), {
+                        zoom: 16,
+                        center: currentPos,
+                        zoomControl: true,
+                        streetViewControl: false,
+                        mapTypeControl: false,
+                        styles: darkMapStyle
                     });
-                } else {
-                    pickerMap.invalidateSize();
+
+                    googleMarker = new google.maps.Marker({
+                        position: currentPos,
+                        map: googleMapObj,
+                        draggable: true,
+                        animation: google.maps.Animation.DROP
+                    });
+
+                    googleMapObj.addListener("click", (e) => {
+                        currentPos = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+                        googleMarker.setPosition(currentPos);
+                    });
+
+                    googleMarker.addListener("dragend", (e) => {
+                        currentPos = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+                    });
                 }
-            }, 200);
+            }, 300);
         }
 
-        function locateUser() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    let lat = position.coords.latitude;
-                    let lng = position.coords.longitude;
-                    currentCenter = { lat: lat, lng: lng };
-                    if (pickerMap) {
-                        pickerMap.setView([lat, lng], 17);
-                    }
-                }, function() {
-                    alert("មិនអាចទាញយក GPS បានទេ សូមបើក Location Service លើទូរស័ព្ទ!");
-                });
-            }
-        }
-
-        function confirmMapLocation() {
-            let mapUrl = `https://maps.google.com/?q=${currentCenter.lat.toFixed(6)},${currentCenter.lng.toFixed(6)}`;
+        function confirmGoogleLocation() {
+            let mapUrl = `https://maps.google.com/?q=${currentPos.lat.toFixed(6)},${currentPos.lng.toFixed(6)}`;
             document.getElementById('custMapUrl').value = mapUrl;
             closeModal('mapPickerModal');
         }
