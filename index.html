@@ -8,7 +8,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS & JS សម្រាប់ Interactive Map Picker (Free 100%) -->
+    <!-- Leaflet CSS & JS សម្រាប់ Interactive Map Picker -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -656,7 +656,7 @@
         </div>
     </div>
 
-    <!-- Modal Interactive Map Picker ដូចក្នុង Grab/NHAM24 -->
+    <!-- Modal Interactive Map Picker (CartoDB Voyager Clean Theme) -->
     <div class="modal-overlay" id="mapPickerModal" style="z-index: 300;" onclick="handleModalClick(event, 'mapPickerModal')">
         <div class="modal-content" style="height: 85vh; padding: 16px; display: flex; flex-direction: column;">
             <div class="modal-header">
@@ -669,9 +669,9 @@
             <div style="position: relative; flex-grow: 1; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color);">
                 <div id="map" style="width: 100%; height: 100%;"></div>
                 
-                <!-- Pin រូបក្រហមចំកណ្តាល Map -->
+                <!-- Pin រូបក្រហមចំកណ្តាល Map + Shadow -->
                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%); z-index: 1000; pointer-events: none;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" style="width: 36px; height: 36px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" style="width: 32px; height: 32px; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));">
                 </div>
 
                 <!-- ប៊ូតុង GPS ទីតាំងបច្ចុប្បន្ន -->
@@ -866,16 +866,16 @@
             openModal('checkoutModal');
         }
 
-        /* Map Functions */
+        /* Map Functions (CartoDB Voyager Premium Theme) */
         function openMapModal() {
             openModal('mapPickerModal');
             setTimeout(() => {
                 if (!pickerMap) {
-                    pickerMap = L.map('map', { zoomControl: false }).setView([currentCenter.lat, currentCenter.lng], 15);
+                    pickerMap = L.map('map', { zoomControl: false, attributionControl: false }).setView([currentCenter.lat, currentCenter.lng], 15);
                     
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
                         maxZoom: 19,
-                        attribution: '© OpenStreetMap'
+                        subdomains: 'abcd'
                     }).addTo(pickerMap);
 
                     pickerMap.on('move', function() {
