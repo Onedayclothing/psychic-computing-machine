@@ -814,7 +814,6 @@
             openModal('mapPickerModal');
             setTimeout(() => {
                 if (!googleMapObj && window.google && window.google.maps) {
-                    // Modern Dark Mode Map Styling for Google Maps
                     const darkMapStyle = [
                         { elementType: "geometry", stylers: [{ color: "#212121" }] },
                         { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
