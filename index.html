@@ -31,7 +31,7 @@
         .guide-top-btn { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
         .guide-top-btn:hover { background: var(--accent-light); color: var(--accent); border-color: #bae6fd; }
 
-        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); }
+        .cart-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15); position: relative; }
 
         .cover-container { width: 100%; background: var(--card-bg); border-bottom: 1px solid var(--border-color); margin-bottom: 16px; position: relative; }
         .cover-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
@@ -82,6 +82,20 @@
 
         .btn-add { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; transition: background 0.2s; }
         .btn-add:active { background: var(--accent); }
+
+        /* Animation Fly to Cart Effect */
+        .fly-item {
+            position: fixed;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
         .cart-checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 12px 16px; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
         .bar-content { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
@@ -138,7 +152,7 @@
                 <option value="en">🇬🇧 EN</option>
                 <option value="zh">🇨🇳 中文</option>
             </select>
-            <button class="cart-btn" onclick="toggleCartModal()">🛒 <span id="cart-count">0</span></button>
+            <button class="cart-btn" id="cartButton" onclick="toggleCartModal()">🛒 <span id="cart-count">0</span></button>
         </div>
     </nav>
 
@@ -598,7 +612,39 @@
             fetchLiveStock('prod-2', 'Ref: 3', 'M');
         };
 
-        async function addToCart(titleKey, price, cardId, refText) {
+        // Fly to Cart Animation Function
+        function playFlyAnimation(event, cardId) {
+            let card = document.getElementById(cardId);
+            let imgBox = card.querySelector('.img-box video, .img-box img');
+            let cartBtn = document.getElementById('cartButton');
+
+            if (!imgBox || !cartBtn) return;
+
+            let flyer = document.createElement('video');
+            flyer.src = imgBox.src;
+            flyer.className = 'fly-item';
+            
+            let rect = imgBox.getBoundingClientRect();
+            flyer.style.top = rect.top + 'px';
+            flyer.style.left = rect.left + 'px';
+            document.body.appendChild(flyer);
+
+            let cartRect = cartBtn.getBoundingClientRect();
+
+            setTimeout(() => {
+                flyer.style.top = (cartRect.top + 5) + 'px';
+                flyer.style.left = (cartRect.left + 5) + 'px';
+                flyer.style.width = '20px';
+                flyer.style.height = '20px';
+                flyer.style.opacity = '0.5';
+            }, 50);
+
+            setTimeout(() => {
+                flyer.remove();
+            }, 850);
+        }
+
+        async function addToCart(titleKey, price, cardId, refText, event) {
             let card = document.getElementById(cardId);
             let activeSizeBtn = card.querySelector('.size-btn.active');
             let selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'M';
@@ -615,6 +661,9 @@
                     return;
                 }
             }
+
+            // Trigger Fly Animation
+            playFlyAnimation(event, cardId);
 
             if (cart[stockKey]) {
                 cart[stockKey].qty += 1;
