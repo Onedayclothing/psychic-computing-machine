@@ -18,15 +18,34 @@
             --text-muted: #64748b;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kantumruy Pro', sans-serif; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        /* ប្រើ touch-action: pan-y ដើម្បីអនុញ្ញាតឱ្យ scroll ចុះឡើងបាន ប៉ុន្តែបិទ Zoom / Pinch ដាច់ខាត */
+        html, body {
+            touch-action: pan-y;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Kantumruy Pro', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
         body { background-color: var(--bg-color); color: var(--primary); padding-bottom: 120px; }
+
+        /* បង្ខំ Font Size Input យ៉ាងតិច 16px ដើម្បីការពារ iOS Safari Auto-Zoom ពេលចុចបំពេញ */
+        input, select, textarea {
+            font-size: 16px !important;
+        }
 
         nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 14px 20px; position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; color: var(--accent); }
         .logo span { color: var(--primary); }
         .nav-right { display: flex; align-items: center; gap: 8px; }
 
-        .lang-select { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; outline: none; }
+        .lang-select { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; outline: none; }
         
         .guide-top-btn { background: #f1f5f9; border: 1px solid var(--border-color); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
         .guide-top-btn:hover { background: var(--accent-light); color: var(--accent); border-color: #bae6fd; }
@@ -39,7 +58,7 @@
         .cover-slide-item { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
         
         .cover-image-box { width: 100%; max-height: 220px; background-color: var(--primary); overflow: hidden; position: relative; }
-        .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; }
+        .cover-image-box video { width: 100%; height: 100%; object-fit: contain; opacity: 0.85; pointer-events: none; }
 
         .cover-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: #ffffff; }
         .cover-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; transition: all 0.3s ease; }
@@ -63,7 +82,7 @@
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
         
         .img-box { background: #f8fafc; aspect-ratio: 9/16; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; border: 1px solid #e2e8f0; position: relative; }
-        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; }
+        .img-box img, .img-box video { width: 100%; height: 100%; object-fit: contain; background-color: #ffffff; pointer-events: none; }
         
         .badge { position: absolute; top: 8px; right: 8px; background: rgba(15, 23, 42, 0.9); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 10; }
         .prod-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; min-height: 30px; line-height: 1.4; color: var(--primary); }
@@ -125,7 +144,7 @@
         .checkout-form { border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
         .form-group { display: flex; flex-direction: column; gap: 4px; width: 100%; }
         .form-label { font-size: 11px; font-weight: 800; color: var(--primary); }
-        .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 12px; outline: none; background: #f8fafc; color: var(--primary); }
+        .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 10px; outline: none; background: #f8fafc; color: var(--primary); }
         .form-input:focus { border-color: var(--accent); background: #ffffff; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
         .form-input.error { border-color: #ef4444; background: #fef2f2; }
 
@@ -139,20 +158,20 @@
     </style>
 
     <script>
-        // បិទការ Zoom ចូល (Pinch-to-zoom in) លើឧបករណ៍ iOS និង Android ដាច់ខាត
-        document.addEventListener('gesturestart', function (e) {
-            if (e.scale > 1) {
+        // បិទ Pinch-to-zoom លើ iOS ទាំងស្រុង
+        document.addEventListener('touchstart', function (e) {
+            if (e.touches.length > 1) {
                 e.preventDefault();
             }
         }, { passive: false });
 
-        document.addEventListener('gesturechange', function (e) {
-            if (e.scale > 1) {
+        document.addEventListener('touchmove', function (e) {
+            if (e.touches.length > 1) {
                 e.preventDefault();
             }
         }, { passive: false });
 
-        // ទប់ស្កាត់ Double Tap Zoom លើអេក្រង់
+        // បិទ Double Tap Zoom
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (event) {
             let now = (new Date()).getTime();
