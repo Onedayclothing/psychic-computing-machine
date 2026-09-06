@@ -271,6 +271,30 @@
                 <button class="btn-add" onclick="addToCart('p2_title', 20.00, 'prod-2', 'Ref: 3', event)">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
             </div>
         </div>
+
+        <div class="card" id="prod-5" data-gender="women" data-type="tops">
+            <span class="badge">Ref: 4</span>
+            <div class="img-box">
+                <video autoplay loop muted playsinline preload="metadata"><source src="Woman_modeling_shirt_360_rotation_202609061421.mp4" type="video/mp4"></video>
+            </div>
+            <div>
+                <div class="prod-title" data-key="p5_title">Plaid Sailor Collar Blouse</div>
+                <div class="prod-desc" data-key="p5_desc">អាវនារី ករសាឡាប្រណិត ស្អាតទាន់សម័យ</div>
+                <div class="price">$7.00</div>
+            </div>
+            <div>
+                <div class="size-header"><div class="size-label" data-key="select_size">SIZE</div></div>
+                <div class="size-grid">
+                    <button class="size-btn" onclick="selectSize(this, 'prod-5', 'Ref: 4')">S</button>
+                    <button class="size-btn active" onclick="selectSize(this, 'prod-5', 'Ref: 4')">M</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-5', 'Ref: 4')">L</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-5', 'Ref: 4')">XL</button>
+                    <button class="size-btn" onclick="selectSize(this, 'prod-5', 'Ref: 4')">XXL</button>
+                </div>
+                <div class="stock-hint-box" id="stock-hint-prod-5"><span id="stock-text-prod-5">ស្តុកនៅសល់: </span><span>...</span></div>
+                <button class="btn-add" onclick="addToCart('p5_title', 7.00, 'prod-5', 'Ref: 4', event)">+ <span data-key="add_to_cart">ដាក់ចូលកន្ត្រក</span></button>
+            </div>
+        </div>
     </div>
 
     <div class="cart-checkout-bar">
@@ -373,6 +397,7 @@
                 p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "ឈុតសម្លៀកបំពាក់ Smart Casual ទាន់សម័យ",
                 p3_title: "Elegant Women Dress", p3_desc: "រ៉ូបនារីទាន់សម័យ សាកសមសម្រាប់ដើរលេង",
                 p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "អាវដៃវែងកាតគៀនពណ៌បៃតងអូលីវ ស្អាតប្រណិត",
+                p5_title: "Plaid Sailor Collar Blouse", p5_desc: "អាវនារី ករសាឡាប្រណិត ស្អាតទាន់សម័យ",
                 select_size: "SIZE", add_to_cart: "ដាក់ចូលកន្ត្រក", total_label: "តម្លៃសរុប", subtotal_label: "តម្លៃទំនិញ", delivery_label: "ថ្លៃដឹក (Delivery Fee)",
                 items_unit: "មុខ", btn_order_now: "Order Now", btn_view_cart: "🛒 មើលកន្ត្រក", cart_title: "ទំនិញក្នុងកន្ត្រករបស់អ្នក", empty_cart: "មិនទាន់មានទំនិញក្នុងកន្ត្រកទេ",
                 checkout_title: "ព័ត៌មានសម្រាប់ការកុម្មង់",
@@ -391,6 +416,7 @@
                 p2_title: "Outfit Smart Casual (Full Set)", p2_desc: "Smart Casual Outfit - Modern & Simple Style.",
                 p3_title: "Elegant Women Dress", p3_desc: "Elegant women dress, perfect for casual outings.",
                 p4_title: "Olive Green Mandarin Collar Long-Sleeve Shirt", p4_desc: "Olive green mandarin collar long-sleeve shirt, premium style.",
+                p5_title: "Plaid Sailor Collar Blouse", p5_desc: "Plaid sailor collar blouse, stylish and elegant.",
                 select_size: "SIZE", add_to_cart: "Add to Cart", total_label: "Total Amount", subtotal_label: "Subtotal", delivery_label: "Delivery Fee",
                 items_unit: "items", btn_order_now: "Order Now", btn_view_cart: "🛒 View Cart", cart_title: "Your Shopping Cart", empty_cart: "Your cart is currently empty",
                 checkout_title: "Checkout Information",
@@ -409,6 +435,7 @@
                 p2_title: "商务休闲套装 (全套)", p2_desc: "商务休闲套装，时尚简约。",
                 p3_title: "优雅女士连衣裙", p3_desc: "时尚女士连衣裙，适合日常出行。",
                 p4_title: "橄榄绿立领长袖衬衫", p4_desc: "橄榄绿立领长袖衬衫，高级时尚剪裁。",
+                p5_title: "格子海军领衬衫", p5_desc: "格纹海军领女式上衣，时尚优雅。",
                 select_size: "尺码", add_to_cart: "加入购物车", total_label: "总金额", subtotal_label: "商品小计", delivery_label: "配送费 (Delivery Fee)",
                 items_unit: "件", btn_order_now: "Order Now", btn_view_cart: "🛒 查看购物车", cart_title: "您的购物车", empty_cart: "购物车是空的",
                 checkout_title: "结账信息",
@@ -609,6 +636,7 @@
             fetchLiveStock('prod-1', 'Ref: 1', 'M');
             fetchLiveStock('prod-4', 'Ref: 2', 'M');
             fetchLiveStock('prod-2', 'Ref: 3', 'M');
+            fetchLiveStock('prod-5', 'Ref: 4', 'M');
         };
 
         function playFlyAnimation(event, cardId) {
@@ -701,19 +729,16 @@
             let subtotalPrice = 0;
             let itemsHtml = '';
 
-            // តម្រៀបទំនិញក្នុង Cart តាម Ref (ពីតូចទៅធំ) និងតាម Size (S, M, L, XL, XXL)
             const sizeOrder = { 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5 };
             
             let sortedKeys = Object.keys(cart).sort((a, b) => {
                 let itemA = cart[a];
                 let itemB = cart[b];
                 
-                // ប្រៀបធៀប Ref ជាមុន (ឧ. Ref: 1 មុន Ref: 2)
                 let refA = parseInt(itemA.ref.replace(/\D/g, '')) || 0;
                 let refB = parseInt(itemB.ref.replace(/\D/g, '')) || 0;
                 if (refA !== refB) return refA - refB;
 
-                // បើ Ref ដូចគ្នា តម្រៀបតាម Size ពីតូចទៅធំ
                 let orderA = sizeOrder[itemA.size] || 99;
                 let orderB = sizeOrder[itemB.size] || 99;
                 return orderA - orderB;
