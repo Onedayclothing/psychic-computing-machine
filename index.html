@@ -19,6 +19,7 @@
             --nav-bg: rgba(255, 255, 255, 0.95);
             --modal-bg: #ffffff;
             --input-bg: #f8fafc;
+            --nav-font: 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         /* Dark Mode Theme Variables */
@@ -67,7 +68,7 @@
             backdrop-filter: blur(12px); 
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color); 
-            padding: 10px 14px; 
+            padding: 8px 12px; 
             position: sticky; 
             top: 0; 
             z-index: 50; 
@@ -79,23 +80,24 @@
         }
 
         .logo { 
-            font-size: 20px; 
-            font-weight: 900; 
+            font-size: 18px; 
+            font-weight: 800; 
             letter-spacing: -0.5px; 
             color: var(--accent); 
             line-height: 1;
+            font-family: var(--nav-font);
         }
         .logo span { color: var(--primary); }
 
         .nav-right { 
             display: flex; 
             align-items: center; 
-            gap: 6px; 
+            gap: 5px; 
         }
 
         .nav-icon-img {
-            width: 16px;
-            height: 16px;
+            width: 13px;
+            height: 13px;
             object-fit: contain;
             display: inline-block;
             vertical-align: middle;
@@ -105,15 +107,16 @@
             background: var(--accent-light); 
             border: 1px solid var(--border-color); 
             color: var(--primary); 
-            padding: 0 10px; 
-            height: 34px;
-            border-radius: 20px; 
-            font-size: 11px; 
-            font-weight: 700; 
+            padding: 0 8px; 
+            height: 30px;
+            border-radius: 16px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            font-family: var(--nav-font);
             cursor: pointer; 
             display: flex; 
             align-items: center; 
-            gap: 5px; 
+            gap: 4px; 
             white-space: nowrap;
             line-height: 1;
         }
@@ -122,10 +125,9 @@
             background: var(--accent-light); 
             border: 1px solid var(--border-color); 
             color: var(--primary); 
-            width: 34px; 
-            height: 34px; 
+            width: 30px; 
+            height: 30px; 
             border-radius: 50%; 
-            font-size: 13px; 
             cursor: pointer; 
             display: flex; 
             align-items: center; 
@@ -135,8 +137,8 @@
         }
 
         .theme-toggle-btn img {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
             object-fit: contain;
         }
 
@@ -146,25 +148,28 @@
             align-items: center;
         }
 
-        .lang-select-icon {
+        .lang-flag-img {
             position: absolute;
-            left: 8px;
-            width: 14px;
-            height: 14px;
+            left: 7px;
+            width: 15px;
+            height: 11px;
             pointer-events: none;
             z-index: 2;
-            object-fit: contain;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 0 1px rgba(0,0,0,0.3);
         }
 
         .lang-select { 
             background: var(--accent-light); 
             border: 1px solid var(--border-color); 
             color: var(--primary); 
-            padding: 0 20px 0 26px; 
-            height: 34px;
-            border-radius: 20px; 
-            font-size: 11px; 
-            font-weight: 700; 
+            padding: 0 16px 0 26px; 
+            height: 30px;
+            border-radius: 16px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            font-family: var(--nav-font);
             cursor: pointer; 
             outline: none; 
             -webkit-appearance: none;
@@ -172,23 +177,24 @@
             appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%22//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230284c7%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 6px center;
-            background-size: 8px auto;
+            background-position: right 5px center;
+            background-size: 7px auto;
         }
 
         .cart-btn { 
             background: var(--accent-light); 
             color: var(--accent); 
             border: 1px solid var(--border-color); 
-            padding: 0 12px; 
-            height: 34px;
-            border-radius: 20px; 
-            font-size: 12px; 
-            font-weight: 700; 
+            padding: 0 10px; 
+            height: 30px;
+            border-radius: 16px; 
+            font-size: 10px; 
+            font-weight: 600; 
+            font-family: var(--nav-font);
             cursor: pointer; 
             display: flex; 
             align-items: center; 
-            gap: 5px; 
+            gap: 4px; 
             box-shadow: 0 2px 5px rgba(2, 132, 199, 0.1); 
             position: relative; 
             white-space: nowrap;
@@ -219,13 +225,13 @@
 
         .menu-wrapper { padding: 0 12px 14px; max-width: 480px; margin: 0 auto; }
         .categories { display: flex; background: var(--accent-light); padding: 4px; border-radius: 24px; gap: 4px; margin-bottom: 8px; border: 1px solid var(--border-color); }
-        .cat-btn { flex: 1; background: transparent; border: none; padding: 8px 0; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
-        .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .cat-btn { flex: 1; background: transparent; border: none; padding: 8px 0; border-radius: 20px; font-size: 11px; font-weight: 600; font-family: var(--nav-font); color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.2s; }
+        .cat-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.08); font-weight: 700; }
 
         .sub-categories { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
         .sub-categories.active { display: flex; }
-        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 14px; font-size: 11px; font-weight: 600; white-space: nowrap; cursor: pointer; color: var(--text-muted); }
-        .sub-btn.active { background: var(--accent); color: #ffffff; border-color: var(--accent); }
+        .sub-btn { background: var(--card-bg); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 14px; font-size: 10px; font-weight: 600; font-family: var(--nav-font); white-space: nowrap; cursor: pointer; color: var(--text-muted); }
+        .sub-btn.active { background: var(--accent); color: #ffffff; border-color: var(--accent); font-weight: 700; }
 
         .container { max-width: 480px; margin: 0 auto; padding: 0 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
@@ -351,11 +357,11 @@
             </button>
 
             <div class="lang-select-wrapper">
-                <img src="IMG_5828.png" alt="Language" class="lang-select-icon">
-                <select class="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="km">🇰🇭 KH</option>
-                    <option value="en">🇬🇧 EN</option>
-                    <option value="zh">🇨🇳 中文</option>
+                <img id="langFlagImg" src="IMG_5833.png" alt="Language Flag" class="lang-flag-img">
+                <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="km">KH</option>
+                    <option value="en">EN</option>
+                    <option value="zh">中文</option>
                 </select>
             </div>
 
@@ -528,7 +534,7 @@
             </div>
             <div class="bar-buttons">
                 <button onclick="toggleCartModal()" class="btn-cart-view">
-                    <img src="IMG_5827.png" alt="Cart" style="width: 15px; height: 15px; object-fit: contain;">
+                    <img src="IMG_5827.png" alt="Cart" style="width: 14px; height: 14px; object-fit: contain;">
                     <span data-key="btn_view_cart">មើលកន្ត្រក</span>
                 </button>
                 <button onclick="prepareOrder()" class="btn-telegram"><span data-key="btn_order_now">Order Now</span></button>
@@ -628,6 +634,12 @@
         let currentType = 'all';
         const deliveryFee = 2.00;
 
+        const langFlags = {
+            km: 'IMG_5833.png',
+            en: 'IMG_5835.png',
+            zh: 'IMG_5834.png'
+        };
+
         const translations = {
             km: {
                 cover_title: "BUILD YOUR DREAM STYLE", cat_men: "បុរស", cat_women: "នារី", cat_tops: "អាវ", cat_pants: "ខោ", cat_outerwear: "អាវក្រៅ", sub_all: "ទាំងអស់",
@@ -705,10 +717,10 @@
             let img = document.getElementById('themeImg');
             if (isDark) {
                 document.body.classList.add('dark-mode');
-                if (img) img.src = 'IMG_5829.png'; // Day mode icon when in dark theme to switch back
+                if (img) img.src = 'IMG_5829.png'; // Day mode icon when in dark theme
             } else {
                 document.body.classList.remove('dark-mode');
-                if (img) img.src = 'IMG_5830.png'; // Night mode icon when in light theme to switch
+                if (img) img.src = 'IMG_5830.png'; // Night mode icon when in light theme
             }
         }
 
@@ -719,6 +731,13 @@
 
         function changeLanguage(lang) {
             currentLang = lang;
+            
+            // Update Flag Image based on selected language
+            let flagImg = document.getElementById('langFlagImg');
+            if (flagImg && langFlags[lang]) {
+                flagImg.src = langFlags[lang];
+            }
+
             const elements = document.querySelectorAll('[data-key]');
             elements.forEach(el => {
                 const key = el.getAttribute('data-key');
